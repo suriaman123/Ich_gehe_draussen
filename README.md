@@ -12,10 +12,13 @@ This is a static site so it runs directly on GitHub Pages. Because static hostin
 ```
 AmanOutside/
 ├── index.html
+├── package.json 
 ├── css/styles.css
 ├── js/
 │   ├── app.js                           # loads events.json, renders the trail + detail view, router
 │   └── theme.js                         # theme switcher (signal / editorial / adventure)
+├── scripts/
+│   └── generate-manifest.js
 ├── outing_data/
 │   └── excursion_details_js.json        # the manifest — one entry per outing
 └── excursion_details/
@@ -49,6 +52,7 @@ Commits are tagged as **Waypoints** — each one marks a point further along the
 
 ```
 Waypoint 0.1 — Trailhead              first working version: trail, detail view, themes
+Waypoint 0.2 — Signal Boost           highlights carousel + the manifest generator script
 
 ```
 
