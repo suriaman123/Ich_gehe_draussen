@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "night-market",
+    "title": "Night Market",
+    "date": "2024-10-15",
+    "folder": "events/night-market_2024-10-15",
+    "cover": "cover.svg",
+    "featured": false,
+    "photos": [],
+    "videos": []
+  },
+  {
+    "slug": "5k-marathon",
+    "title": "5K Marathon",
+    "date": "2024-09-01",
+    "folder": "events/5k-marathon_2024-09-01",
+    "cover": "cover.svg",
+    "featured": true,
+    "photos": [],
+    "videos": []
+  }
+]

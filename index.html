@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" data-theme="signal">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AmanOutside — a log of going out</title>
+<meta name="description" content="A weekly log of getting outside — outings, photos, and notes from the trail.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="wordmark" href="#/">
+    <span class="wordmark-main">AmanOutside</span>
+  </a>
+
+  <div class="theme-switcher" role="group" aria-label="Choose a visual theme">
+    <button class="theme-dot" data-theme-choice="signal" aria-label="Signal theme (dark)" aria-pressed="true"></button>
+    <button class="theme-dot" data-theme-choice="editorial" aria-label="Editorial theme (light)" aria-pressed="false"></button>
+    <button class="theme-dot" data-theme-choice="adventure" aria-label="Adventure theme (warm)" aria-pressed="false"></button>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- HOME VIEW -->
+  <div id="view-home">
+    <section class="hero">
+      <p class="hero-eyebrow">a weekly practice of leaving the house</p>
+      <h1 class="hero-title">The Trail</h1>
+      <p class="hero-sub">Every outing, logged. Photos, notes, and the occasional video — arranged the way they happened, one week at a time.</p>
+      <dl class="hero-stats" id="hero-stats" aria-live="polite">
+        <div><dt>Outings</dt><dd id="stat-count">—</dd></div>
+        <div><dt>Since</dt><dd id="stat-since">—</dd></div>
+        <div><dt>Latest</dt><dd id="stat-latest">—</dd></div>
+      </dl>
+    </section>
+
+    <section class="featured" id="featured-section" hidden>
+      <div class="featured-heading">
+        <h2 class="section-label">Highlights</h2>
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="featured-prev" aria-label="Previous highlight">‹</button>
+          <button class="carousel-btn" id="featured-next" aria-label="Next highlight">›</button>
+        </div>
+      </div>
+      <div class="featured-track" id="featured-track" tabindex="0" aria-label="Highlighted outings, scrollable"></div>
+    </section>
+
+    <section class="trail-section">
+      <h2 class="section-label">Full log</h2>
+      <div class="trail" id="trail"></div>
+    </section>
+  </div>
+
+  <!-- DETAIL VIEW -->
+  <div id="view-detail" hidden>
+    <button class="back-link" id="back-link">
+      <span aria-hidden="true">←</span> Back to the trail
+    </button>
+
+    <header class="detail-header">
+      <img class="detail-cover" id="detail-cover" alt="">
+      <div class="detail-heading">
+        <p class="detail-date" id="detail-date"></p>
+        <h1 id="detail-title"></h1>
+      </div>
+    </header>
+
+    <article class="detail-readme" id="detail-readme"></article>
+
+    <section class="detail-media">
+      <h2 class="section-label" id="detail-media-label">Moments</h2>
+      <div class="media-grid" id="media-grid"></div>
+    </section>
+  </div>
+
+  <div id="view-empty" hidden>
+    <p class="empty-state">Couldn't find that outing. <a href="#/">Back to the trail →</a></p>
+  </div>
+
+</main>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
+  <div class="lightbox-content" id="lightbox-content"></div>
+</div>
+
+<footer class="site-footer">
+  <p>Built by Aman · one outing at a time.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
