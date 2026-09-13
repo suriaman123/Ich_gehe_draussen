@@ -53,6 +53,7 @@ Commits are tagged as **Waypoints** — each one marks a point further along the
 ```
 Waypoint 0.1 — Trailhead              first working version: trail, detail view, themes
 Waypoint 0.2 — Signal Boost           highlights carousel + the manifest generator script
+Waypoint 0.3 — Umbenennung + Polish
 
 ```
 

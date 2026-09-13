@@ -1,8 +1,19 @@
 // app.js
-// Loads /data/events.json, renders the homepage trail, and handles the
-// hash-based router for individual outing detail pages (#/event/<slug>).
+// Loads outing_data/excursion_details_js.json, renders the homepage trail,
+// and handles the hash-based router for individual outing detail pages
+// (#/event/<slug>).
 
-const DATA_URL = "data/events.json";
+const DATA_URL = "outing_data/excursion_details_js.json";
+
+/**
+ * Outing folder names can contain spaces (e.g. "5k Marathon_01.09.2024"),
+ * which browsers require to be percent-encoded in a URL. This wraps
+ * encodeURI() so every path we build for fetch() or an <img>/<video> src
+ * is safe, while leaving forward slashes intact.
+ */
+function encodePath(p) {
+  return encodeURI(p);
+}
 
 const els = {
   home: document.getElementById("view-home"),
@@ -40,11 +51,11 @@ function isVideo(filename) {
   return /\.(mp4|mov|webm|m4v)$/i.test(filename);
 }
 
-/** Loads events.json once and caches sorted results. */
+/** Loads the outing manifest once and caches sorted results. */
 async function loadEvents() {
   if (EVENTS.length) return EVENTS;
-  const res = await fetch(DATA_URL);
-  if (!res.ok) throw new Error("Could not load events.json");
+  const res = await fetch(encodePath(DATA_URL));
+  if (!res.ok) throw new Error("Could not load excursion_details_js.json");
   const raw = await res.json();
   EVENTS = raw.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
   return EVENTS;
@@ -62,10 +73,14 @@ function renderStats(events) {
 }
 
 function coverUrl(ev) {
-  return `${ev.folder}/${ev.cover}`;
+  return encodePath(`${ev.folder}/${ev.cover}`);
 }
 
 function renderTrail(events) {
+  if (!events.length) {
+    els.trail.innerHTML = `<p class="loading-state">No outings logged yet — run the generator after adding your first one.</p>`;
+    return;
+  }
   els.trail.innerHTML = "";
   events.forEach((ev) => {
     const node = document.createElement("a");
@@ -193,11 +208,11 @@ async function renderDetail(slug) {
   els.detailCover.alt = ev.title;
   els.detailDate.textContent = formatDate(ev.date);
   els.detailTitle.textContent = ev.title;
-  document.title = `${ev.title} — AmanOutside`;
+  document.title = `${ev.title} — Ich gehe draußen`;
 
   els.detailReadme.innerHTML = "<p><em>Loading notes…</em></p>";
   try {
-    const res = await fetch(`${ev.folder}/README.md`);
+    const res = await fetch(encodePath(`${ev.folder}/README.md`));
     const md = res.ok ? await res.text() : "";
     els.detailReadme.innerHTML = md ? marked.parse(md) : "<p><em>No notes yet for this one.</em></p>";
   } catch (e) {
@@ -208,7 +223,7 @@ async function renderDetail(slug) {
   els.mediaLabel.textContent = media.length ? "Moments" : "";
   els.mediaGrid.innerHTML = media
     .map((file) => {
-      const url = `${ev.folder}/${file}`;
+      const url = encodePath(`${ev.folder}/${file}`);
       if (isVideo(file)) {
         return `<button class="media-item is-video" data-url="${url}" data-type="video" aria-label="Play video"><video src="${url}" muted></video></button>`;
       }
@@ -256,7 +271,7 @@ async function route() {
   const match = hash.match(/^#\/event\/(.+)$/);
 
   await loadEvents().catch(() => {
-    els.trail.innerHTML = `<p class="empty-state">Couldn't load the log. Check that data/events.json exists.</p>`;
+    els.trail.innerHTML = `<p class="empty-state">Couldn't load the log. Check that outing_data/excursion_details_js.json exists.</p>`;
   });
 
   if (match) {
@@ -265,7 +280,7 @@ async function route() {
     renderStats(EVENTS);
     renderFeatured(EVENTS);
     renderTrail(EVENTS);
-    document.title = "AmanOutside — a log of going out";
+    document.title = "Ich gehe draußen — a log of going out";
     showView("home");
   }
 }

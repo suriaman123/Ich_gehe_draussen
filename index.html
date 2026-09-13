@@ -3,8 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AmanOutside — a log of going out</title>
+<title>Ich gehe draußen — a log of going out</title>
 <meta name="description" content="A weekly log of getting outside — outings, photos, and notes from the trail.">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ich gehe draußen">
+<meta property="og:description" content="A weekly log of getting outside — outings, photos, and notes from the trail.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ich gehe draußen">
+<meta name="twitter:description" content="A weekly log of getting outside — outings, photos, and notes from the trail.">
+<meta name="theme-color" content="#0a0e14">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +26,7 @@
 
 <header class="site-header">
   <a class="wordmark" href="#/">
-    <span class="wordmark-main">AmanOutside</span>
+    <span class="wordmark-main">Ich gehe draußen</span>
   </a>
 
   <div class="theme-switcher" role="group" aria-label="Choose a visual theme">
@@ -54,7 +64,9 @@
 
     <section class="trail-section">
       <h2 class="section-label">Full log</h2>
-      <div class="trail" id="trail"></div>
+      <div class="trail" id="trail">
+        <p class="loading-state">Loading the trail…</p>
+      </div>
     </section>
   </div>
 
@@ -81,7 +93,7 @@
   </div>
 
   <div id="view-empty" hidden>
-    <p class="empty-state">Couldn't find that outing. <a href="#/">Back to the trail →</a></p>
+    <p class="empty-state">Hm — couldn't find that outing. It might have been renamed or removed. <a href="#/">Back to the trail →</a></p>
   </div>
 
 </main>

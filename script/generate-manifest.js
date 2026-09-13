@@ -2,13 +2,14 @@
 /**
  * generate-manifest.js
  *
- * Scans the `events/` folder and writes `data/events.json` — the file the
- * website actually reads. This is the one command you run after adding or
- * changing an outing folder.
+ * Scans the `outing_data/excursion_details/` folder and writes
+ * `outing_data/excursion_details_js.json` — the file the website actually
+ * reads. This is the one command you run after adding or changing an
+ * outing folder.
  *
  * FOLDER NAMING CONVENTION
- *   events/<Title>_<DD.MM.YYYY>/          e.g. events/5k marathon_01.09.2024/
- *   events/<Title>_<YYYY-MM-DD>/          also accepted
+ *   excursion_details/<Title>_<DD.MM.YYYY>/   e.g. .../5k marathon_01.09.2024/
+ *   excursion_details/<Title>_<YYYY-MM-DD>/   also accepted (e.g. 5k-Marathon_2024-09-01)
  *
  * INSIDE EACH FOLDER
  *   - One image is the cover/profile photo. Name it so its filename starts
@@ -19,7 +20,7 @@
  *     media automatically. No need to list files by hand.
  *
  * SAFE TO RE-RUN
- *   If data/events.json already exists, this script preserves any
+ *   If excursion_details_js.json already exists, this script preserves any
  *   hand-edited "featured" flag (and a few other optional fields) for
  *   outings that still exist, and only recalculates paths from disk.
  *
@@ -31,14 +32,22 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
-const EVENTS_DIR = path.join(ROOT, "events");
-const OUTPUT_FILE = path.join(ROOT, "data", "events.json");
+
+// These use path.join (OS-specific separators) because they're real
+// filesystem paths Node reads from disk — fine on Windows or Mac/Linux.
+const EVENTS_DIR = path.join(ROOT, "outing_data", "excursion_details");
+const OUTPUT_FILE = path.join(ROOT, "outing_data", "excursion_details_js.json");
+
+// This is the folder prefix written INTO the JSON, so the browser can use
+// it directly as a URL. It must always use forward slashes, regardless of
+// which OS generated it — a Windows backslash would break in the browser.
+const WEB_FOLDER_PREFIX = "outing_data/excursion_details";
 
 const IMAGE_EXTS = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"];
 const VIDEO_EXTS = [".mp4", ".mov", ".webm", ".m4v"];
 const COVER_HINTS = /^(cover|profile|display)/i;
 
-// Fields a person might hand-edit in events.json that re-running this
+// Fields a person might hand-edit in excursion_details_js.json that re-running this
 // script should NOT clobber, as long as the outing's slug still exists.
 const PRESERVE_FIELDS = ["featured", "title"];
 
@@ -109,14 +118,14 @@ function loadExistingManifest() {
     const raw = JSON.parse(fs.readFileSync(OUTPUT_FILE, "utf8"));
     return new Map(raw.map((ev) => [ev.slug, ev]));
   } catch (e) {
-    console.warn("⚠ Existing events.json couldn't be parsed — starting fresh.");
+    console.warn("⚠ Existing excursion_details_js.json couldn't be parsed — starting fresh.");
     return new Map();
   }
 }
 
 function run() {
   if (!fs.existsSync(EVENTS_DIR)) {
-    fail(`No events/ folder found at ${EVENTS_DIR}`);
+    fail(`No excursion_details folder found at ${EVENTS_DIR}`);
   }
 
   const existing = loadExistingManifest();
@@ -125,7 +134,7 @@ function run() {
     .filter((name) => fs.statSync(path.join(EVENTS_DIR, name)).isDirectory());
 
   if (!folders.length) {
-    fail("events/ exists but has no outing folders inside it yet.");
+    fail("excursion_details/ exists but has no outing folders inside it yet.");
   }
 
   const results = [];
@@ -163,7 +172,7 @@ function run() {
       slug,
       title: parsed.title,
       date: parsed.date,
-      folder: `events/${folderName}`,
+      folder: `${WEB_FOLDER_PREFIX}/${folderName}`,
       cover,
       featured: false,
       photos,
@@ -186,7 +195,7 @@ function run() {
   fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(results, null, 2) + "\n");
 
-  console.log(`\n✓ Wrote ${results.length} outing(s) to data/events.json`);
+  console.log(`\n✓ Wrote ${results.length} outing(s) to outing_data/excursion_details_js.json`);
   if (skipped) console.log(`  (${skipped} folder(s) skipped — see warnings above)`);
   console.log("");
 }
