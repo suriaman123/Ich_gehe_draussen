@@ -1,22 +1,77 @@
 [
   {
-    "slug": "night-market",
-    "title": "Night Market",
-    "date": "2024-10-15",
-    "folder": "events/night-market_2024-10-15",
-    "cover": "cover.svg",
+    "slug": "museum-night-cosmos",
+    "title": "Museum Night Cosmos",
+    "date": "2026-09-12",
+    "folder": "outing_data/excursion_details/Museum Night_Cosmos_12.09.2026",
+    "cover": "cover.jpg",
     "featured": false,
-    "photos": [],
-    "videos": []
+    "photos": [
+      "IMG_20260912_205346054.jpg",
+      "IMG_20260912_214434302.jpg",
+      "IMG_20260912_214438042.jpg",
+      "IMG_20260912_214442263.jpg",
+      "IMG_20260912_214448630.jpg",
+      "IMG_20260912_214503420.jpg",
+      "IMG_20260912_214506906.jpg",
+      "IMG_20260912_214512016.jpg",
+      "IMG_20260912_214529902.jpg",
+      "IMG_20260912_214544564.jpg",
+      "IMG_20260912_214550082.jpg",
+      "IMG_20260912_214554945.jpg",
+      "IMG_20260912_214559539.jpg",
+      "IMG_20260912_214604445.jpg",
+      "IMG_20260912_214611034.jpg",
+      "IMG_20260912_221917046.jpg",
+      "IMG_20260912_225411153.jpg",
+      "IMG_20260912_225856825.jpg",
+      "Snapchat-403987627.jpg"
+    ],
+    "videos": [
+      "Snapchat-985616983.mp4"
+    ]
   },
   {
     "slug": "5k-marathon",
     "title": "5K Marathon",
-    "date": "2024-09-01",
-    "folder": "events/5k-marathon_2024-09-01",
-    "cover": "cover.svg",
+    "date": "2026-09-11",
+    "folder": "outing_data/excursion_details/5K Marathon_11.09.2026",
+    "cover": "cover.jpg",
     "featured": true,
-    "photos": [],
+    "photos": [
+      "IMG_20260911_155747951.jpg",
+      "IMG_20260911_172641031.jpg",
+      "IMG_20260911_172645771.jpg",
+      "IMG_20260911_191141412.jpg",
+      "IMG_20260911_192058128.jpg",
+      "IMG_20260911_192607693.jpg",
+      "IMG_20260911_193629632.jpg",
+      "IMG_20260911_202028838.jpg",
+      "Snapchat-1489631630.jpg",
+      "Snapchat-1755032857.jpg",
+      "Snapchat-1961832892.jpg",
+      "Snapchat-947951559.jpg"
+    ],
+    "videos": [
+      "Snapchat-1161084624.mp4",
+      "Snapchat-1660537820.mp4",
+      "Snapchat-1766104389.mp4",
+      "Snapchat-2004070895.mp4"
+    ]
+  },
+  {
+    "slug": "creapolis-community-area-makeover",
+    "title": "Creapolis Community Area Makeover",
+    "date": "2026-09-10",
+    "folder": "outing_data/excursion_details/Creapolis_Community_Area_Makeover_10.09.2026",
+    "cover": "IMG_20260910_160545725.jpg",
+    "featured": false,
+    "photos": [
+      "IMG_20260910_161651723.jpg",
+      "IMG_20260910_192811403.jpg",
+      "IMG_20260910_193331190.jpg",
+      "IMG_20260912_173123899.jpg"
+    ],
     "videos": []
   }
 ]

@@ -221,13 +221,14 @@ async function renderDetail(slug) {
 
   const media = [...(ev.photos || []), ...(ev.videos || [])];
   els.mediaLabel.textContent = media.length ? "Moments" : "";
+  const total = media.length;
   els.mediaGrid.innerHTML = media
-    .map((file) => {
+    .map((file, i) => {
       const url = encodePath(`${ev.folder}/${file}`);
       if (isVideo(file)) {
-        return `<button class="media-item is-video" data-url="${url}" data-type="video" aria-label="Play video"><video src="${url}" muted></video></button>`;
+        return `<button class="media-item is-video" data-url="${url}" data-type="video" aria-label="Play video, ${i + 1} of ${total}, from ${ev.title}"><video src="${url}" muted></video></button>`;
       }
-      return `<button class="media-item" data-url="${url}" data-type="image" aria-label="View photo"><img src="${url}" alt="" loading="lazy"></button>`;
+      return `<button class="media-item" data-url="${url}" data-type="image" aria-label="View photo, ${i + 1} of ${total}, from ${ev.title}"><img src="${url}" alt="" loading="lazy"></button>`;
     })
     .join("");
 
@@ -236,27 +237,60 @@ async function renderDetail(slug) {
 }
 
 /** ---- Lightbox ---- */
+let lightboxTrigger = null; // the thumbnail that opened the lightbox, so focus can return to it
+
 document.addEventListener("click", (e) => {
   const item = e.target.closest(".media-item");
   if (!item) return;
   const { url, type } = item.dataset;
+  const label = item.getAttribute("aria-label") || "";
+  lightboxTrigger = item;
   els.lightboxContent.innerHTML =
     type === "video"
-      ? `<video src="${url}" controls autoplay></video>`
-      : `<img src="${url}" alt="">`;
+      ? `<video src="${url}" controls autoplay aria-label="${label}"></video>`
+      : `<img src="${url}" alt="${label}">`;
   els.lightbox.hidden = false;
+  // Move focus into the overlay so keyboard/screen-reader users land
+  // somewhere sensible rather than staying "under" the now-hidden page.
+  els.lightboxClose.focus();
 });
 
 function closeLightbox() {
   els.lightbox.hidden = true;
   els.lightboxContent.innerHTML = "";
+  // Return focus to whatever thumbnail opened this, so keyboard users
+  // don't lose their place in the media grid.
+  if (lightboxTrigger) {
+    lightboxTrigger.focus();
+    lightboxTrigger = null;
+  }
 }
 els.lightboxClose.addEventListener("click", closeLightbox);
 els.lightbox.addEventListener("click", (e) => {
   if (e.target === els.lightbox) closeLightbox();
 });
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeLightbox();
+  if (e.key === "Escape" && !els.lightbox.hidden) closeLightbox();
+});
+
+// Basic focus trap: while the lightbox is open, Tab should cycle only
+// between elements inside it (the close button and, for videos, the
+// native player controls) rather than escaping into the hidden page.
+els.lightbox.addEventListener("keydown", (e) => {
+  if (e.key !== "Tab") return;
+  const focusable = els.lightbox.querySelectorAll(
+    "button, video, [href], [tabindex]:not([tabindex='-1'])"
+  );
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
 });
 
 /** ---- View switching + router ---- */
