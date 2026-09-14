@@ -445,12 +445,16 @@ button { font-family: inherit; cursor: pointer; }
   position: fixed;
   inset: 0;
   background: rgba(5, 6, 8, 0.9);
-  display: flex;
   align-items: center;
   justify-content: center;
   z-index: 50;
   padding: 2rem;
 }
+/* The base .lightbox rule above and the browser's default [hidden] rule
+   have equal CSS specificity, and ours comes later in the file — so
+   without this, `hidden` would never actually hide the overlay. */
+.lightbox[hidden] { display: none; }
+.lightbox:not([hidden]) { display: flex; }
 .lightbox-content { max-width: min(90vw, 1000px); max-height: 85vh; }
 .lightbox-content img, .lightbox-content video {
   max-width: 100%;
