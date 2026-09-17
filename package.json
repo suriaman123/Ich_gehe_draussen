@@ -1,7 +1,7 @@
 {
   "name": "ich-gehe-draussen",
   "private": true,
-  "description": "Ich gehe draußen — a weekly log of going outside, hosted on GitHub Pages.",
+  "description": "Ich gehe draußen — a log of going outside, hosted on GitHub Pages.",
   "scripts": {
     "generate": "node scripts/generate-manifest.js",
     "serve": "python3 -m http.server 8000"

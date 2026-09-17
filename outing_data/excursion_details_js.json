@@ -1,5 +1,37 @@
 [
   {
+    "slug": "soulfood-cosmos",
+    "title": "SoulFood Cosmos",
+    "date": "2026-09-16",
+    "folder": "outing_data/excursion_details/SoulFood-Cosmos_16.09.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "SoulFood (1).jpg",
+      "SoulFood (2).jpg",
+      "SoulFood (3).jpg",
+      "SoulFood (4).jpg",
+      "SoulFood (5).jpg",
+      "SoulFood (6).jpg",
+      "SoulFood (7).jpg",
+      "SoulFood (8).jpg"
+    ],
+    "videos": []
+  },
+  {
+    "slug": "spp-direkt",
+    "title": "SPP Direkt",
+    "date": "2026-09-16",
+    "folder": "outing_data/excursion_details/SPP Direkt_16.09.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "spp direkt (1).jpg",
+      "spp direkt (2).jpg"
+    ],
+    "videos": []
+  },
+  {
     "slug": "museum-night-cosmos",
     "title": "Museum Night Cosmos",
     "date": "2026-09-12",
@@ -7,28 +39,28 @@
     "cover": "cover.jpg",
     "featured": false,
     "photos": [
-      "IMG_20260912_205346054.jpg",
-      "IMG_20260912_214434302.jpg",
-      "IMG_20260912_214438042.jpg",
-      "IMG_20260912_214442263.jpg",
-      "IMG_20260912_214448630.jpg",
-      "IMG_20260912_214503420.jpg",
-      "IMG_20260912_214506906.jpg",
-      "IMG_20260912_214512016.jpg",
-      "IMG_20260912_214529902.jpg",
-      "IMG_20260912_214544564.jpg",
-      "IMG_20260912_214550082.jpg",
-      "IMG_20260912_214554945.jpg",
-      "IMG_20260912_214559539.jpg",
-      "IMG_20260912_214604445.jpg",
-      "IMG_20260912_214611034.jpg",
-      "IMG_20260912_221917046.jpg",
-      "IMG_20260912_225411153.jpg",
-      "IMG_20260912_225856825.jpg",
-      "Snapchat-403987627.jpg"
+      "museum night (1).jpg",
+      "museum night (10).jpg",
+      "museum night (11).jpg",
+      "museum night (12).jpg",
+      "museum night (13).jpg",
+      "museum night (14).jpg",
+      "museum night (15).jpg",
+      "museum night (16).jpg",
+      "museum night (17).jpg",
+      "museum night (18).jpg",
+      "museum night (19).jpg",
+      "museum night (2).jpg",
+      "museum night (3).jpg",
+      "museum night (4).jpg",
+      "museum night (5).jpg",
+      "museum night (6).jpg",
+      "museum night (7).jpg",
+      "museum night (8).jpg",
+      "museum night (9).jpg"
     ],
     "videos": [
-      "Snapchat-985616983.mp4"
+      "museum night (1).mp4"
     ]
   },
   {
@@ -39,24 +71,24 @@
     "cover": "cover.jpg",
     "featured": true,
     "photos": [
-      "IMG_20260911_155747951.jpg",
-      "IMG_20260911_172641031.jpg",
-      "IMG_20260911_172645771.jpg",
-      "IMG_20260911_191141412.jpg",
-      "IMG_20260911_192058128.jpg",
-      "IMG_20260911_192607693.jpg",
-      "IMG_20260911_193629632.jpg",
-      "IMG_20260911_202028838.jpg",
-      "Snapchat-1489631630.jpg",
-      "Snapchat-1755032857.jpg",
-      "Snapchat-1961832892.jpg",
-      "Snapchat-947951559.jpg"
+      "marathon photo (1).jpg",
+      "marathon photo (10).jpg",
+      "marathon photo (11).jpg",
+      "marathon photo (12).jpg",
+      "marathon photo (2).jpg",
+      "marathon photo (3).jpg",
+      "marathon photo (4).jpg",
+      "marathon photo (5).jpg",
+      "marathon photo (6).jpg",
+      "marathon photo (7).jpg",
+      "marathon photo (8).jpg",
+      "marathon photo (9).jpg"
     ],
     "videos": [
-      "Snapchat-1161084624.mp4",
-      "Snapchat-1660537820.mp4",
-      "Snapchat-1766104389.mp4",
-      "Snapchat-2004070895.mp4"
+      "marathon photo (1).mp4",
+      "marathon photo (2).mp4",
+      "marathon photo (3).mp4",
+      "marathon photo (4).mp4"
     ]
   },
   {
@@ -64,13 +96,13 @@
     "title": "Creapolis Community Area Makeover",
     "date": "2026-09-10",
     "folder": "outing_data/excursion_details/Creapolis_Community_Area_Makeover_10.09.2026",
-    "cover": "IMG_20260910_160545725.jpg",
+    "cover": "cover.jpg",
     "featured": false,
     "photos": [
-      "IMG_20260910_161651723.jpg",
-      "IMG_20260910_192811403.jpg",
-      "IMG_20260910_193331190.jpg",
-      "IMG_20260912_173123899.jpg"
+      "creapolis (1).jpg",
+      "creapolis (3).jpg",
+      "creapolis (4).jpg",
+      "creapolis (5).jpg"
     ],
     "videos": []
   }

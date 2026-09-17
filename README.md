@@ -2,7 +2,7 @@
 
 A log of me going outside — one folder per outing, rendered as a trail of waypoints.
 
-**Live site:** `https://suriaman123.github.io/Ichgehedraußen/` 
+**Live site:** `https://suriaman123.github.io/Ich_gehe_draussen/#/` 
 
 
 ## How it works
@@ -22,7 +22,7 @@ AmanOutside/
 ├── outing_data/
 │   └── excursion_details_js.json        # the manifest — one entry per outing
 └── excursion_details/
-    └── 5k-marathon_2024-09-01/
+    └── 5k-marathon_2026-09-01/
         ├── cover.svg                    # the outing's display photo (any image name works)
         ├── README.md                    # notes, rendered on the detail page
         ├── photo2.jpg

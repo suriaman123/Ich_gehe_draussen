@@ -2,7 +2,7 @@
 
 **11.09.2026**
 
-The **FirmenLauf** is an annual run organised by Neue Presse. Around **2,000 people** showed up this year, and it was less like a serious running event and more like a huge community gathering. People from all over Coburg came together to run, walk, eat, dance, and just have a good time.
+The **FirmenLauf** `https://www.neue-presse-firmenlauf.de` is an annual run organised by Neue Presse. Around **2,000 people** showed up this year, and it was less like a serious running event and more like a huge community gathering. People from all over Coburg came together to run, walk, eat, dance, and just have a good time.
 
 I went with **Utkarsh and Prince**, who actually ran the entire 5K and finished in around **35 minutes**. I, on the other hand, decided that walking was a much more realistic goal for me. It took me about **an hour**, but hey — I finished!
 
