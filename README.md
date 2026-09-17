@@ -2,7 +2,7 @@
 
 A log of me going outside — one folder per outing, rendered as a trail of waypoints.
 
-**Live site:** `https://suriaman123.github.io/Ich_gehe_draussen/#/` 
+**Live site:** https://suriaman123.github.io/Ich_gehe_draussen/#/
 
 
 ## How it works

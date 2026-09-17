@@ -65,7 +65,18 @@
     </section>
 
     <section class="trail-section">
-      <h2 class="section-label">Full log</h2>
+      <div class="log-heading">
+        <h2 class="section-label">Full log</h2>
+        <div class="log-controls">
+          <div class="log-search">
+            <input type="search" id="log-search" placeholder="Search outings…" aria-label="Search outings by title">
+          </div>
+          <div class="view-toggle" role="group" aria-label="Choose how the log is displayed">
+            <button class="view-btn" data-view="trail" aria-pressed="true">Trail</button>
+            <button class="view-btn" data-view="grid" aria-pressed="false">Grid</button>
+          </div>
+        </div>
+      </div>
       <div class="trail" id="trail">
         <p class="loading-state">Loading the trail…</p>
       </div>

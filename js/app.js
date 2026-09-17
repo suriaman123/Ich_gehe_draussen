@@ -26,7 +26,8 @@ const els = {
   statSince: document.getElementById("stat-since"),
   statLatest: document.getElementById("stat-latest"),
   backLink: document.getElementById("back-link"),
-  detailCover: document.getElementById("detail-cover"),
+  logSearch: document.getElementById("log-search"),
+  viewButtons: document.querySelectorAll(".view-btn"),  detailCover: document.getElementById("detail-cover"),
   detailDate: document.getElementById("detail-date"),
   detailTitle: document.getElementById("detail-title"),
   detailReadme: document.getElementById("detail-readme"),
@@ -38,6 +39,8 @@ const els = {
 };
 
 let EVENTS = [];
+let searchQuery = "";
+let viewMode = "trail";
 
 /** Formats an ISO date ("2024-09-01") as "01 SEP 2024". */
 function formatDate(iso) {
@@ -78,7 +81,9 @@ function coverUrl(ev) {
 
 function renderTrail(events) {
   if (!events.length) {
-    els.trail.innerHTML = `<p class="loading-state">No outings logged yet — run the generator after adding your first one.</p>`;
+    els.trail.innerHTML = searchQuery
+      ? `<p class="loading-state">No outings match "${searchQuery}".</p>`
+      : `<p class="loading-state">No outings logged yet — run the generator after adding your first one.</p>`;
     return;
   }
   els.trail.innerHTML = "";
@@ -300,6 +305,30 @@ function showView(name) {
   els.empty.hidden = name !== "empty";
 }
 
+els.backLink.addEventListener("click", () => {
+  window.location.hash = "#/";
+});
+
+/** ---- Search + view toggle for the Full log section ---- */
+function getFilteredEvents() {
+  if (!searchQuery) return EVENTS;
+  const q = searchQuery.toLowerCase();
+  return EVENTS.filter((ev) => ev.title.toLowerCase().includes(q));
+}
+
+els.logSearch.addEventListener("input", (e) => {
+  searchQuery = e.target.value.trim();
+  renderTrail(getFilteredEvents());
+});
+
+els.viewButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    viewMode = btn.dataset.view;
+    els.viewButtons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+    els.trail.classList.toggle("is-grid", viewMode === "grid");
+  });
+});
+
 async function route() {
   const hash = window.location.hash;
   const match = hash.match(/^#\/event\/(.+)$/);
@@ -313,7 +342,8 @@ async function route() {
   } else {
     renderStats(EVENTS);
     renderFeatured(EVENTS);
-    renderTrail(EVENTS);
+    renderTrail(getFilteredEvents());
+    els.trail.classList.toggle("is-grid", viewMode === "grid");
     document.title = "Ich gehe draußen — a log of going out";
     showView("home");
   }

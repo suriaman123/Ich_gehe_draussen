@@ -321,6 +321,65 @@ button { font-family: inherit; cursor: pointer; }
 /* ---- The Trail ---- */
 .trail-section { position: relative; }
 
+.log-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.6rem;
+  margin-bottom: 2rem;
+}
+.log-heading .section-label { border: none; padding: 0; margin: 0; }
+
+.log-controls {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.log-search input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  width: 180px;
+  transition: border-color 0.2s ease, width 0.2s ease;
+}
+.log-search input:focus { border-color: var(--accent); width: 220px; }
+.log-search input::placeholder { color: var(--text-muted); }
+/* Removes the default OS "clear" (x) button so it doesn't clash with the
+   pill shape — search fields still clear normally by selecting + deleting. */
+.log-search input::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+.view-toggle {
+  display: flex;
+  padding: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+}
+.view-btn {
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  min-height: 32px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.view-btn[aria-pressed="true"] {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
 .trail {
   position: relative;
   padding: 1rem 0;
@@ -395,7 +454,41 @@ button { font-family: inherit; cursor: pointer; }
   font-weight: 600;
   margin: 0;
   letter-spacing: -0.01em;
+  display: block;
 }
+/* Explicit on both sides rather than relying on the browser's default
+   text-align, so the left/right mirroring can't be affected by any
+   inherited or otherwise-specified alignment elsewhere. */
+@media (min-width: 780px) {
+  .trail-node:nth-child(even) .trail-card { text-align: left; }
+}
+
+/* ---- Grid view (alternative to the trail timeline) ---- */
+.trail.is-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.75rem 1.25rem;
+  padding: 0.5rem 0;
+}
+.trail.is-grid::before { display: none; }
+.trail.is-grid .trail-node {
+  grid-template-columns: 1fr !important;
+  gap: 0.75rem;
+  padding: 0;
+  align-items: stretch;
+}
+.trail.is-grid .trail-marker {
+  width: 100%;
+  height: 150px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  grid-column: 1 !important;
+}
+.trail.is-grid .trail-card {
+  grid-column: 1 !important;
+  text-align: left !important;
+}
+.trail.is-grid .trail-spacer { display: none; }
 
 /* ---- Detail view ---- */
 .back-link {
@@ -448,7 +541,12 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--text);
 }
 .detail-readme h1, .detail-readme h2, .detail-readme h3 { font-family: var(--font-display); }
-.detail-readme p { color: var(--text); }
+.detail-readme p {
+  color: var(--text);
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
 .detail-readme a { color: var(--accent-text); text-decoration-thickness: 1px; text-underline-offset: 2px; }
 .detail-readme blockquote {
   border-left: 3px solid var(--accent);
