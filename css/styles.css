@@ -409,17 +409,38 @@ button { font-family: inherit; cursor: pointer; }
   text-decoration: none;
   color: inherit;
 }
+/* Desktop: the marker and the card are each independently centered on the
+   node's own vertical midpoint using the identical `top: 50%; transform:
+   translateY(-50%)` technique. Because both use the exact same centering
+   math against the exact same reference point, they cannot end up at
+   different heights — this replaces an earlier 3-column CSS Grid
+   approach where the two sides could drift apart under real content. */
 @media (min-width: 780px) {
   .trail-node {
-    grid-template-columns: 1fr 112px 1fr;
-    gap: 2rem;
+    display: block;
+    min-height: 112px;
   }
-  .trail-node:nth-child(odd) .trail-card { grid-column: 1; text-align: right; }
-  .trail-node:nth-child(odd) .trail-marker { grid-column: 2; }
-  .trail-node:nth-child(odd) .trail-spacer { grid-column: 3; }
-  .trail-node:nth-child(even) .trail-card { grid-column: 3; }
-  .trail-node:nth-child(even) .trail-marker { grid-column: 2; }
-  .trail-node:nth-child(even) .trail-spacer { grid-column: 1; }
+  .trail-marker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .trail-card {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: calc(50% - 56px - 2rem);
+  }
+  .trail-node:nth-child(odd) .trail-card {
+    right: calc(50% + 56px + 2rem);
+    text-align: right;
+  }
+  .trail-node:nth-child(even) .trail-card {
+    left: calc(50% + 56px + 2rem);
+    text-align: left;
+  }
+  .trail-spacer { display: none; }
 }
 
 .trail-marker {
@@ -456,12 +477,6 @@ button { font-family: inherit; cursor: pointer; }
   letter-spacing: -0.01em;
   display: block;
 }
-/* Explicit on both sides rather than relying on the browser's default
-   text-align, so the left/right mirroring can't be affected by any
-   inherited or otherwise-specified alignment elsewhere. */
-@media (min-width: 780px) {
-  .trail-node:nth-child(even) .trail-card { text-align: left; }
-}
 
 /* ---- Grid view (alternative to the trail timeline) ---- */
 .trail.is-grid {
@@ -472,12 +487,19 @@ button { font-family: inherit; cursor: pointer; }
 }
 .trail.is-grid::before { display: none; }
 .trail.is-grid .trail-node {
+  display: grid !important;
+  position: relative !important;
+  min-height: 0 !important;
   grid-template-columns: 1fr !important;
   gap: 0.75rem;
   padding: 0;
   align-items: stretch;
 }
 .trail.is-grid .trail-marker {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
   width: 100%;
   height: 150px;
   border-radius: var(--radius);
@@ -485,6 +507,12 @@ button { font-family: inherit; cursor: pointer; }
   grid-column: 1 !important;
 }
 .trail.is-grid .trail-card {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: auto !important;
   grid-column: 1 !important;
   text-align: left !important;
 }
