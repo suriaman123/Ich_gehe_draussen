@@ -1,9 +1,9 @@
 [
   {
-    "slug": "cosmos-tour",
-    "title": "Cosmos Tour",
+    "slug": "creapolis-tour",
+    "title": "Creapolis Tour",
     "date": "2026-09-17",
-    "folder": "outing_data/excursion_details/Cosmos Tour_17.09.2026",
+    "folder": "outing_data/excursion_details/Creapolis Tour_17.09.2026",
     "cover": "cover.jpg",
     "featured": false,
     "photos": [
@@ -20,7 +20,13 @@
       "IMG_20260917_190139538.jpg",
       "IMG_20260917_192913325.jpg"
     ],
-    "videos": []
+    "videos": [],
+    "location": {
+      "lat": 50.2534978,
+      "lng": 10.9596264,
+      "label": "Schlachthofstraße 1, 96450 Coburg"
+    },
+    "locationQuery": "Schlachthofstraße 1, 96450 Coburg"
   },
   {
     "slug": "soulfood-cosmos",

@@ -1,5 +1,5 @@
 # A Tour of Creapolis
-
+Location: Schlachthofstraße 1, 96450 Coburg
 **17.09.2026**
 
 I reached Creapolis just before **6 PM**. As Florian had told me the week before, he wasn't there today.I also tried looking for the nice guy who had made the sour eggs the previous week, but he wasn't there either. I sat outside for a while, mostly on my phone, and was just about to leave when I saw him arriving on a bicycle.

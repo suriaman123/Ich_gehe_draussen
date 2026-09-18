@@ -1,6 +1,7 @@
 # Creapolis Community Area Makeover
 
 ## 10.09.2026
+Location: 50.253764547947256, 10.959483435297669
 
 I left home around 3:30 PM, hoping to reach Creapolis by 4:00. Somehow, I managed to get lost and ended up walking for an extra 40 minutes before finally making it there. Not exactly the smoothest start to the day.
 

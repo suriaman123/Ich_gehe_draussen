@@ -27,7 +27,9 @@ const els = {
   statLatest: document.getElementById("stat-latest"),
   backLink: document.getElementById("back-link"),
   logSearch: document.getElementById("log-search"),
-  viewButtons: document.querySelectorAll(".view-btn"),  detailCover: document.getElementById("detail-cover"),
+  viewButtons: document.querySelectorAll(".view-btn"),
+  logMap: document.getElementById("log-map"),
+  detailCover: document.getElementById("detail-cover"),
   detailDate: document.getElementById("detail-date"),
   detailTitle: document.getElementById("detail-title"),
   detailReadme: document.getElementById("detail-readme"),
@@ -36,6 +38,9 @@ const els = {
   lightbox: document.getElementById("lightbox"),
   lightboxContent: document.getElementById("lightbox-content"),
   lightboxClose: document.getElementById("lightbox-close"),
+  lightboxPrev: document.getElementById("lightbox-prev"),
+  lightboxNext: document.getElementById("lightbox-next"),
+  lightboxCounter: document.getElementById("lightbox-counter"),
 };
 
 let EVENTS = [];
@@ -227,13 +232,25 @@ async function renderDetail(slug) {
   const media = [...(ev.photos || []), ...(ev.videos || [])];
   els.mediaLabel.textContent = media.length ? "Moments" : "";
   const total = media.length;
-  els.mediaGrid.innerHTML = media
-    .map((file, i) => {
-      const url = encodePath(`${ev.folder}/${file}`);
-      if (isVideo(file)) {
-        return `<button class="media-item is-video" data-url="${url}" data-type="video" aria-label="Play video, ${i + 1} of ${total}, from ${ev.title}"><video src="${url}" muted></video></button>`;
+
+  // Built once here and reused by the lightbox's prev/next navigation,
+  // so opening any thumbnail knows the full ordered list it belongs to.
+  currentGallery = media.map((file, i) => {
+    const url = encodePath(`${ev.folder}/${file}`);
+    const type = isVideo(file) ? "video" : "image";
+    const label =
+      type === "video"
+        ? `Video, ${i + 1} of ${total}, from ${ev.title}`
+        : `Photo, ${i + 1} of ${total}, from ${ev.title}`;
+    return { url, type, label };
+  });
+
+  els.mediaGrid.innerHTML = currentGallery
+    .map(({ url, type, label }, i) => {
+      if (type === "video") {
+        return `<button class="media-item is-video" data-index="${i}" aria-label="Play ${label}"><video src="${url}" muted></video></button>`;
       }
-      return `<button class="media-item" data-url="${url}" data-type="image" aria-label="View photo, ${i + 1} of ${total}, from ${ev.title}"><img src="${url}" alt="" loading="lazy"></button>`;
+      return `<button class="media-item" data-index="${i}" aria-label="View ${label}"><img src="${url}" alt="" loading="lazy"></button>`;
     })
     .join("");
 
@@ -243,26 +260,51 @@ async function renderDetail(slug) {
 
 /** ---- Lightbox ---- */
 let lightboxTrigger = null; // the thumbnail that opened the lightbox, so focus can return to it
+let currentGallery = []; // the current outing's media, in display order
+let currentIndex = -1; // index within currentGallery of what's showing now
 
-document.addEventListener("click", (e) => {
-  const item = e.target.closest(".media-item");
-  if (!item) return;
-  const { url, type } = item.dataset;
-  const label = item.getAttribute("aria-label") || "";
-  lightboxTrigger = item;
+function renderLightboxAt(index) {
+  if (!currentGallery.length) return;
+  // Wrap around at either end rather than dead-ending the arrows.
+  currentIndex = (index + currentGallery.length) % currentGallery.length;
+  const { url, type, label } = currentGallery[currentIndex];
+
   els.lightboxContent.innerHTML =
     type === "video"
       ? `<video src="${url}" controls autoplay aria-label="${label}"></video>`
       : `<img src="${url}" alt="${label}">`;
+
+  els.lightboxCounter.textContent =
+    currentGallery.length > 1 ? `${currentIndex + 1} / ${currentGallery.length}` : "";
+  const showArrows = currentGallery.length > 1;
+  els.lightboxPrev.hidden = !showArrows;
+  els.lightboxNext.hidden = !showArrows;
+}
+
+document.addEventListener("click", (e) => {
+  const item = e.target.closest(".media-item");
+  if (!item) return;
+  lightboxTrigger = item;
   els.lightbox.hidden = false;
+  renderLightboxAt(Number(item.dataset.index));
   // Move focus into the overlay so keyboard/screen-reader users land
   // somewhere sensible rather than staying "under" the now-hidden page.
   els.lightboxClose.focus();
 });
 
+els.lightboxPrev.addEventListener("click", (e) => {
+  e.stopPropagation();
+  renderLightboxAt(currentIndex - 1);
+});
+els.lightboxNext.addEventListener("click", (e) => {
+  e.stopPropagation();
+  renderLightboxAt(currentIndex + 1);
+});
+
 function closeLightbox() {
   els.lightbox.hidden = true;
   els.lightboxContent.innerHTML = "";
+  currentIndex = -1;
   // Return focus to whatever thumbnail opened this, so keyboard users
   // don't lose their place in the media grid.
   if (lightboxTrigger) {
@@ -275,16 +317,19 @@ els.lightbox.addEventListener("click", (e) => {
   if (e.target === els.lightbox) closeLightbox();
 });
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !els.lightbox.hidden) closeLightbox();
+  if (els.lightbox.hidden) return;
+  if (e.key === "Escape") closeLightbox();
+  if (e.key === "ArrowRight") renderLightboxAt(currentIndex + 1);
+  if (e.key === "ArrowLeft") renderLightboxAt(currentIndex - 1);
 });
 
 // Basic focus trap: while the lightbox is open, Tab should cycle only
-// between elements inside it (the close button and, for videos, the
+// between elements inside it (close/prev/next and, for videos, the
 // native player controls) rather than escaping into the hidden page.
 els.lightbox.addEventListener("keydown", (e) => {
   if (e.key !== "Tab") return;
   const focusable = els.lightbox.querySelectorAll(
-    "button, video, [href], [tabindex]:not([tabindex='-1'])"
+    "button:not([hidden]), video, [href], [tabindex]:not([tabindex='-1'])"
   );
   if (!focusable.length) return;
   const first = focusable[0];
@@ -319,15 +364,74 @@ function getFilteredEvents() {
 els.logSearch.addEventListener("input", (e) => {
   searchQuery = e.target.value.trim();
   renderTrail(getFilteredEvents());
+  if (viewMode === "map") renderMap(getFilteredEvents());
 });
+
+function applyViewMode() {
+  els.trail.hidden = viewMode === "map";
+  els.logMap.hidden = viewMode !== "map";
+  els.trail.classList.toggle("is-grid", viewMode === "grid");
+  if (viewMode === "map") renderMap(getFilteredEvents());
+}
 
 els.viewButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
     viewMode = btn.dataset.view;
     els.viewButtons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
-    els.trail.classList.toggle("is-grid", viewMode === "grid");
+    applyViewMode();
   });
 });
+
+/** ---- Map view (Leaflet + OpenStreetMap tiles) ---- */
+let leafletMap = null;
+let leafletMarkerLayer = null;
+
+function renderMap(events) {
+  const located = events.filter((ev) => ev.location);
+
+  if (!located.length) {
+    els.logMap.innerHTML = `<p class="map-empty-state">No outings have a location yet — add a location.txt to an outing's folder and re-run the generator.</p>`;
+    leafletMap = null; // the container was just replaced with plain text; force re-init next time
+    return;
+  }
+
+  // The map only needs to be constructed once; after that we just clear
+  // and re-add markers. Leaflet requires the container to already be
+  // visible in the DOM at init time, which it is by the time this runs
+  // (applyViewMode un-hides #log-map before calling this).
+  if (!leafletMap) {
+    els.logMap.innerHTML = "";
+    leafletMap = L.map(els.logMap, { scrollWheelZoom: false });
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 18,
+    }).addTo(leafletMap);
+    leafletMarkerLayer = L.layerGroup().addTo(leafletMap);
+  } else {
+    leafletMarkerLayer.clearLayers();
+  }
+
+  const bounds = [];
+  located.forEach((ev) => {
+    const { lat, lng } = ev.location;
+    bounds.push([lat, lng]);
+    const marker = L.marker([lat, lng]);
+    marker.bindPopup(
+      `<a class="map-popup" href="#/event/${ev.slug}">
+         <img src="${coverUrl(ev)}" alt="">
+         <span class="trail-date">${formatDate(ev.date)}</span>
+         <span class="trail-title">${ev.title}</span>
+       </a>`
+    );
+    marker.addTo(leafletMarkerLayer);
+  });
+
+  leafletMap.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
+  // The map was just un-hidden, and Leaflet miscalculates its own size
+  // if it initializes (or was last touched) while its container had
+  // display:none — this forces it to recheck now that it's visible.
+  requestAnimationFrame(() => leafletMap.invalidateSize());
+}
 
 async function route() {
   const hash = window.location.hash;
@@ -343,7 +447,7 @@ async function route() {
     renderStats(EVENTS);
     renderFeatured(EVENTS);
     renderTrail(getFilteredEvents());
-    els.trail.classList.toggle("is-grid", viewMode === "grid");
+    applyViewMode();
     document.title = "Ich gehe draußen — a log of going out";
     showView("home");
   }

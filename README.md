@@ -41,6 +41,14 @@ it scans every folder in `excursion_details/`, works out the title and date from
 
 **Folder naming pattern:**eiht `<Title>_<DD.MM.YYYY>`- e.g. `excursion_details/Sunset Hike_02.11.2024/`, or  `<Title>_<YYYY-MM-DD>` works. The script is strict about `<Title>_<Date>` so it can reliably extract both pieces. If a folder doesn't match, it's skipped with a warning printed to the terminal — nothing breaks, that folder just won't appear on the site yet.
 
+**Location:**To give the excursion a map pin, put a line starting with `Location:` right after the title.
+
+   ```
+   # 5K Marathon
+   Location: Schützenstraße 1A, 96450 Coburg-Ketschendorf
+   ```
+   A plain address is looked up automatically via OpenStreetMap's free Nominatim service (no API key needed). You can also type raw coordinates directly (`Location: 50.2643, 10.9622`) to skip the lookup entirely. No `Location:` line means no map pin for that outing — nothing breaks. (An old-style `location.txt` file in the folder, formatted as `lat,lng` or `lat,lng,Label`, still works too and takes priority if both are present.)
+
 **Cover photo:** Name the  chosen cover/profile photo so it starts with `cover`, `profile`, or `display` (e.g. `cover.jpg`) — the script finds it automatically. If nothing matches, it just uses the first image alphabetically. 
 
 **Marking something as a highlight:** open `excursion_details.json` and flip that outing's `"featured"` to `true`.

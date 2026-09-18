@@ -21,6 +21,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 </head>
 <body>
 
@@ -74,12 +75,14 @@
           <div class="view-toggle" role="group" aria-label="Choose how the log is displayed">
             <button class="view-btn" data-view="trail" aria-pressed="true">Trail</button>
             <button class="view-btn" data-view="grid" aria-pressed="false">Grid</button>
+            <button class="view-btn" data-view="map" aria-pressed="false">Map</button>
           </div>
         </div>
       </div>
       <div class="trail" id="trail">
         <p class="loading-state">Loading the trail…</p>
       </div>
+      <div class="log-map" id="log-map" hidden></div>
     </section>
   </div>
 
@@ -113,7 +116,10 @@
 
 <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Media viewer">
   <button class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
+  <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous" hidden>‹</button>
+  <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next" hidden>›</button>
   <div class="lightbox-content" id="lightbox-content"></div>
+  <p class="lightbox-counter" id="lightbox-counter" aria-live="polite"></p>
 </div>
 
 <footer class="site-footer">
@@ -121,6 +127,7 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/app.js"></script>
 </body>
