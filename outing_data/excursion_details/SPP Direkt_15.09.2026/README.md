@@ -1,6 +1,6 @@
 # The Job Interview I Didn't Know I Had
 
-**16.09.2026**
+**15.09.2026**
 
 Yesterday, I got a phone call from a lady speaking German. I understood absolutely nothing. After a few seconds of confusion, I finally said, *“Ich spreche nicht Deutsch.”* She immediately switched to English and said, **“You applied for a job. Is tomorrow at 12 PM okay?”** I was like, *sure, I guess?* I asked her to send me the precise address, because I had applied to quite a few jobs randomly and honestly had no idea who she was or which job she was talking about.
 

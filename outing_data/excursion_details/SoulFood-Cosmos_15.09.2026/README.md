@@ -1,6 +1,6 @@
 # SoulFood at Cosmos
 
-**19.09.2026**
+**15.09.2026**
 
 Last Saturday, Ali told me about something called **SoulFood**. The idea is pretty simple: people come together, discuss what they want to cook, go buy the ingredients, and then cook and eat together.The week before, they had made pancakes, which caught my attention because I've been wanting to try making pancakes myself for quite a while. So when I heard about SoulFood, I really wanted to go.
 

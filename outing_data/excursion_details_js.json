@@ -1,9 +1,32 @@
 [
   {
+    "slug": "cosmos-tour",
+    "title": "Cosmos Tour",
+    "date": "2026-09-17",
+    "folder": "outing_data/excursion_details/Cosmos Tour_17.09.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "IMG_20260917_181543567.jpg",
+      "IMG_20260917_181547987.jpg",
+      "IMG_20260917_182615243.jpg",
+      "IMG_20260917_182726408.jpg",
+      "IMG_20260917_184254171.jpg",
+      "IMG_20260917_184301469.jpg",
+      "IMG_20260917_184415104.jpg",
+      "IMG_20260917_184524173.jpg",
+      "IMG_20260917_185616291.jpg",
+      "IMG_20260917_185619429.jpg",
+      "IMG_20260917_190139538.jpg",
+      "IMG_20260917_192913325.jpg"
+    ],
+    "videos": []
+  },
+  {
     "slug": "soulfood-cosmos",
     "title": "SoulFood Cosmos",
-    "date": "2026-09-16",
-    "folder": "outing_data/excursion_details/SoulFood-Cosmos_16.09.2026",
+    "date": "2026-09-15",
+    "folder": "outing_data/excursion_details/SoulFood-Cosmos_15.09.2026",
     "cover": "cover.jpg",
     "featured": false,
     "photos": [
@@ -21,8 +44,8 @@
   {
     "slug": "spp-direkt",
     "title": "SPP Direkt",
-    "date": "2026-09-16",
-    "folder": "outing_data/excursion_details/SPP Direkt_16.09.2026",
+    "date": "2026-09-15",
+    "folder": "outing_data/excursion_details/SPP Direkt_15.09.2026",
     "cover": "cover.jpg",
     "featured": false,
     "photos": [
