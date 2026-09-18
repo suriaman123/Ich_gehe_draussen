@@ -1,7 +1,8 @@
 # Creapolis Community Area Makeover
+Location: Schlachthofstraße 1, 96450 Coburg
 
 ## 10.09.2026
-Location: Schlachthofstraße 1, 96450 Coburg
+
 
 I left home around 3:30 PM, hoping to reach Creapolis by 4:00. Somehow, I managed to get lost and ended up walking for an extra 40 minutes before finally making it there. Not exactly the smoothest start to the day.
 

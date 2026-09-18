@@ -45,7 +45,12 @@
       "SoulFood (7).jpg",
       "SoulFood (8).jpg"
     ],
-    "videos": []
+    "videos": [],
+    "location": {
+      "lat": 50.25440323060424,
+      "lng": 10.96360184754839
+    },
+    "locationQuery": "50.25440323060424, 10.96360184754839"
   },
   {
     "slug": "spp-direkt",
@@ -90,7 +95,12 @@
     ],
     "videos": [
       "museum night (1).mp4"
-    ]
+    ],
+    "location": {
+      "lat": 50.25451860754015,
+      "lng": 10.96361659374308
+    },
+    "locationQuery": "50.25451860754015, 10.96361659374308"
   },
   {
     "slug": "5k-marathon",
@@ -133,6 +143,12 @@
       "creapolis (4).jpg",
       "creapolis (5).jpg"
     ],
-    "videos": []
+    "videos": [],
+    "location": {
+      "lat": 50.2534978,
+      "lng": 10.9596264,
+      "label": "Schlachthofstraße 1, 96450 Coburg"
+    },
+    "locationQuery": "Schlachthofstraße 1, 96450 Coburg"
   }
 ]
