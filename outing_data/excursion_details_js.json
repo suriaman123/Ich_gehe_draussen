@@ -1,24 +1,18 @@
 [
   {
-    "slug": "creapolis-tour",
-    "title": "Creapolis Tour",
-    "date": "2026-09-17",
-    "folder": "outing_data/excursion_details/Creapolis Tour_17.09.2026",
+    "slug": "making-mobile-workstation-day-2",
+    "title": "Making Mobile Workstation Day 2",
+    "date": "2026-09-24",
+    "folder": "outing_data/excursion_details/Making Mobile Workstation Day 2_24.09.2026",
     "cover": "cover.jpg",
     "featured": false,
     "photos": [
-      "IMG_20260917_181543567.jpg",
-      "IMG_20260917_181547987.jpg",
-      "IMG_20260917_182615243.jpg",
-      "IMG_20260917_182726408.jpg",
-      "IMG_20260917_184254171.jpg",
-      "IMG_20260917_184301469.jpg",
-      "IMG_20260917_184415104.jpg",
-      "IMG_20260917_184524173.jpg",
-      "IMG_20260917_185616291.jpg",
-      "IMG_20260917_185619429.jpg",
-      "IMG_20260917_190139538.jpg",
-      "IMG_20260917_192913325.jpg"
+      "photo (1).jpg",
+      "photo (2).jpg",
+      "photo (3).jpg",
+      "photo (4).jpg",
+      "photo (5).jpg",
+      "photo (6).jpg"
     ],
     "videos": [],
     "location": {
@@ -27,6 +21,49 @@
       "label": "Schlachthofstraße 1, 96450 Coburg"
     },
     "locationQuery": "Schlachthofstraße 1, 96450 Coburg"
+  },
+  {
+    "slug": "soulfood-ii",
+    "title": "SoulFood II",
+    "date": "2026-09-22",
+    "folder": "outing_data/excursion_details/SoulFood II_22.09.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "photo (1).jpg",
+      "photo (2).jpg",
+      "photo (4).jpg"
+    ],
+    "videos": [],
+    "location": {
+      "lat": 50.25440323060424,
+      "lng": 10.96360184754839
+    },
+    "locationQuery": "50.25440323060424, 10.96360184754839"
+  },
+  {
+    "slug": "creapolis-tour",
+    "title": "Creapolis Tour",
+    "date": "2026-09-17",
+    "folder": "outing_data/excursion_details/Creapolis Tour_17.09.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "photo (1).jpg",
+      "photo (10).jpg",
+      "photo (11).jpg",
+      "photo (12).jpg",
+      "photo (13).jpg",
+      "photo (2).jpg",
+      "photo (3).jpg",
+      "photo (4).jpg",
+      "photo (5).jpg",
+      "photo (6).jpg",
+      "photo (7).jpg",
+      "photo (8).jpg",
+      "photo (9).jpg"
+    ],
+    "videos": []
   },
   {
     "slug": "soulfood-cosmos",
@@ -143,12 +180,6 @@
       "creapolis (4).jpg",
       "creapolis (5).jpg"
     ],
-    "videos": [],
-    "location": {
-      "lat": 50.2534978,
-      "lng": 10.9596264,
-      "label": "Schlachthofstraße 1, 96450 Coburg"
-    },
-    "locationQuery": "Schlachthofstraße 1, 96450 Coburg"
+    "videos": []
   }
 ]
