@@ -1,4 +1,6 @@
 # 5K FirmenLauf
+Location: Sportplatz Gemünda, 96145 Seßlach
+
 
 **11.09.2026**
 

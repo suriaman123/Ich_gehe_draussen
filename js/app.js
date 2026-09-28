@@ -27,6 +27,7 @@ const els = {
   statLatest: document.getElementById("stat-latest"),
   backLink: document.getElementById("back-link"),
   logSearch: document.getElementById("log-search"),
+  logSearchClear: document.getElementById("log-search-clear"),
   viewButtons: document.querySelectorAll(".view-btn"),
   logMap: document.getElementById("log-map"),
   detailCover: document.getElementById("detail-cover"),
@@ -355,16 +356,38 @@ els.backLink.addEventListener("click", () => {
 });
 
 /** ---- Search + view toggle for the Full log section ---- */
+
+/** Text a search should be able to match for a given outing: title plus
+ *  any location text we have, whether or not it successfully geocoded. */
+function searchableText(ev) {
+  const parts = [ev.title, ev.locationQuery, ev.location && ev.location.label];
+  return parts.filter(Boolean).join(" ").toLowerCase();
+}
+
 function getFilteredEvents() {
   if (!searchQuery) return EVENTS;
   const q = searchQuery.toLowerCase();
-  return EVENTS.filter((ev) => ev.title.toLowerCase().includes(q));
+  return EVENTS.filter((ev) => searchableText(ev).includes(q));
+}
+
+function updateSearchClearButton() {
+  els.logSearchClear.hidden = !searchQuery;
 }
 
 els.logSearch.addEventListener("input", (e) => {
   searchQuery = e.target.value.trim();
+  updateSearchClearButton();
   renderTrail(getFilteredEvents());
   if (viewMode === "map") renderMap(getFilteredEvents());
+});
+
+els.logSearchClear.addEventListener("click", () => {
+  searchQuery = "";
+  els.logSearch.value = "";
+  updateSearchClearButton();
+  renderTrail(getFilteredEvents());
+  if (viewMode === "map") renderMap(getFilteredEvents());
+  els.logSearch.focus();
 });
 
 function applyViewMode() {
@@ -386,11 +409,47 @@ els.viewButtons.forEach((btn) => {
 let leafletMap = null;
 let leafletMarkerLayer = null;
 
+/** Groups outings by (rounded) coordinates, so multiple outings at the
+ *  same spot share one marker instead of stacking invisibly on top of
+ *  each other — Leaflet only shows/click-through the last marker added
+ *  at an identical position otherwise. */
+function groupByLocation(events) {
+  const groups = new Map();
+  events.forEach((ev) => {
+    if (!ev.location) return;
+    const key = `${ev.location.lat.toFixed(5)},${ev.location.lng.toFixed(5)}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(ev);
+  });
+  return groups;
+}
+
+function popupHtmlFor(group) {
+  if (group.length === 1) {
+    const ev = group[0];
+    return `<a class="map-popup" href="#/event/${ev.slug}">
+      <img src="${coverUrl(ev)}" alt="">
+      <span class="trail-date">${formatDate(ev.date)}</span>
+      <span class="trail-title">${ev.title}</span>
+    </a>`;
+  }
+  const items = group
+    .map(
+      (ev) => `<li><a class="map-popup" href="#/event/${ev.slug}">
+        <img src="${coverUrl(ev)}" alt="">
+        <span class="trail-date">${formatDate(ev.date)}</span>
+        <span class="trail-title">${ev.title}</span>
+      </a></li>`
+    )
+    .join("");
+  return `<span class="map-popup-count">${group.length} outings here</span><ul class="map-popup-list">${items}</ul>`;
+}
+
 function renderMap(events) {
   const located = events.filter((ev) => ev.location);
 
   if (!located.length) {
-    els.logMap.innerHTML = `<p class="map-empty-state">No outings have a location yet — add a location.txt to an outing's folder and re-run the generator.</p>`;
+    els.logMap.innerHTML = `<p class="map-empty-state">No outings have a location yet — add a "Location:" line under the title in an outing's README.md and re-run the generator.</p>`;
     leafletMap = null; // the container was just replaced with plain text; force re-init next time
     return;
   }
@@ -411,18 +470,14 @@ function renderMap(events) {
     leafletMarkerLayer.clearLayers();
   }
 
+  const groups = groupByLocation(located);
   const bounds = [];
-  located.forEach((ev) => {
-    const { lat, lng } = ev.location;
+
+  groups.forEach((group) => {
+    const { lat, lng } = group[0].location;
     bounds.push([lat, lng]);
     const marker = L.marker([lat, lng]);
-    marker.bindPopup(
-      `<a class="map-popup" href="#/event/${ev.slug}">
-         <img src="${coverUrl(ev)}" alt="">
-         <span class="trail-date">${formatDate(ev.date)}</span>
-         <span class="trail-title">${ev.title}</span>
-       </a>`
-    );
+    marker.bindPopup(popupHtmlFor(group));
     marker.addTo(leafletMarkerLayer);
   });
 

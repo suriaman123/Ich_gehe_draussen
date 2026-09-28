@@ -1,5 +1,6 @@
 # Creapolis Mobile Workstation — Day 2
 Location: Schlachthofstraße 1, 96450 Coburg
+<!-- 24.09.2026 -->
 
 I left home around **3:45 PM**. The next bus was in about 10 minutes, so instead of waiting, I decided to walk. And, of course, I almost took the wrong road again. Eventually, I made it to Creapolis, where Florian and two other volunteers were already there. Florian had already cut the countertops down to roughly the same size, so our job for the day was to get them properly finished. One of the volunteers and I worked on **chamfering and sanding the countertops**, while the other volunteer was sanding the wooden legs.
 

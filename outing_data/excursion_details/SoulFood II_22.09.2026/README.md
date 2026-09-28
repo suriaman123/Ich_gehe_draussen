@@ -1,7 +1,7 @@
 # Soul Food — Day 2
 
 Location: 50.25440323060424, 10.96360184754839
-
+<!-- 22.09.2026 -->
 I was actually quite excited about Soul Food this week. After last time, when we somehow turned zucchini and chickpeas into a really good meal, I was curious to see what we would come up with this time. I definitely would never have thought of combining those ingredients myself.
 
 I reached Cosmos at around **4:15 PM**, but once again, I was the only participant. Piama wasn't coming either. The nice lady from last time was there; for now, let's call her **Chief**. Chief asked me what I wanted to cook, but I told her I was happy with whatever she preferred. We looked at what we already had, and there was some **pasta and pesto sauce**. At one point, I even offered to go home because I felt like Chief was only cooking because I had shown up. But she said it would be nice to have a meal together and have a conversation, so I stayed. We decided to keep things simple and make **pesto pasta** instead of coming up with a dish and going to Aldi to buy ingredients.

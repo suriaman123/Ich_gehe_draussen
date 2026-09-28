@@ -1,5 +1,5 @@
 # A Tour of Creapolis
-**Location:** Schlachthofstraße 1, 96450 Coburg
+**Location:** Creapolis, Schlachthofstraße 1, 96450 Coburg
 
 <!-- 17.09.2026 -->
 

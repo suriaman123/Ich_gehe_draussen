@@ -340,11 +340,12 @@ button { font-family: inherit; cursor: pointer; }
   flex-wrap: wrap;
 }
 
+.log-search { position: relative; display: flex; align-items: center; }
 .log-search input {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 0.45rem 0.9rem;
+  padding: 0.45rem 2.1rem 0.45rem 0.9rem;
   color: var(--text);
   font-family: var(--font-body);
   font-size: 0.85rem;
@@ -353,9 +354,25 @@ button { font-family: inherit; cursor: pointer; }
 }
 .log-search input:focus { border-color: var(--accent); width: 220px; }
 .log-search input::placeholder { color: var(--text-muted); }
-/* Removes the default OS "clear" (x) button so it doesn't clash with the
-   pill shape — search fields still clear normally by selecting + deleting. */
+/* Removes the default OS "clear" (x) button so it doesn't clash with our
+   own clear button below — search fields still clear normally either way. */
 .log-search input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.log-search-clear {
+  position: absolute;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1;
+  border-radius: 50%;
+}
+.log-search-clear:hover { color: var(--text); background: var(--accent-soft); }
 
 .view-toggle {
   display: flex;
@@ -482,9 +499,11 @@ button { font-family: inherit; cursor: pointer; }
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   grid-column: 1 !important;
+  grid-row: 1 !important;
 }
 .trail.is-grid .trail-card {
   grid-column: 1 !important;
+  grid-row: 2 !important;
   text-align: left !important;
 }
 .trail.is-grid .trail-spacer { display: none; }
@@ -720,6 +739,15 @@ button { font-family: inherit; cursor: pointer; }
 }
 .map-popup .trail-date { display: block; }
 .map-popup .trail-title { font-size: 1rem; display: block; margin-top: 0.2rem; }
+.map-popup-list { list-style: none; margin: 0; padding: 0; }
+.map-popup-list li + li { margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--border); }
+.map-popup-count {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 0.4rem;
+}
 .map-empty-state {
   display: flex;
   align-items: center;
