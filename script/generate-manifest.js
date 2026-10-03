@@ -16,10 +16,11 @@
  *     with "cover", "profile", or "display" (e.g. cover.jpg, profile_01.png).
  *     If none is found, the first image alphabetically is used instead.
  *   - README.md is optional — rendered as the outing's notes. Put a line
- *     starting with "Location:" right after the title to give the outing
- *     a map pin, e.g.:
- *       # 5K Marathon
- *       Location: Schützenstraße 1A, 96450 Coburg-Ketschendorf
+ *     starting with "Location:" within the first 3 lines of the file to
+ *     give the outing a map pin — plain text or as a markdown heading
+ *     (any level), e.g. any of:
+ *       # 5K Marathon                    # 5K Marathon
+ *       Location: Schützenstraße 1A...   ## Location: Schützenstraße 1A...
  *     A plain address is looked up automatically (OpenStreetMap/Nominatim,
  *     no API key needed). No Location line = no map pin, nothing breaks.
  *   - Everything else with an image/video extension is treated as gallery
@@ -98,8 +99,14 @@ function readLocationFile(folderPath) {
   return parsed;
 }
 
-/** The first non-empty line after the title (line 1) in README.md, if it
- *  starts with "Location:" — otherwise null (no location line present). */
+// Matches a "Location:" line, with or without markdown heading hashes in
+// front of it — "Location: ...", "# Location: ...", up through "###### ...".
+const LOCATION_LINE = /^#{0,6}\s*location:\s*(.+)$/i;
+
+/** Looks for a "Location:" line among the first three non-empty lines of
+ *  README.md (so it can sit right after the title however it's written —
+ *  plain text, or a markdown heading of any level). Returns null if none
+ *  of those lines match. */
 function extractLocationQuery(readmePath) {
   if (!fs.existsSync(readmePath)) return null;
   const lines = fs
@@ -107,10 +114,12 @@ function extractLocationQuery(readmePath) {
     .split(/\r?\n/)
     .map((l) => l.trim())
     .filter(Boolean);
-  const candidate = lines[1];
-  if (!candidate) return null;
-  const match = candidate.match(/^location:\s*(.+)$/i);
-  return match ? match[1].trim() : null;
+
+  for (const candidate of lines.slice(0, 3)) {
+    const match = candidate.match(LOCATION_LINE);
+    if (match) return match[1].trim();
+  }
+  return null;
 }
 
 function sleep(ms) {

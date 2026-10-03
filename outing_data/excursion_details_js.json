@@ -17,7 +17,13 @@
       "phtoto (8).jpg",
       "phtoto (9).jpg"
     ],
-    "videos": []
+    "videos": [],
+    "location": {
+      "lat": 50.2534978,
+      "lng": 10.9596264,
+      "label": "Schlachthofstraße 1, 96450 Coburg"
+    },
+    "locationQuery": "Schlachthofstraße 1, 96450 Coburg"
   },
   {
     "slug": "soulfood-iii",
@@ -35,7 +41,12 @@
       "photo (6).jpg",
       "photo (7).jpg"
     ],
-    "videos": []
+    "videos": [],
+    "location": {
+      "lat": 50.25440323060424,
+      "lng": 10.96360184754839
+    },
+    "locationQuery": "50.25440323060424, 10.96360184754839"
   },
   {
     "slug": "making-mobile-workstation-day-2",
@@ -219,6 +230,12 @@
       "creapolis (4).jpg",
       "creapolis (5).jpg"
     ],
-    "videos": []
+    "videos": [],
+    "location": {
+      "lat": 50.2534978,
+      "lng": 10.9596264,
+      "label": "Schlachthofstraße 1, 96450 Coburg"
+    },
+    "locationQuery": "Schlachthofstraße 1, 96450 Coburg"
   }
 ]

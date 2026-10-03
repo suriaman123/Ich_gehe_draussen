@@ -1,5 +1,5 @@
-Location: Schlachthofstraße 1, 96450 Coburg
 <!-- 01.10.2026 -->
+#### Location: Schlachthofstraße 1, 96450 Coburg
 
 When I reached Creapolis, Florian was busy giving a tour. Apparently, his colleague was sick, so he had to take over the tour for the day. He pointed me towards **Kevin** and told me Kevin would help me until Florian was free.
 
