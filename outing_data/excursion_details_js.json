@@ -1,5 +1,43 @@
 [
   {
+    "slug": "mobile-workstation-day-3",
+    "title": "Mobile Workstation Day 3",
+    "date": "2026-10-01",
+    "folder": "outing_data/excursion_details/Mobile-Workstation Day 3_01.10.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "phtoto (1).jpg",
+      "phtoto (2).jpg",
+      "phtoto (3).jpg",
+      "phtoto (4).jpg",
+      "phtoto (5).jpg",
+      "phtoto (6).jpg",
+      "phtoto (7).jpg",
+      "phtoto (8).jpg",
+      "phtoto (9).jpg"
+    ],
+    "videos": []
+  },
+  {
+    "slug": "soulfood-iii",
+    "title": "SoulFood III",
+    "date": "2026-09-29",
+    "folder": "outing_data/excursion_details/SoulFood III_29.09.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "photo (1).jpg",
+      "photo (2).jpg",
+      "photo (3).jpg",
+      "photo (4).jpg",
+      "photo (5).jpg",
+      "photo (6).jpg",
+      "photo (7).jpg"
+    ],
+    "videos": []
+  },
+  {
     "slug": "making-mobile-workstation-day-2",
     "title": "Making Mobile Workstation Day 2",
     "date": "2026-09-24",
