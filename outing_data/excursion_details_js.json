@@ -1,5 +1,79 @@
 [
   {
+    "slug": "grillpary-creapolis",
+    "title": "GrillPary @Creapolis",
+    "date": "2026-10-07",
+    "folder": "outing_data/excursion_details/GrillPary @Creapolis_07.10.2026",
+    "cover": "Cover.jpg",
+    "featured": false,
+    "photos": [
+      "IMG_20261007_181244685.jpg",
+      "IMG_20261007_181655766.jpg",
+      "IMG_20261007_184455294.jpg",
+      "IMG_20261007_184623044.jpg",
+      "IMG_20261007_191042782.jpg",
+      "IMG_20261007_194639172.jpg",
+      "IMG_20261007_201628694.jpg",
+      "IMG_20261007_201632800.jpg",
+      "IMG_20261007_201923416.jpg"
+    ],
+    "videos": [],
+    "location": {
+      "lat": 50.2534978,
+      "lng": 10.9596264,
+      "label": "Creapolis, Schlachthofstraße 1, 96450 Coburg"
+    },
+    "locationQuery": "Creapolis, Schlachthofstraße 1, 96450 Coburg"
+  },
+  {
+    "slug": "soulfood-iv",
+    "title": "SoulFood IV",
+    "date": "2026-10-06",
+    "folder": "outing_data/excursion_details/SoulFood IV_06.10.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "IMG_20261006_162651200.jpg",
+      "IMG_20261006_164832201.jpg",
+      "IMG_20261006_170244473.jpg",
+      "IMG_20261006_170247087.jpg",
+      "IMG_20261006_172542458.jpg",
+      "IMG_20261006_172839819.jpg",
+      "IMG_20261006_174801574.jpg",
+      "IMG_20261006_175226208.jpg",
+      "IMG_20261006_175306981.jpg",
+      "IMG_20261006_175414610.jpg",
+      "IMG_20261006_182046430.jpg",
+      "IMG_20261006_184151994.jpg",
+      "IMG_20261006_184458493.jpg"
+    ],
+    "videos": [],
+    "location": {
+      "lat": 50.25440323060424,
+      "lng": 10.96360184754839
+    },
+    "locationQuery": "50.25440323060424, 10.96360184754839"
+  },
+  {
+    "slug": "sudden-hangout",
+    "title": "Sudden Hangout",
+    "date": "2026-10-04",
+    "folder": "outing_data/excursion_details/Sudden hangout_04.10.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "IMG_20261004_125843627.jpg",
+      "IMG_20261004_131533845.jpg"
+    ],
+    "videos": [],
+    "location": {
+      "lat": 50.2604919,
+      "lng": 10.9653596,
+      "label": "Steinweg 6, 96450 Coburg"
+    },
+    "locationQuery": "Steinweg 6, 96450 Coburg"
+  },
+  {
     "slug": "mobile-workstation-day-3",
     "title": "Mobile Workstation Day 3",
     "date": "2026-10-01",
