@@ -1,5 +1,235 @@
 [
   {
+    "slug": "cat-racing-meetup",
+    "title": "Cat Racing MeetUp",
+    "date": "2026-10-28",
+    "folder": "outing_data/excursion_details/Cat Racing MeetUp_28.10.2026",
+    "cover": "cover.png",
+    "featured": false,
+    "photos": [
+      "IMG_20261028_184111612.jpg",
+      "IMG_20261028_185202807.jpg",
+      "IMG_20261028_190140322.jpg",
+      "IMG_20261028_190642573.jpg"
+    ],
+    "videos": [],
+    "location": {
+      "lat": 50.26497480015601,
+      "lng": 10.950651906929115
+    },
+    "locationQuery": "50.26497480015601, 10.950651906929115"
+  },
+  {
+    "slug": "soulfood-vii",
+    "title": "SoulFood VII",
+    "date": "2026-10-27",
+    "folder": "outing_data/excursion_details/SoulFood VII_27.10.2026",
+    "cover": "cover.jpg",
+    "featured": true,
+    "photos": [
+      "IMG_20261027_161708194.jpg",
+      "IMG_20261027_162737695.jpg",
+      "IMG_20261027_163540084.jpg",
+      "IMG_20261027_165043494.jpg",
+      "IMG_20261027_165718053.jpg",
+      "IMG_20261027_165924983.jpg",
+      "IMG_20261027_173341258.jpg",
+      "IMG_20261027_174651710.jpg",
+      "IMG_20261027_175635591.jpg",
+      "IMG_20261027_175644696.jpg",
+      "IMG_20261027_180922656.jpg",
+      "IMG_20261027_181755586.jpg",
+      "IMG_20261027_181929555.jpg",
+      "IMG_20261027_182200491.jpg",
+      "IMG_20261027_182509280.jpg",
+      "IMG_20261027_183027873.jpg",
+      "IMG_20261027_183956463.jpg",
+      "IMG_20261027_184029200.jpg",
+      "IMG_20261027_184259052.jpg",
+      "IMG_20261027_184516031.jpg",
+      "IMG_20261027_185716212.jpg",
+      "IMG_20261027_190018982.jpg",
+      "IMG_20261027_191005127.jpg",
+      "IMG_20261027_192827885.jpg",
+      "IMG_20261027_192926349.jpg",
+      "IMG_20261027_193020555.jpg",
+      "IMG_20261027_193031492.jpg",
+      "IMG_20261027_193314413.jpg",
+      "IMG_20261027_193453665.jpg"
+    ],
+    "videos": [
+      "VID_20261027_163621458.mp4",
+      "VID_20261027_185803370.mp4"
+    ],
+    "location": {
+      "lat": 50.25440323060424,
+      "lng": 10.96360184754839
+    },
+    "locationQuery": "50.25440323060424, 10.96360184754839"
+  },
+  {
+    "slug": "lebenslauf-berpr-fen",
+    "title": "Lebenslauf üBerprüfen",
+    "date": "2026-10-26",
+    "folder": "outing_data/excursion_details/Lebenslauf überprüfen_26.10.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "IMG_20261026_124517966.jpg",
+      "photo.png"
+    ],
+    "videos": [],
+    "location": {
+      "lat": 50.26497480015601,
+      "lng": 10.950651906929115
+    },
+    "locationQuery": "50.26497480015601, 10.950651906929115"
+  },
+  {
+    "slug": "warentauschtag-coburg-2026",
+    "title": "Warentauschtag Coburg 2026",
+    "date": "2026-10-24",
+    "folder": "outing_data/excursion_details/Warentauschtag Coburg 2026_24.10.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "IMG_20261024_122054738.jpg",
+      "IMG_20261024_123837578.jpg",
+      "IMG_20261024_124754792.jpg",
+      "IMG_20261024_131425446.jpg",
+      "IMG_20261025_200921176.jpg"
+    ],
+    "videos": [],
+    "location": {
+      "lat": 50.249664560314706,
+      "lng": 10.960488553262817
+    },
+    "locationQuery": "50.249664560314706, 10.960488553262817"
+  },
+  {
+    "slug": "language-bar",
+    "title": "Language Bar",
+    "date": "2026-10-21",
+    "folder": "outing_data/excursion_details/Language Bar_21.10.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "IMG_20261021_185052657.jpg",
+      "IMG_20261021_190737094.jpg",
+      "IMG_20261021_191533843.jpg",
+      "IMG_20261021_192921298.jpg",
+      "IMG_20261021_195542717.jpg"
+    ],
+    "videos": [],
+    "locationQuery": "Friedrich-Streib-Straße 2/4-010, 96450 Coburg"
+  },
+  {
+    "slug": "soulfood-vi",
+    "title": "SoulFood VI",
+    "date": "2026-10-20",
+    "folder": "outing_data/excursion_details/SoulFood VI_20.10.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "IMG_20261020_162817547~2.jpg",
+      "IMG_20261020_164941512.jpg",
+      "IMG_20261020_182004446.jpg",
+      "IMG_20261020_182015373.jpg",
+      "IMG_20261020_182022860.jpg",
+      "IMG_20261020_182026221.jpg",
+      "IMG_20261020_182325697.jpg",
+      "IMG_20261020_182415954.jpg",
+      "IMG_20261020_182426256.jpg"
+    ],
+    "videos": [
+      "VID_20261020_161302489.mp4"
+    ],
+    "location": {
+      "lat": 50.25440323060424,
+      "lng": 10.96360184754839
+    },
+    "locationQuery": "50.25440323060424, 10.96360184754839"
+  },
+  {
+    "slug": "robot-operator-assesment",
+    "title": "Robot Operator Assesment",
+    "date": "2026-10-16",
+    "folder": "outing_data/excursion_details/Robot Operator Assesment_16.10.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "IMG_20261015_141523592.jpg",
+      "IMG_20261015_152617520.jpg",
+      "IMG_20261015_191837995.jpg",
+      "IMG_20261015_200600327.jpg",
+      "IMG_20261015_212236575.jpg",
+      "IMG_20261016_074545696.jpg",
+      "IMG_20261016_075714751.jpg",
+      "IMG_20261016_181203792.jpg"
+    ],
+    "videos": [],
+    "location": {
+      "lat": 48.55577901513233,
+      "lng": 9.261802135920705
+    },
+    "locationQuery": "48.55577901513233, 9.261802135920705"
+  },
+  {
+    "slug": "coburg-by-the-night",
+    "title": "Coburg By The Night",
+    "date": "2026-10-14",
+    "folder": "outing_data/excursion_details/Coburg by the Night_14.10.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "IMG_20261014_192653979.jpg",
+      "IMG_20261014_200445882.jpg",
+      "IMG_20261014_212415595.jpg",
+      "email.png"
+    ],
+    "videos": [
+      "Snapchat-2136872982.mp4"
+    ],
+    "location": {
+      "lat": 50.2582226,
+      "lng": 10.964561,
+      "label": "Coburg, Germany"
+    },
+    "locationQuery": "Coburg, Germany"
+  },
+  {
+    "slug": "soulfood-v",
+    "title": "SoulFood V",
+    "date": "2026-10-13",
+    "folder": "outing_data/excursion_details/SoulFood V_13.10.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "photos": [
+      "IMG_20261013_154355800.jpg",
+      "IMG_20261013_161410767.jpg",
+      "IMG_20261013_161415703.jpg",
+      "IMG_20261013_163033421.jpg",
+      "IMG_20261013_163038941.jpg",
+      "IMG_20261013_164557018.jpg",
+      "IMG_20261013_164600617.jpg",
+      "IMG_20261013_165138267.jpg",
+      "IMG_20261013_165244113.jpg",
+      "IMG_20261013_165744645.jpg",
+      "IMG_20261013_170738015.jpg",
+      "IMG_20261013_173912617.jpg",
+      "IMG_20261013_173914572.jpg",
+      "IMG_20261013_181249921.jpg",
+      "IMG_20261013_181746413.jpg",
+      "IMG_20261013_191502820.jpg"
+    ],
+    "videos": [],
+    "location": {
+      "lat": 50.25440323060424,
+      "lng": 10.96360184754839
+    },
+    "locationQuery": "50.25440323060424, 10.96360184754839"
+  },
+  {
     "slug": "grillpary-creapolis",
     "title": "GrillPary @Creapolis",
     "date": "2026-10-07",
