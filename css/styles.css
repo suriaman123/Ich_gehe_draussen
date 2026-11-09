@@ -768,3 +768,24 @@ button { font-family: inherit; cursor: pointer; }
   font-family: var(--font-mono);
   font-size: 0.8rem;
 }
+
+/* ---- Images between Readme ---- */
+.readme-gallery {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 12px;
+  overflow-x: auto;
+  width: 100%;
+  padding: 10px 0 16px;
+}
+
+.readme-gallery img {
+  display: block !important;
+  width: auto !important;
+  height: 180px !important;
+  max-width: none !important;
+  object-fit: cover;
+  flex: 0 0 auto;
+  border-radius: 10px;
+}

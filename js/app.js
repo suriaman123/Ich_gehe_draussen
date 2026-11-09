@@ -225,7 +225,23 @@ async function renderDetail(slug) {
   try {
     const res = await fetch(encodePath(`${ev.folder}/README.md`));
     const md = res.ok ? await res.text() : "";
+    // els.detailReadme.innerHTML = md ? marked.parse(md) : "<p><em>No notes yet for this one.</em></p>";
     els.detailReadme.innerHTML = md ? marked.parse(md) : "<p><em>No notes yet for this one.</em></p>";
+
+    // Fix relative image paths inside the README
+    els.detailReadme.querySelectorAll("img").forEach((img) => {
+      const src = img.getAttribute("src");
+
+      if (src && !/^(https?:|data:|\/)/i.test(src)) {
+        img.src = new URL(
+          src,
+          new URL(
+            encodePath(`${ev.folder}/README.md`),
+            document.baseURI
+          )
+        ).href;
+      }
+    });
   } catch (e) {
     els.detailReadme.innerHTML = "<p><em>Notes couldn't be loaded.</em></p>";
   }
