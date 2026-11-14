@@ -1,5 +1,27 @@
 [
   {
+    "slug": "utkarshs-birthday",
+    "title": "Utkarshs Birthday",
+    "date": "2026-11-14",
+    "folder": "outing_data/excursion_details/Utkarshs Birthday_14.11.2026",
+    "cover": "cover.png",
+    "featured": false,
+    "archived": true,
+    "photos": [],
+    "videos": [
+      "Snapchat-1184273802.mp4",
+      "Snapchat-1514916048.mp4",
+      "Snapchat-401414826.mp4",
+      "Snapchat-926233099.mp4",
+      "VID_20261114_002712498.mp4"
+    ],
+    "location": {
+      "lat": 50.26497480015601,
+      "lng": 10.950651906929115
+    },
+    "locationQuery": "50.26497480015601, 10.950651906929115"
+  },
+  {
     "slug": "soulfood-ix-lasanga",
     "title": "SoulFood IX Lasanga",
     "date": "2026-11-10",
