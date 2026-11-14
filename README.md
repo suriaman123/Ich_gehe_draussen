@@ -59,14 +59,21 @@ it scans every folder in `excursion_details/`, works out the title and date from
 Commits are tagged as **Waypoints** — each one marks a point further along the trail:
 
 ```
-Waypoint 0.1 — Trailhead              first working version: trail, detail view, themes
-Waypoint 0.2 — Signal Boost           highlights carousel + the manifest generator script
+Waypoint 0.1 — Trailhead              # first working version: trail, detail view, themes
+Waypoint 0.2 — Signal Boost           # highlights carousel + the manifest generator script
 Waypoint 0.3 — Umbenennung + Polish
 .
 .
 .
 
 Waypoint 1.0 - map and photo navigation
+Waypoint 1.1 - map and grid view updated
+Waypoint 1.2 - location detection within readme updated
+Waypoint 1.3 — css and app.js updated to add images in a single row between text
+Waypoint 1.3 — archive page             // I know I forgot to update the waypoint version   
+Waypoint 1.4 — map update
+Waypoint 1.5 — small but fun updates   // year filter;  Prev / next outing links; A “random outing” button ;used sharp package for faster image loading; search box and year filter in archives; Faster image loading
+
 
 ```
 

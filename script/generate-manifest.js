@@ -26,13 +26,21 @@
  *   - Everything else with an image/video extension is treated as gallery
  *     media automatically. No need to list files by hand.
  *
+ * THUMBNAILS
+ *   If the optional "sharp" package is installed (npm install), small WebP
+ *   copies of every cover and photo are written to outing_data/thumbs/ and
+ *   the manifest gets a "thumbFolder" field per outing. The site uses them
+ *   for the trail, grid, archive, map and gallery, and still opens the
+ *   original in the lightbox. Commit outing_data/thumbs/ along with the rest.
+ *   Without sharp, everything still works — it just loads the originals.
+ *
  * SAFE TO RE-RUN
  *   If excursion_details_js.json already exists, this script preserves any
  *   hand-edited "featured" flag (and a few other optional fields) for
  *   outings that still exist, and only recalculates paths from disk.
  *
  * USAGE
- *   node scripts/generate-manifest.js
+ *   node script/generate-manifest.js
  */
 
 const fs = require("fs");
@@ -53,6 +61,54 @@ const WEB_FOLDER_PREFIX = "outing_data/excursion_details";
 const IMAGE_EXTS = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"];
 const VIDEO_EXTS = [".mp4", ".mov", ".webm", ".m4v"];
 const COVER_HINTS = /^(cover|profile|display)/i;
+
+// ---- Thumbnails (optional: needs `npm install` for "sharp") ----
+let sharp = null;
+try {
+  sharp = require("sharp");
+} catch (e) {
+  /* not installed — thumbnails are skipped */
+}
+const THUMBS_DIR = path.join(ROOT, "outing_data", "thumbs");
+const WEB_THUMBS_PREFIX = "outing_data/thumbs";
+const THUMB_SIZES = {
+  sm: { width: 640, quality: 76 }, // trail / grid / archive / map / gallery
+  md: { width: 1600, quality: 80 }, // detail-page header
+};
+const THUMBABLE_EXTS = [".jpg", ".jpeg", ".png", ".webp"];
+
+/** Writes <file>.sm.webp and <file>.md.webp for each image, skipping any
+ *  that are already up to date. Returns true if everything succeeded. */
+async function makeThumbs(folderPath, folderName, files) {
+  const outDir = path.join(THUMBS_DIR, folderName);
+  fs.mkdirSync(outDir, { recursive: true });
+  let ok = true;
+  let made = 0;
+
+  for (const file of files) {
+    if (!THUMBABLE_EXTS.includes(path.extname(file).toLowerCase())) continue;
+    const src = path.join(folderPath, file);
+    const srcTime = fs.statSync(src).mtimeMs;
+
+    for (const [name, { width, quality }] of Object.entries(THUMB_SIZES)) {
+      const dest = path.join(outDir, `${file}.${name}.webp`);
+      if (fs.existsSync(dest) && fs.statSync(dest).mtimeMs >= srcTime) continue;
+      try {
+        await sharp(src)
+          .rotate() // respect the phone's EXIF orientation
+          .resize({ width, withoutEnlargement: true })
+          .webp({ quality })
+          .toFile(dest);
+        made++;
+      } catch (e) {
+        console.warn(`⚠ Couldn't make a thumbnail for "${folderName}/${file}": ${e.message}`);
+        ok = false;
+      }
+    }
+  }
+  if (made) console.log(`  → ${made} thumbnail(s) for "${folderName}"`);
+  return ok;
+}
 
 // Fields a person might hand-edit in excursion_details_js.json that re-running this
 // script should NOT clobber, as long as the outing's slug still exists.
@@ -262,6 +318,7 @@ async function run() {
 
   const results = [];
   const usedSlugs = new Set();
+  const keptThumbDirs = new Set();
   let skipped = 0;
 
   for (const folderName of folders) {
@@ -309,6 +366,12 @@ async function run() {
     if (location) entry.location = location;
     if (locationQuery) entry.locationQuery = locationQuery;
 
+    if (sharp) {
+      const ok = await makeThumbs(folderPath, folderName, [cover, ...photos]);
+      if (ok) entry.thumbFolder = `${WEB_THUMBS_PREFIX}/${folderName}`;
+      keptThumbDirs.add(folderName);
+    }
+
     for (const field of PRESERVE_FIELDS) {
       if (prior[field] !== undefined) entry[field] = prior[field];
     }
@@ -324,6 +387,19 @@ async function run() {
 
   fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(results, null, 2) + "\n");
+
+  // Remove thumbnail folders for outings that no longer exist.
+  if (sharp && fs.existsSync(THUMBS_DIR)) {
+    for (const name of fs.readdirSync(THUMBS_DIR)) {
+      const p = path.join(THUMBS_DIR, name);
+      if (fs.statSync(p).isDirectory() && !keptThumbDirs.has(name)) {
+        fs.rmSync(p, { recursive: true, force: true });
+      }
+    }
+  }
+  if (!sharp) {
+    console.log("\nℹ Thumbnails skipped — run `npm install` once to enable faster image loading.");
+  }
 
   console.log(`\n✓ Wrote ${results.length} outing(s) to outing_data/excursion_details_js.json`);
   if (skipped) console.log(`  (${skipped} folder(s) skipped — see warnings above)`);

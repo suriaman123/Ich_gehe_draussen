@@ -372,6 +372,10 @@ button { font-family: inherit; cursor: pointer; }
   line-height: 1;
   border-radius: 50%;
 }
+/* display:flex above would otherwise override the HTML `hidden` attribute,
+   leaving the × showing even when the box is empty. */
+.log-search-clear[hidden] { display: none; }
+.log-search-clear { z-index: 1; cursor: pointer; font-size: 1.15rem; }
 .log-search-clear:hover { color: var(--text); background: var(--accent-soft); }
 
 .view-toggle {
@@ -838,3 +842,126 @@ button { font-family: inherit; cursor: pointer; }
   background: var(--accent-soft);
   opacity: 1;
 }
+
+/* ---- Random button (matches the archive icon) ---- */
+.random-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  opacity: 0.75;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+.random-btn:hover,
+.random-btn:focus-visible {
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  opacity: 1;
+}
+
+/* ---- Year menu (calendar button after "Full log") ---- */
+.log-title { display: flex; align-items: center; gap: 0.6rem; }
+.year-menu { position: relative; }
+.year-menu[hidden], .year-menu-list[hidden] { display: none; }
+.year-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  height: 28px;
+  padding: 0 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  opacity: 0.8;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+.year-menu-btn:hover,
+.year-menu-btn:focus-visible,
+.year-menu-btn.is-active,
+.year-menu-btn[aria-expanded="true"] {
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  opacity: 1;
+}
+.year-menu-btn.is-active { border-color: var(--accent); }
+.year-menu-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 30;
+  min-width: 150px;
+  max-height: 260px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0.3rem;
+  list-style: none;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) / 2);
+  box-shadow: var(--shadow);
+}
+.year-menu-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: calc(var(--radius) / 3);
+  background: none;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.year-menu-item:hover,
+.year-menu-item:focus-visible { background: var(--accent-soft); }
+.year-menu-item[aria-checked="true"] { color: var(--accent-text); font-weight: 600; }
+.year-menu-item[aria-checked="true"]::after { content: " ✓"; }
+
+/* ---- Archive search ---- */
+.archive-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.75rem;
+}
+.archive-tools[hidden] { display: none; }
+.archive-tools .year-menu-btn { height: 36px; padding: 0 0.7rem; }
+.archive-tools .log-search input { width: 240px; max-width: 100%; }
+.archive-tools .log-search input:focus { width: 280px; }
+
+/* ---- Older / newer pager on detail pages ---- */
+.detail-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+.pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  max-width: 48%;
+  text-decoration: none;
+  color: inherit;
+}
+.pager-newer { text-align: right; margin-left: auto; }
+.pager-dir {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.pager-title { font-size: 1.05rem; }
+.pager-link:hover .pager-title,
+.pager-link:focus-visible .pager-title { color: var(--accent-text); text-decoration: underline; }

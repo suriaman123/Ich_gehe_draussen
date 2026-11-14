@@ -23,6 +23,14 @@ const els = {
   archiveGrid: document.getElementById("archive-grid"),
   archiveSub: document.getElementById("archive-sub"),
   archiveBackLink: document.getElementById("archive-back-link"),
+  archiveTools: document.getElementById("archive-tools"),
+  archiveSearch: document.getElementById("archive-search"),
+  archiveSearchClear: document.getElementById("archive-search-clear"),
+  logTitle: document.getElementById("log-title"),
+  yearMenu: document.getElementById("year-menu"),
+  archiveYearMenu: document.getElementById("archive-year-menu"),
+  randomBtn: document.getElementById("random-btn"),
+  detailPager: document.getElementById("detail-pager"),
   trail: document.getElementById("trail"),
   featuredSection: document.getElementById("featured-section"),
   featuredTrack: document.getElementById("featured-track"),
@@ -51,6 +59,9 @@ const els = {
 let EVENTS = [];
 let searchQuery = "";
 let viewMode = "trail";
+let yearFilter = ""; // "" = all years
+let archiveQuery = "";
+let archiveYear = "";
 
 /** Formats an ISO date ("2024-09-01") as "01 SEP 2024". */
 function formatDate(iso) {
@@ -94,19 +105,48 @@ function renderStats(events) {
   }
 }
 
-function coverUrl(ev) {
-  return encodePath(`${ev.folder}/${ev.cover}`);
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-function renderTrail(events, target = els.trail) {
-  if (target === els.archiveGrid && !events.length) {
-    target.innerHTML = `<p class="loading-state">Nothing in the archive yet — set "archived": true on an outing in excursion_details_js.json.</p>`;
-    return;
+/** URL for an outing's image. With size "sm" / "md" and a thumbnail folder
+ *  in the manifest (made by the generator), returns the small WebP version;
+ *  otherwise the original file. */
+function imageUrl(ev, file, size) {
+  if (size && ev.thumbFolder && /\.(jpe?g|png|webp)$/i.test(file)) {
+    return encodePath(`${ev.thumbFolder}/${file}.${size}.webp`);
   }
+  return encodePath(`${ev.folder}/${file}`);
+}
+
+function coverUrl(ev) {
+  return imageUrl(ev, ev.cover, "sm");
+}
+
+// If a thumbnail is missing (not generated or not pushed yet), quietly
+// fall back to the original image instead of showing a broken picture.
+const THUMB_RE = /\/outing_data\/thumbs\/(.+)\.(?:sm|md)\.webp$/;
+document.addEventListener(
+  "error",
+  (e) => {
+    const img = e.target;
+    if (!(img instanceof HTMLImageElement) || !THUMB_RE.test(img.src)) return;
+    img.src = img.src.replace(THUMB_RE, "/outing_data/excursion_details/$1");
+  },
+  true
+);
+
+function renderTrail(events, target = els.trail) {
   if (!events.length) {
-    target.innerHTML = searchQuery
-      ? `<p class="loading-state">No outings match "${searchQuery}".</p>`
-      : `<p class="loading-state">No outings logged yet — run the generator after adding your first one.</p>`;
+    const isArchive = target === els.archiveGrid;
+    const q = isArchive ? archiveQuery : searchQuery;
+    let msg;
+    if (q) msg = `No outings match "${escapeHtml(q)}".`;
+    else if (isArchive && archiveYear) msg = `Nothing archived in ${escapeHtml(archiveYear)}.`;
+    else if (isArchive) msg = `Nothing in the archive yet — set "archived": true on an outing in excursion_details_js.json.`;
+    else if (yearFilter) msg = `No outings logged in ${escapeHtml(yearFilter)}.`;
+    else msg = `No outings logged yet — run the generator after adding your first one.`;
+    target.innerHTML = `<p class="loading-state">${msg}</p>`;
     return;
   }
   target.innerHTML = "";
@@ -238,7 +278,7 @@ async function renderDetail(slug) {
     : '<span aria-hidden="true">←</span> Back to the trail';
   els.backLink.dataset.target = fromArchive ? "#/archive" : "#/";
 
-  els.detailCover.src = coverUrl(ev);
+  els.detailCover.src = imageUrl(ev, ev.cover, "md");
   els.detailCover.alt = ev.title;
   els.detailDate.textContent = formatDate(ev.date);
   els.detailTitle.textContent = ev.title;
@@ -282,20 +322,42 @@ async function renderDetail(slug) {
       type === "video"
         ? `Video, ${i + 1} of ${total}, from ${ev.title}`
         : `Photo, ${i + 1} of ${total}, from ${ev.title}`;
-    return { url, type, label };
+    const thumb = type === "video" ? url : imageUrl(ev, file, "sm");
+    return { url, thumb, type, label };
   });
 
   els.mediaGrid.innerHTML = currentGallery
-    .map(({ url, type, label }, i) => {
+    .map(({ url, thumb, type, label }, i) => {
       if (type === "video") {
-        return `<button class="media-item is-video" data-index="${i}" aria-label="Play ${label}"><video src="${url}" muted></video></button>`;
+        return `<button class="media-item is-video" data-index="${i}" aria-label="Play ${label}"><video src="${url}" muted preload="metadata"></video></button>`;
       }
-      return `<button class="media-item" data-index="${i}" aria-label="View ${label}"><img src="${url}" alt="" loading="lazy"></button>`;
+      return `<button class="media-item" data-index="${i}" aria-label="View ${label}"><img src="${thumb}" alt="" loading="lazy" decoding="async"></button>`;
     })
     .join("");
 
+  renderPager(ev);
   showView("detail");
   window.scrollTo(0, 0);
+}
+
+/** Older / newer links at the bottom of a detail page. Moves within the
+ *  same collection (main trail or archive), newest-first order. */
+function renderPager(ev) {
+  const list = EVENTS.filter((e) => !!e.archived === !!ev.archived);
+  const i = list.findIndex((e) => e.slug === ev.slug);
+  const newer = i > 0 ? list[i - 1] : null;
+  const older = i >= 0 ? list[i + 1] : null;
+  const link = (e, cls, dir) =>
+    e
+      ? `<a class="pager-link ${cls}" href="#/event/${e.slug}">
+          <span class="pager-dir">${dir}</span>
+          <span class="pager-title">${escapeHtml(e.title)}</span>
+          <span class="trail-date">${formatDate(e.date)}</span>
+        </a>`
+      : `<span></span>`;
+  els.detailPager.hidden = !newer && !older;
+  els.detailPager.innerHTML =
+    link(older, "pager-older", "← Older") + link(newer, "pager-newer", "Newer →");
 }
 
 /** ---- Lightbox ---- */
@@ -408,11 +470,152 @@ function searchableText(ev) {
 }
 
 function getFilteredEvents() {
-  const active = activeEvents();
-  if (!searchQuery) return active;
-  const q = searchQuery.toLowerCase();
-  return active.filter((ev) => searchableText(ev).includes(q));
+  let list = activeEvents();
+  if (yearFilter) list = list.filter((ev) => ev.date.slice(0, 4) === yearFilter);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    list = list.filter((ev) => searchableText(ev).includes(q));
+  }
+  return list;
 }
+
+/** Reusable year dropdown (small calendar button + menu). `root` is the
+ *  .year-menu element; `onPick(year)` runs when a choice is made ("" = all).
+ *  render(events) rebuilds the list from the years in `events` and returns
+ *  the current selection (reset to "" if that year no longer exists). */
+function createYearMenu(root, onPick) {
+  const btn = root.querySelector(".year-menu-btn");
+  const list = root.querySelector(".year-menu-list");
+  let current = "";
+
+  function sync() {
+    btn.classList.toggle("is-active", !!current);
+    list.querySelectorAll(".year-menu-item").forEach((b) =>
+      b.setAttribute("aria-checked", String(b.dataset.year === current))
+    );
+  }
+
+  function open(isOpen) {
+    list.hidden = !isOpen;
+    btn.setAttribute("aria-expanded", String(isOpen));
+    if (isOpen) {
+      const target =
+        list.querySelector('[aria-checked="true"]') || list.querySelector(".year-menu-item");
+      if (target) target.focus();
+    }
+  }
+
+  btn.addEventListener("click", () => open(list.hidden));
+
+  list.addEventListener("click", (e) => {
+    const item = e.target.closest(".year-menu-item");
+    if (!item) return;
+    current = item.dataset.year;
+    sync();
+    open(false);
+    btn.focus();
+    onPick(current);
+  });
+
+  // Close when clicking elsewhere, or on Escape; arrow keys move through items.
+  document.addEventListener("click", (e) => {
+    if (!list.hidden && !root.contains(e.target)) open(false);
+  });
+  root.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !list.hidden) {
+      open(false);
+      btn.focus();
+      return;
+    }
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    e.preventDefault();
+    if (list.hidden) {
+      open(true);
+      return;
+    }
+    const items = [...list.querySelectorAll(".year-menu-item")];
+    const i = items.indexOf(document.activeElement);
+    const next = e.key === "ArrowDown" ? (i + 1) % items.length : i <= 0 ? items.length - 1 : i - 1;
+    items[next].focus();
+  });
+
+  return {
+    render(events) {
+      const years = [...new Set(events.map((ev) => ev.date.slice(0, 4)))].sort((a, b) => b - a);
+      if (current && !years.includes(current)) current = "";
+      root.hidden = !years.length;
+      list.innerHTML = ["", ...years]
+        .map(
+          (y) =>
+            `<li role="none"><button type="button" role="menuitemradio" class="year-menu-item" data-year="${y}" aria-checked="false">${y || "All years"}</button></li>`
+        )
+        .join("");
+      open(false);
+      sync();
+      return current;
+    },
+  };
+}
+
+/** Main page: the menu after "Full log". Picking a year turns the title
+ *  into "<year> log"; "All years" turns it back. */
+const mainYearMenu = createYearMenu(els.yearMenu, (year) => {
+  yearFilter = year;
+  updateLogTitle();
+  renderTrail(getFilteredEvents());
+  if (viewMode === "map") renderMap(getFilteredEvents());
+});
+
+function updateLogTitle() {
+  els.logTitle.textContent = yearFilter ? `${yearFilter} log` : "Full log";
+}
+
+function renderYearMenu(events) {
+  yearFilter = mainYearMenu.render(events);
+  updateLogTitle();
+}
+
+/** Archive page: the same menu, after the search box. */
+const archiveYearMenu = createYearMenu(els.archiveYearMenu, (year) => {
+  archiveYear = year;
+  renderArchive();
+});
+
+/** Random outing: picks any outing on the main trail (not the archive). */
+els.randomBtn.addEventListener("click", () => {
+  const pool = activeEvents();
+  if (!pool.length) return;
+  const ev = pool[Math.floor(Math.random() * pool.length)];
+  window.location.hash = `#/event/${ev.slug}`;
+});
+
+/** Archive page: search + grid. */
+function renderArchive() {
+  const all = archivedEvents();
+  const q = archiveQuery.toLowerCase();
+  let list = all;
+  if (archiveYear) list = list.filter((ev) => ev.date.slice(0, 4) === archiveYear);
+  if (q) list = list.filter((ev) => searchableText(ev).includes(q));
+  renderTrail(list, els.archiveGrid);
+  els.archiveTools.hidden = !all.length;
+  els.archiveSearchClear.hidden = !els.archiveSearch.value;
+  els.archiveSub.textContent = !all.length
+    ? ""
+    : q || archiveYear
+      ? `${list.length} of ${all.length} archived outings.`
+      : `${all.length} outing${all.length === 1 ? "" : "s"} tucked away from the main trail.`;
+}
+
+els.archiveSearch.addEventListener("input", (e) => {
+  archiveQuery = e.target.value.trim();
+  renderArchive();
+});
+els.archiveSearchClear.addEventListener("click", () => {
+  archiveQuery = "";
+  els.archiveSearch.value = "";
+  renderArchive();
+  els.archiveSearch.focus();
+});
 
 function updateSearchClearButton() {
   els.logSearchClear.hidden = !searchQuery;
@@ -490,7 +693,7 @@ function popupHtmlFor(group) {
       </a></li>`
     )
     .join("");
-  return `<span class="map-popup-count">${group.length} outings here </span><ul class="map-popup-list">${items}</ul>`;
+  return `<span class="map-popup-count">${group.length} outings here · scroll for more</span><ul class="map-popup-list">${items}</ul>`;
 }
 
 function renderMap(events) {
@@ -556,11 +759,9 @@ async function route() {
   if (match) {
     renderDetail(decodeURIComponent(match[1]));
   } else if (hash === "#/archive") {
-    const archived = archivedEvents();
-    renderTrail(archived, els.archiveGrid);
-    els.archiveSub.textContent = archived.length
-      ? `${archived.length} outing${archived.length === 1 ? "" : "s"} tucked away from the main trail.`
-      : "";
+    els.archiveSearch.value = archiveQuery;
+    archiveYear = archiveYearMenu.render(archivedEvents());
+    renderArchive();
     document.title = "Archive — Ich gehe draußen";
     showView("archive");
     window.scrollTo(0, 0);
@@ -568,6 +769,7 @@ async function route() {
     const active = activeEvents();
     renderStats(active);
     renderFeatured(active);
+    renderYearMenu(active);
     renderTrail(getFilteredEvents());
     applyViewMode();
     document.title = "Ich gehe draußen — a log of going out";

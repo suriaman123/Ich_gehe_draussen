@@ -19,7 +19,8 @@
       "lat": 50.26497480015601,
       "lng": 10.950651906929115
     },
-    "locationQuery": "50.26497480015601, 10.950651906929115"
+    "locationQuery": "50.26497480015601, 10.950651906929115",
+    "thumbFolder": "outing_data/thumbs/Utkarshs Birthday_14.11.2026"
   },
   {
     "slug": "soulfood-ix-lasanga",
@@ -42,7 +43,8 @@
       "lat": 50.25440323060424,
       "lng": 10.96360184754839
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839"
+    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "thumbFolder": "outing_data/thumbs/SoulFood IX-Lasanga_10.11.2026"
   },
   {
     "slug": "party-after-diwali",
@@ -72,7 +74,8 @@
       "lat": 50.26497480015601,
       "lng": 10.950651906929115
     },
-    "locationQuery": "50.26497480015601, 10.950651906929115"
+    "locationQuery": "50.26497480015601, 10.950651906929115",
+    "thumbFolder": "outing_data/thumbs/Party after Diwali_09.11.2026"
   },
   {
     "slug": "go-meetup",
@@ -214,7 +217,8 @@
       "lat": 50.133105454306566,
       "lng": 11.00099427975901
     },
-    "locationQuery": "50.133105454306566, 11.00099427975901"
+    "locationQuery": "50.133105454306566, 11.00099427975901",
+    "thumbFolder": "outing_data/thumbs/GO! MeetUp_06.11.2026"
   },
   {
     "slug": "soulfood-viii-chili-sin-carne",
@@ -249,7 +253,8 @@
       "lat": 50.25440323060424,
       "lng": 10.96360184754839
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839"
+    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "thumbFolder": "outing_data/thumbs/SoulFood VIII-Chili sin Carne_03.11.2026"
   },
   {
     "slug": "cat-racing-meetup",
@@ -270,7 +275,8 @@
       "lat": 50.26497480015601,
       "lng": 10.950651906929115
     },
-    "locationQuery": "50.26497480015601, 10.950651906929115"
+    "locationQuery": "50.26497480015601, 10.950651906929115",
+    "thumbFolder": "outing_data/thumbs/Cat Racing MeetUp_28.10.2026"
   },
   {
     "slug": "soulfood-vii",
@@ -319,7 +325,8 @@
       "lat": 50.25440323060424,
       "lng": 10.96360184754839
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839"
+    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "thumbFolder": "outing_data/thumbs/SoulFood VII_27.10.2026"
   },
   {
     "slug": "lebenslauf-berpr-fen",
@@ -338,7 +345,8 @@
       "lat": 50.26497480015601,
       "lng": 10.950651906929115
     },
-    "locationQuery": "50.26497480015601, 10.950651906929115"
+    "locationQuery": "50.26497480015601, 10.950651906929115",
+    "thumbFolder": "outing_data/thumbs/Lebenslauf überprüfen_26.10.2026"
   },
   {
     "slug": "warentauschtag-coburg-2026",
@@ -360,7 +368,8 @@
       "lat": 50.249664560314706,
       "lng": 10.960488553262817
     },
-    "locationQuery": "50.249664560314706, 10.960488553262817"
+    "locationQuery": "50.249664560314706, 10.960488553262817",
+    "thumbFolder": "outing_data/thumbs/Warentauschtag Coburg 2026_24.10.2026"
   },
   {
     "slug": "language-bar",
@@ -378,7 +387,8 @@
       "IMG_20261021_195542717.jpg"
     ],
     "videos": [],
-    "locationQuery": "Friedrich-Streib-Straße 2/4-010, 96450 Coburg"
+    "locationQuery": "Friedrich-Streib-Straße 2/4-010, 96450 Coburg",
+    "thumbFolder": "outing_data/thumbs/Language Bar_21.10.2026"
   },
   {
     "slug": "soulfood-vi",
@@ -406,7 +416,8 @@
       "lat": 50.25440323060424,
       "lng": 10.96360184754839
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839"
+    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "thumbFolder": "outing_data/thumbs/SoulFood VI_20.10.2026"
   },
   {
     "slug": "robot-operator-assesment",
@@ -431,7 +442,8 @@
       "lat": 48.55577901513233,
       "lng": 9.261802135920705
     },
-    "locationQuery": "48.55577901513233, 9.261802135920705"
+    "locationQuery": "48.55577901513233, 9.261802135920705",
+    "thumbFolder": "outing_data/thumbs/Robot Operator Assesment_16.10.2026"
   },
   {
     "slug": "coburg-by-the-night",
@@ -455,7 +467,8 @@
       "lng": 10.964561,
       "label": "Coburg, Germany"
     },
-    "locationQuery": "Coburg, Germany"
+    "locationQuery": "Coburg, Germany",
+    "thumbFolder": "outing_data/thumbs/Coburg by the Night_14.10.2026"
   },
   {
     "slug": "soulfood-v",
@@ -488,7 +501,8 @@
       "lat": 50.25440323060424,
       "lng": 10.96360184754839
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839"
+    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "thumbFolder": "outing_data/thumbs/SoulFood V_13.10.2026"
   },
   {
     "slug": "grillpary-creapolis",
@@ -515,7 +529,8 @@
       "lng": 10.9596264,
       "label": "Creapolis, Schlachthofstraße 1, 96450 Coburg"
     },
-    "locationQuery": "Creapolis, Schlachthofstraße 1, 96450 Coburg"
+    "locationQuery": "Creapolis, Schlachthofstraße 1, 96450 Coburg",
+    "thumbFolder": "outing_data/thumbs/GrillPary @Creapolis_07.10.2026"
   },
   {
     "slug": "soulfood-iv",
@@ -545,7 +560,8 @@
       "lat": 50.25440323060424,
       "lng": 10.96360184754839
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839"
+    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "thumbFolder": "outing_data/thumbs/SoulFood IV_06.10.2026"
   },
   {
     "slug": "sudden-hangout",
@@ -565,7 +581,8 @@
       "lng": 10.9653596,
       "label": "Steinweg 6, 96450 Coburg"
     },
-    "locationQuery": "Steinweg 6, 96450 Coburg"
+    "locationQuery": "Steinweg 6, 96450 Coburg",
+    "thumbFolder": "outing_data/thumbs/Sudden hangout_04.10.2026"
   },
   {
     "slug": "mobile-workstation-day-3",
@@ -592,7 +609,8 @@
       "lng": 10.9596264,
       "label": "Schlachthofstraße 1, 96450 Coburg"
     },
-    "locationQuery": "Schlachthofstraße 1, 96450 Coburg"
+    "locationQuery": "Schlachthofstraße 1, 96450 Coburg",
+    "thumbFolder": "outing_data/thumbs/Mobile-Workstation Day 3_01.10.2026"
   },
   {
     "slug": "soulfood-iii",
@@ -616,7 +634,8 @@
       "lat": 50.25440323060424,
       "lng": 10.96360184754839
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839"
+    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "thumbFolder": "outing_data/thumbs/SoulFood III_29.09.2026"
   },
   {
     "slug": "making-mobile-workstation-day-2",
@@ -640,7 +659,8 @@
       "lng": 10.9596264,
       "label": "Schlachthofstraße 1, 96450 Coburg"
     },
-    "locationQuery": "Schlachthofstraße 1, 96450 Coburg"
+    "locationQuery": "Schlachthofstraße 1, 96450 Coburg",
+    "thumbFolder": "outing_data/thumbs/Making Mobile Workstation Day 2_24.09.2026"
   },
   {
     "slug": "soulfood-ii",
@@ -660,7 +680,8 @@
       "lat": 50.25440323060424,
       "lng": 10.96360184754839
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839"
+    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "thumbFolder": "outing_data/thumbs/SoulFood II_22.09.2026"
   },
   {
     "slug": "creapolis-tour",
@@ -685,7 +706,8 @@
       "photo (8).jpg",
       "photo (9).jpg"
     ],
-    "videos": []
+    "videos": [],
+    "thumbFolder": "outing_data/thumbs/Creapolis Tour_17.09.2026"
   },
   {
     "slug": "soulfood-cosmos",
@@ -710,7 +732,8 @@
       "lat": 50.25440323060424,
       "lng": 10.96360184754839
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839"
+    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "thumbFolder": "outing_data/thumbs/SoulFood-Cosmos_15.09.2026"
   },
   {
     "slug": "spp-direkt",
@@ -724,7 +747,8 @@
       "spp direkt (1).jpg",
       "spp direkt (2).jpg"
     ],
-    "videos": []
+    "videos": [],
+    "thumbFolder": "outing_data/thumbs/SPP Direkt_15.09.2026"
   },
   {
     "slug": "museum-night-cosmos",
@@ -762,7 +786,8 @@
       "lat": 50.25451860754015,
       "lng": 10.96361659374308
     },
-    "locationQuery": "50.25451860754015, 10.96361659374308"
+    "locationQuery": "50.25451860754015, 10.96361659374308",
+    "thumbFolder": "outing_data/thumbs/Museum Night_Cosmos_12.09.2026"
   },
   {
     "slug": "5k-marathon",
@@ -792,7 +817,8 @@
       "marathon photo (3).mp4",
       "marathon photo (4).mp4"
     ],
-    "locationQuery": "Sportplatz Gemünda, 96145 Seßlach"
+    "locationQuery": "Sportplatz Gemünda, 96145 Seßlach",
+    "thumbFolder": "outing_data/thumbs/5K Marathon_11.09.2026"
   },
   {
     "slug": "creapolis-community-area-makeover",
@@ -814,6 +840,7 @@
       "lng": 10.9596264,
       "label": "Schlachthofstraße 1, 96450 Coburg"
     },
-    "locationQuery": "Schlachthofstraße 1, 96450 Coburg"
+    "locationQuery": "Schlachthofstraße 1, 96450 Coburg",
+    "thumbFolder": "outing_data/thumbs/Creapolis_Community_Area_Makeover_10.09.2026"
   }
 ]
