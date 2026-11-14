@@ -56,7 +56,7 @@ const COVER_HINTS = /^(cover|profile|display)/i;
 
 // Fields a person might hand-edit in excursion_details_js.json that re-running this
 // script should NOT clobber, as long as the outing's slug still exists.
-const PRESERVE_FIELDS = ["featured", "title"];
+const PRESERVE_FIELDS = ["featured", "archived", "title"];
 
 /**
  * Location resolution, two ways:
@@ -298,6 +298,7 @@ async function run() {
       folder: `${WEB_FOLDER_PREFIX}/${folderName}`,
       cover,
       featured: false,
+      archived: false,
       photos,
       videos,
     };

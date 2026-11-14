@@ -6,6 +6,7 @@
     "folder": "outing_data/excursion_details/SoulFood IX-Lasanga_10.11.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261110_091110476.jpg",
       "IMG_20261110_163203230.jpg",
@@ -28,6 +29,7 @@
     "folder": "outing_data/excursion_details/Party after Diwali_09.11.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261109_200935375.jpg",
       "IMG_20261109_215410989.jpg",
@@ -57,6 +59,7 @@
     "folder": "outing_data/excursion_details/GO! MeetUp_06.11.2026",
     "cover": "cover.webp",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG-20261106-WA0011.jpg",
       "IMG-20261107-WA0017.jpeg",
@@ -198,6 +201,7 @@
     "folder": "outing_data/excursion_details/SoulFood VIII-Chili sin Carne_03.11.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261103_170321422.jpg",
       "IMG_20261103_173032928.jpg",
@@ -232,6 +236,7 @@
     "folder": "outing_data/excursion_details/Cat Racing MeetUp_28.10.2026",
     "cover": "cover.png",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261028_184111612.jpg",
       "IMG_20261028_185202807.jpg",
@@ -252,6 +257,7 @@
     "folder": "outing_data/excursion_details/SoulFood VII_27.10.2026",
     "cover": "cover.jpg",
     "featured": true,
+    "archived": false,
     "photos": [
       "IMG_20261027_161708194.jpg",
       "IMG_20261027_162737695.jpg",
@@ -300,6 +306,7 @@
     "folder": "outing_data/excursion_details/Lebenslauf überprüfen_26.10.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261026_124517966.jpg",
       "photo.png"
@@ -318,6 +325,7 @@
     "folder": "outing_data/excursion_details/Warentauschtag Coburg 2026_24.10.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261024_122054738.jpg",
       "IMG_20261024_123837578.jpg",
@@ -339,6 +347,7 @@
     "folder": "outing_data/excursion_details/Language Bar_21.10.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261021_185052657.jpg",
       "IMG_20261021_190737094.jpg",
@@ -356,6 +365,7 @@
     "folder": "outing_data/excursion_details/SoulFood VI_20.10.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261020_162817547~2.jpg",
       "IMG_20261020_164941512.jpg",
@@ -383,6 +393,7 @@
     "folder": "outing_data/excursion_details/Robot Operator Assesment_16.10.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261015_141523592.jpg",
       "IMG_20261015_152617520.jpg",
@@ -407,6 +418,7 @@
     "folder": "outing_data/excursion_details/Coburg by the Night_14.10.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261014_192653979.jpg",
       "IMG_20261014_200445882.jpg",
@@ -430,6 +442,7 @@
     "folder": "outing_data/excursion_details/SoulFood V_13.10.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261013_154355800.jpg",
       "IMG_20261013_161410767.jpg",
@@ -462,6 +475,7 @@
     "folder": "outing_data/excursion_details/GrillPary @Creapolis_07.10.2026",
     "cover": "Cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261007_181244685.jpg",
       "IMG_20261007_181655766.jpg",
@@ -488,6 +502,7 @@
     "folder": "outing_data/excursion_details/SoulFood IV_06.10.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261006_162651200.jpg",
       "IMG_20261006_164832201.jpg",
@@ -517,6 +532,7 @@
     "folder": "outing_data/excursion_details/Sudden hangout_04.10.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "IMG_20261004_125843627.jpg",
       "IMG_20261004_131533845.jpg"
@@ -536,6 +552,7 @@
     "folder": "outing_data/excursion_details/Mobile-Workstation Day 3_01.10.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "phtoto (1).jpg",
       "phtoto (2).jpg",
@@ -562,6 +579,7 @@
     "folder": "outing_data/excursion_details/SoulFood III_29.09.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "photo (1).jpg",
       "photo (2).jpg",
@@ -585,6 +603,7 @@
     "folder": "outing_data/excursion_details/Making Mobile Workstation Day 2_24.09.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "photo (1).jpg",
       "photo (2).jpg",
@@ -608,6 +627,7 @@
     "folder": "outing_data/excursion_details/SoulFood II_22.09.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "photo (1).jpg",
       "photo (2).jpg",
@@ -627,6 +647,7 @@
     "folder": "outing_data/excursion_details/Creapolis Tour_17.09.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "photo (1).jpg",
       "photo (10).jpg",
@@ -651,6 +672,7 @@
     "folder": "outing_data/excursion_details/SoulFood-Cosmos_15.09.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "SoulFood (1).jpg",
       "SoulFood (2).jpg",
@@ -675,6 +697,7 @@
     "folder": "outing_data/excursion_details/SPP Direkt_15.09.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "spp direkt (1).jpg",
       "spp direkt (2).jpg"
@@ -688,6 +711,7 @@
     "folder": "outing_data/excursion_details/Museum Night_Cosmos_12.09.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "museum night (1).jpg",
       "museum night (10).jpg",
@@ -725,6 +749,7 @@
     "folder": "outing_data/excursion_details/5K Marathon_11.09.2026",
     "cover": "cover.jpg",
     "featured": true,
+    "archived": false,
     "photos": [
       "marathon photo (1).jpg",
       "marathon photo (10).jpg",
@@ -754,6 +779,7 @@
     "folder": "outing_data/excursion_details/Creapolis_Community_Area_Makeover_10.09.2026",
     "cover": "cover.jpg",
     "featured": false,
+    "archived": false,
     "photos": [
       "creapolis (1).jpg",
       "creapolis (3).jpg",

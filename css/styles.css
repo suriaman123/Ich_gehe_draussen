@@ -789,3 +789,23 @@ button { font-family: inherit; cursor: pointer; }
   flex: 0 0 auto;
   border-radius: 10px;
 }
+/* ---- Archive link (sits quietly after the view toggle) ---- */
+.archive-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  opacity: 0.75;
+  transition: color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+.archive-link:hover,
+.archive-link:focus-visible {
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  opacity: 1;
+}

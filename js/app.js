@@ -19,6 +19,10 @@ const els = {
   home: document.getElementById("view-home"),
   detail: document.getElementById("view-detail"),
   empty: document.getElementById("view-empty"),
+  archive: document.getElementById("view-archive"),
+  archiveGrid: document.getElementById("archive-grid"),
+  archiveSub: document.getElementById("archive-sub"),
+  archiveBackLink: document.getElementById("archive-back-link"),
   trail: document.getElementById("trail"),
   featuredSection: document.getElementById("featured-section"),
   featuredTrack: document.getElementById("featured-track"),
@@ -70,6 +74,15 @@ async function loadEvents() {
   return EVENTS;
 }
 
+/** Outings with "archived": true in the manifest live on the archive page
+ *  only; everything else is "active" and shown on the main page. */
+function activeEvents() {
+  return EVENTS.filter((ev) => !ev.archived);
+}
+function archivedEvents() {
+  return EVENTS.filter((ev) => ev.archived);
+}
+
 /** ---- Home view ---- */
 function renderStats(events) {
   els.statCount.textContent = events.length;
@@ -85,14 +98,18 @@ function coverUrl(ev) {
   return encodePath(`${ev.folder}/${ev.cover}`);
 }
 
-function renderTrail(events) {
+function renderTrail(events, target = els.trail) {
+  if (target === els.archiveGrid && !events.length) {
+    target.innerHTML = `<p class="loading-state">Nothing in the archive yet — set "archived": true on an outing in excursion_details_js.json.</p>`;
+    return;
+  }
   if (!events.length) {
-    els.trail.innerHTML = searchQuery
+    target.innerHTML = searchQuery
       ? `<p class="loading-state">No outings match "${searchQuery}".</p>`
       : `<p class="loading-state">No outings logged yet — run the generator after adding your first one.</p>`;
     return;
   }
-  els.trail.innerHTML = "";
+  target.innerHTML = "";
   events.forEach((ev) => {
     const node = document.createElement("a");
     node.className = "trail-node";
@@ -107,7 +124,7 @@ function renderTrail(events) {
       </span>
       <span class="trail-spacer" aria-hidden="true"></span>
     `;
-    els.trail.appendChild(node);
+    target.appendChild(node);
   });
 }
 
@@ -214,6 +231,12 @@ async function renderDetail(slug) {
     showView("empty");
     return;
   }
+
+  const fromArchive = !!ev.archived;
+  els.backLink.innerHTML = fromArchive
+    ? '<span aria-hidden="true">←</span> Back to the archive'
+    : '<span aria-hidden="true">←</span> Back to the trail';
+  els.backLink.dataset.target = fromArchive ? "#/archive" : "#/";
 
   els.detailCover.src = coverUrl(ev);
   els.detailCover.alt = ev.title;
@@ -365,9 +388,13 @@ function showView(name) {
   els.home.hidden = name !== "home";
   els.detail.hidden = name !== "detail";
   els.empty.hidden = name !== "empty";
+  els.archive.hidden = name !== "archive";
 }
 
 els.backLink.addEventListener("click", () => {
+  window.location.hash = els.backLink.dataset.target || "#/";
+});
+els.archiveBackLink.addEventListener("click", () => {
   window.location.hash = "#/";
 });
 
@@ -381,9 +408,10 @@ function searchableText(ev) {
 }
 
 function getFilteredEvents() {
-  if (!searchQuery) return EVENTS;
+  const active = activeEvents();
+  if (!searchQuery) return active;
   const q = searchQuery.toLowerCase();
-  return EVENTS.filter((ev) => searchableText(ev).includes(q));
+  return active.filter((ev) => searchableText(ev).includes(q));
 }
 
 function updateSearchClearButton() {
@@ -514,9 +542,19 @@ async function route() {
 
   if (match) {
     renderDetail(decodeURIComponent(match[1]));
+  } else if (hash === "#/archive") {
+    const archived = archivedEvents();
+    renderTrail(archived, els.archiveGrid);
+    els.archiveSub.textContent = archived.length
+      ? `${archived.length} outing${archived.length === 1 ? "" : "s"} tucked away from the main trail.`
+      : "";
+    document.title = "Archive — Ich gehe draußen";
+    showView("archive");
+    window.scrollTo(0, 0);
   } else {
-    renderStats(EVENTS);
-    renderFeatured(EVENTS);
+    const active = activeEvents();
+    renderStats(active);
+    renderFeatured(active);
     renderTrail(getFilteredEvents());
     applyViewMode();
     document.title = "Ich gehe draußen — a log of going out";

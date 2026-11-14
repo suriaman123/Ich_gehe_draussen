@@ -78,6 +78,13 @@
             <button class="view-btn" data-view="grid" aria-pressed="false">Grid</button>
             <button class="view-btn" data-view="map" aria-pressed="false">Map</button>
           </div>
+          <a class="archive-link" href="#/archive" aria-label="Open the archive" title="Archive">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="4.5" rx="1"/>
+              <path d="M5 8.5V19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5"/>
+              <path d="M10 12.5h4"/>
+            </svg>
+          </a>
         </div>
       </div>
       <div class="trail" id="trail">
@@ -85,6 +92,19 @@
       </div>
       <div class="log-map" id="log-map" hidden></div>
     </section>
+  </div>
+
+  <!-- ARCHIVE VIEW -->
+  <div id="view-archive" hidden>
+    <button class="back-link" id="archive-back-link">
+      <span aria-hidden="true">←</span> Back to the trail
+    </button>
+    <section class="hero">
+      <p class="hero-eyebrow">put away, not forgotten</p>
+      <h1 class="hero-title">The Archive</h1>
+      <p class="hero-sub" id="archive-sub"></p>
+    </section>
+    <div class="trail is-grid" id="archive-grid"></div>
   </div>
 
   <!-- DETAIL VIEW -->
