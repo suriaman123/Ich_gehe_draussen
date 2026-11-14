@@ -306,7 +306,7 @@
     "folder": "outing_data/excursion_details/Lebenslauf überprüfen_26.10.2026",
     "cover": "cover.jpg",
     "featured": false,
-    "archived": false,
+    "archived": true,
     "photos": [
       "IMG_20261026_124517966.jpg",
       "photo.png"

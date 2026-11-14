@@ -477,16 +477,20 @@ function popupHtmlFor(group) {
       <span class="trail-title">${ev.title}</span>
     </a>`;
   }
+  // Several outings at one pin: compact rows (small thumbnail + text) in a
+  // scrollable list, so all of them are reachable however many there are.
   const items = group
     .map(
-      (ev) => `<li><a class="map-popup" href="#/event/${ev.slug}">
-        <img src="${coverUrl(ev)}" alt="">
-        <span class="trail-date">${formatDate(ev.date)}</span>
-        <span class="trail-title">${ev.title}</span>
+      (ev) => `<li><a class="map-popup-row" href="#/event/${ev.slug}">
+        <img src="${coverUrl(ev)}" alt="" loading="lazy">
+        <span class="map-popup-text">
+          <span class="trail-date">${formatDate(ev.date)}</span>
+          <span class="trail-title">${ev.title}</span>
+        </span>
       </a></li>`
     )
     .join("");
-  return `<span class="map-popup-count">${group.length} outings here</span><ul class="map-popup-list">${items}</ul>`;
+  return `<span class="map-popup-count">${group.length} outings here </span><ul class="map-popup-list">${items}</ul>`;
 }
 
 function renderMap(events) {
@@ -521,7 +525,16 @@ function renderMap(events) {
     const { lat, lng } = group[0].location;
     bounds.push([lat, lng]);
     const marker = L.marker([lat, lng]);
-    marker.bindPopup(popupHtmlFor(group));
+    marker.bindPopup(popupHtmlFor(group), { minWidth: group.length > 1 ? 260 : 150 });
+    // Let the list scroll (mouse wheel and touch) without zooming or
+    // dragging the map underneath it.
+    marker.on("popupopen", (e) => {
+      const list = e.popup.getElement().querySelector(".map-popup-list");
+      if (list) {
+        L.DomEvent.disableScrollPropagation(list);
+        L.DomEvent.disableClickPropagation(list);
+      }
+    });
     marker.addTo(leafletMarkerLayer);
   });
 

@@ -739,8 +739,37 @@ button { font-family: inherit; cursor: pointer; }
 }
 .map-popup .trail-date { display: block; }
 .map-popup .trail-title { font-size: 1rem; display: block; margin-top: 0.2rem; }
-.map-popup-list { list-style: none; margin: 0; padding: 0; }
-.map-popup-list li + li { margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--border); }
+.map-popup-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 0.4rem 0 0;
+  max-height: 260px; /* fits inside the 480px map; scrolls beyond this */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.map-popup-list li + li { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border); }
+.map-popup-list::-webkit-scrollbar { width: 6px; }
+.map-popup-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }
+.map-popup-list { scrollbar-width: thin; }
+.map-popup-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  color: inherit;
+}
+.map-popup-row img {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  object-fit: cover;
+  border-radius: calc(var(--radius) / 3);
+}
+.map-popup-row .trail-date { display: block; }
+.map-popup-row .trail-title { display: block; font-size: 0.92rem; margin-top: 0.1rem; }
+.map-popup-row:hover .trail-title,
+.map-popup-row:focus-visible .trail-title { color: var(--accent-text); text-decoration: underline; }
 .map-popup-count {
   font-family: var(--font-mono);
   font-size: 0.72rem;
