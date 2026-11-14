@@ -47,6 +47,8 @@ const els = {
   detailTitle: document.getElementById("detail-title"),
   detailReadme: document.getElementById("detail-readme"),
   mediaGrid: document.getElementById("media-grid"),
+  attachSection: document.getElementById("detail-attachments"),
+  attachList: document.getElementById("attachment-list"),
   mediaLabel: document.getElementById("detail-media-label"),
   lightbox: document.getElementById("lightbox"),
   lightboxContent: document.getElementById("lightbox-content"),
@@ -54,6 +56,7 @@ const els = {
   lightboxPrev: document.getElementById("lightbox-prev"),
   lightboxNext: document.getElementById("lightbox-next"),
   lightboxCounter: document.getElementById("lightbox-counter"),
+  lightboxOriginal: document.getElementById("lightbox-original"),
 };
 
 let EVENTS = [];
@@ -309,6 +312,8 @@ async function renderDetail(slug) {
     els.detailReadme.innerHTML = "<p><em>Notes couldn't be loaded.</em></p>";
   }
 
+  renderAttachments(ev);
+
   const media = [...(ev.photos || []), ...(ev.videos || [])];
   els.mediaLabel.textContent = media.length ? "Moments" : "";
   const total = media.length;
@@ -323,7 +328,10 @@ async function renderDetail(slug) {
         ? `Video, ${i + 1} of ${total}, from ${ev.title}`
         : `Photo, ${i + 1} of ${total}, from ${ev.title}`;
     const thumb = type === "video" ? url : imageUrl(ev, file, "sm");
-    return { url, thumb, type, label };
+    // The lightbox shows the 1600px copy (~250 KB) instead of the multi-MB
+    // original; the original stays one click away via "Open original".
+    const view = type === "video" ? url : imageUrl(ev, file, "md");
+    return { url, thumb, view, type, label };
   });
 
   els.mediaGrid.innerHTML = currentGallery
@@ -338,6 +346,29 @@ async function renderDetail(slug) {
   renderPager(ev);
   showView("detail");
   window.scrollTo(0, 0);
+}
+
+/** "Attachments" section: PDF / text files that open in a new tab.
+ *  Only shown for outings whose manifest entry has an `attachments` list. */
+function renderAttachments(ev) {
+  const files = ev.attachments || [];
+  els.attachSection.hidden = !files.length;
+  els.attachList.innerHTML = files
+    .map((file) => {
+      const ext = (file.split(".").pop() || "").toUpperCase();
+      return `<li>
+        <a class="attachment" href="${encodePath(`${ev.folder}/${file}`)}" target="_blank" rel="noopener">
+          <svg class="attachment-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/>
+          </svg>
+          <span class="attachment-name">${escapeHtml(file)}</span>
+          <span class="attachment-type">${escapeHtml(ext)}</span>
+          <span class="attachment-open" aria-hidden="true">↗</span>
+          <span class="visually-hidden">(opens in a new tab)</span>
+        </a>
+      </li>`;
+    })
+    .join("");
 }
 
 /** Older / newer links at the bottom of a detail page. Moves within the
@@ -369,12 +400,23 @@ function renderLightboxAt(index) {
   if (!currentGallery.length) return;
   // Wrap around at either end rather than dead-ending the arrows.
   currentIndex = (index + currentGallery.length) % currentGallery.length;
-  const { url, type, label } = currentGallery[currentIndex];
+  const { url, view, type, label } = currentGallery[currentIndex];
 
   els.lightboxContent.innerHTML =
     type === "video"
       ? `<video src="${url}" controls autoplay aria-label="${label}"></video>`
-      : `<img src="${url}" alt="${label}">`;
+      : `<img src="${view}" alt="${label}">`;
+
+  // "Open original" only when we're showing a smaller copy of it.
+  const hasSmallerCopy = type === "image" && view !== url;
+  els.lightboxOriginal.hidden = !hasSmallerCopy;
+  if (hasSmallerCopy) els.lightboxOriginal.href = url;
+
+  // Warm the cache for the neighbours so prev/next feels instant.
+  [currentIndex - 1, currentIndex + 1].forEach((n) => {
+    const g = currentGallery[(n + currentGallery.length) % currentGallery.length];
+    if (g && g.type === "image") new Image().src = g.view;
+  });
 
   els.lightboxCounter.textContent =
     currentGallery.length > 1 ? `${currentIndex + 1} / ${currentGallery.length}` : "";
@@ -405,6 +447,7 @@ els.lightboxNext.addEventListener("click", (e) => {
 
 function closeLightbox() {
   els.lightbox.hidden = true;
+  els.lightboxOriginal.hidden = true;
   els.lightboxContent.innerHTML = "";
   currentIndex = -1;
   // Return focus to whatever thumbnail opened this, so keyboard users

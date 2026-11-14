@@ -25,6 +25,9 @@
  *     no API key needed). No Location line = no map pin, nothing breaks.
  *   - Everything else with an image/video extension is treated as gallery
  *     media automatically. No need to list files by hand.
+ *   - Any .pdf or .txt file (other than location.txt) becomes an attachment
+ *     and shows up in an "Attachments" section on that outing's page.
+ *     Outings without any such file are unaffected.
  *
  * THUMBNAILS
  *   If the optional "sharp" package is installed (npm install), small WebP
@@ -61,6 +64,12 @@ const WEB_FOLDER_PREFIX = "outing_data/excursion_details";
 const IMAGE_EXTS = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"];
 const VIDEO_EXTS = [".mp4", ".mov", ".webm", ".m4v"];
 const COVER_HINTS = /^(cover|profile|display)/i;
+
+// Files shown in the "Attachments" section of an outing's page. Add more
+// extensions here if you like (note: browsers download some types instead
+// of opening them, e.g. .docx). location.txt is the map-pin file, not an attachment.
+const ATTACHMENT_EXTS = [".pdf", ".txt"];
+const NOT_ATTACHMENTS = ["location.txt"];
 
 // ---- Thumbnails (optional: needs `npm install` for "sharp") ----
 let sharp = null;
@@ -275,20 +284,25 @@ function classifyFiles(folderPath) {
   const files = fs.readdirSync(folderPath).filter((f) => !f.startsWith("."));
   const images = [];
   const videos = [];
+  const attachments = [];
 
   for (const file of files) {
     const ext = path.extname(file).toLowerCase();
     if (IMAGE_EXTS.includes(ext)) images.push(file);
     else if (VIDEO_EXTS.includes(ext)) videos.push(file);
+    else if (ATTACHMENT_EXTS.includes(ext) && !NOT_ATTACHMENTS.includes(file.toLowerCase())) {
+      attachments.push(file);
+    }
   }
 
   images.sort();
   videos.sort();
+  attachments.sort();
 
   const coverFile = images.find((f) => COVER_HINTS.test(f)) || images[0] || null;
   const photos = images.filter((f) => f !== coverFile);
 
-  return { cover: coverFile, photos, videos };
+  return { cover: coverFile, photos, videos, attachments };
 }
 
 function loadExistingManifest() {
@@ -332,7 +346,7 @@ async function run() {
     }
 
     const folderPath = path.join(EVENTS_DIR, folderName);
-    const { cover, photos, videos } = classifyFiles(folderPath);
+    const { cover, photos, videos, attachments } = classifyFiles(folderPath);
 
     if (!cover) {
       console.warn(`⚠ Skipping "${folderName}" — no image files found for a cover.`);
@@ -365,6 +379,9 @@ async function run() {
     const { location, locationQuery } = await resolveLocation(folderPath, prior);
     if (location) entry.location = location;
     if (locationQuery) entry.locationQuery = locationQuery;
+
+    // Only outings that actually have PDF/text files get this field.
+    if (attachments.length) entry.attachments = attachments;
 
     if (sharp) {
       const ok = await makeThumbs(folderPath, folderName, [cover, ...photos]);

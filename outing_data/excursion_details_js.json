@@ -346,6 +346,10 @@
       "lng": 10.950651906929115
     },
     "locationQuery": "50.26497480015601, 10.950651906929115",
+    "attachments": [
+      "Resume.pdf",
+      "coverletter.pdf"
+    ],
     "thumbFolder": "outing_data/thumbs/Lebenslauf überprüfen_26.10.2026"
   },
   {
@@ -707,6 +711,9 @@
       "photo (9).jpg"
     ],
     "videos": [],
+    "attachments": [
+      "location.txt.txt"
+    ],
     "thumbFolder": "outing_data/thumbs/Creapolis Tour_17.09.2026"
   },
   {
@@ -733,6 +740,9 @@
       "lng": 10.96360184754839
     },
     "locationQuery": "50.25440323060424, 10.96360184754839",
+    "attachments": [
+      "location.txt.txt"
+    ],
     "thumbFolder": "outing_data/thumbs/SoulFood-Cosmos_15.09.2026"
   },
   {
