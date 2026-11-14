@@ -1,0 +1,73 @@
+# Regenerates the outing manifest + thumbnails + video previews automatically.
+#
+# Runs when you push changes inside outing_data/excursion_details/ (new or
+# edited outings, photos, videos, READMEs, PDFs) or edit the generator script.
+# If the generator produces anything new, this workflow commits it back to
+# the same branch, then asks GitHub Pages to rebuild the site.
+#
+# You can also run it by hand: repo → Actions → "Regenerate manifest" → Run workflow.
+
+name: Regenerate manifest
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "outing_data/excursion_details/**"
+      - "script/generate-manifest.js"
+  workflow_dispatch:
+
+permissions:
+  contents: write # commit the regenerated files back
+  pages: write # ask GitHub Pages to rebuild afterwards
+
+# If you push twice in a row, run one after the other instead of in parallel.
+concurrency:
+  group: regenerate-manifest
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies (sharp + ffmpeg)
+        run: npm install --no-audit --no-fund
+
+      - name: Run the generator
+        run: npm run generate
+
+      - name: Commit regenerated files
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A outing_data
+          if git diff --cached --quiet; then
+            echo "Nothing new to commit."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "chore: regenerate manifest, thumbnails and video previews"
+          # You may have pushed again while this ran — pick that up first.
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # Pushes made with the built-in token don't trigger a Pages build on
+      # their own, so ask for one explicitly. If this step ever fails, the
+      # commit above is still there; your next push (or re-running this
+      # workflow) will publish it.
+      - name: Ask GitHub Pages to rebuild
+        if: steps.commit.outputs.changed == 'true'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds"

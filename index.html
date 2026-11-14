@@ -25,17 +25,23 @@
 </head>
 <body>
 
-<a class="skip-link" href="#app">Skip to content</a>
+<a class="skip-link" href="#app" data-i18n="skip_link">Skip to content</a>
 
 <header class="site-header">
   <a class="wordmark" href="#/">
     <span class="wordmark-main">Ich gehe draußen</span>
   </a>
 
-  <div class="theme-switcher" role="group" aria-label="Choose a visual theme">
-    <button class="theme-dot" data-theme-choice="signal" aria-label="Signal theme (dark)" aria-pressed="false"></button>
-    <button class="theme-dot" data-theme-choice="editorial" aria-label="Editorial theme (light)" aria-pressed="true"></button>
-    <button class="theme-dot" data-theme-choice="adventure" aria-label="Adventure theme (warm)" aria-pressed="false"></button>
+  <div class="header-controls">
+    <div class="lang-switcher" role="group" aria-label="Language" data-i18n-attr="aria-label:lang_group">
+      <button class="lang-btn" type="button" data-lang="en" lang="en" aria-label="English" title="English" aria-pressed="true">EN</button>
+      <button class="lang-btn" type="button" data-lang="de" lang="de" aria-label="Deutsch" title="Deutsch" aria-pressed="false">DE</button>
+    </div>
+    <div class="theme-switcher" role="group" aria-label="Choose a visual theme" data-i18n-attr="aria-label:theme_group">
+      <button class="theme-dot" data-theme-choice="signal" aria-label="Signal theme (dark)" data-i18n-attr="aria-label:theme_signal" aria-pressed="false"></button>
+      <button class="theme-dot" data-theme-choice="editorial" aria-label="Editorial theme (light)" data-i18n-attr="aria-label:theme_editorial" aria-pressed="true"></button>
+      <button class="theme-dot" data-theme-choice="adventure" aria-label="Adventure theme (warm)" data-i18n-attr="aria-label:theme_adventure" aria-pressed="false"></button>
+    </div>
   </div>
 </header>
 
@@ -44,57 +50,57 @@
   <!-- HOME VIEW -->
   <div id="view-home">
     <section class="hero">
-      <p class="hero-eyebrow">a practice of leaving the house</p>
-      <h1 class="hero-title">The Trail</h1>
-      <p class="hero-sub">Every outing, logged. Photos, notes, and the occasional video — arranged in the order they happened.</p>
+      <p class="hero-eyebrow" data-i18n="hero_eyebrow">a practice of leaving the house</p>
+      <h1 class="hero-title" data-i18n="hero_title">The Trail</h1>
+      <p class="hero-sub" data-i18n="hero_sub">Every outing, logged. Photos, notes, and the occasional video — arranged in the order they happened.</p>
       <dl class="hero-stats" id="hero-stats" aria-live="polite">
-        <div><dt>Outings</dt><dd id="stat-count">—</dd></div>
-        <div><dt>Since</dt><dd id="stat-since">—</dd></div>
-        <div><dt>Latest</dt><dd id="stat-latest">—</dd></div>
+        <div><dt data-i18n="stat_outings">Outings</dt><dd id="stat-count">—</dd></div>
+        <div><dt data-i18n="stat_since">Since</dt><dd id="stat-since">—</dd></div>
+        <div><dt data-i18n="stat_latest">Latest</dt><dd id="stat-latest">—</dd></div>
       </dl>
     </section>
 
     <section class="featured" id="featured-section" hidden>
       <div class="featured-heading">
-        <h2 class="section-label">Highlights</h2>
+        <h2 class="section-label" data-i18n="highlights">Highlights</h2>
         <div class="carousel-controls">
-          <button class="carousel-btn" id="featured-prev" aria-label="Previous highlight">‹</button>
-          <button class="carousel-btn" id="featured-next" aria-label="Next highlight">›</button>
+          <button class="carousel-btn" id="featured-prev" aria-label="Previous highlight" data-i18n-attr="aria-label:highlight_prev">‹</button>
+          <button class="carousel-btn" id="featured-next" aria-label="Next highlight" data-i18n-attr="aria-label:highlight_next">›</button>
         </div>
       </div>
-      <div class="featured-track" id="featured-track" tabindex="0" aria-label="Highlighted outings, scrollable"></div>
+      <div class="featured-track" id="featured-track" tabindex="0" aria-label="Highlighted outings, scrollable" data-i18n-attr="aria-label:highlight_track"></div>
     </section>
 
     <section class="trail-section">
       <div class="log-heading">
         <div class="log-title">
-          <h2 class="section-label" id="log-title">Full log</h2>
+          <h2 class="section-label" id="log-title" data-i18n="full_log">Full log</h2>
           <div class="year-menu" id="year-menu" hidden>
-            <button class="year-menu-btn" id="year-menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="year-menu-list" aria-label="Filter the log by year" title="Filter by year">
+            <button class="year-menu-btn" id="year-menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="year-menu-list" aria-label="Filter the log by year" title="Filter by year" data-i18n-attr="aria-label:filter_year_log; title:filter_year_title">
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/>
               </svg>
               <svg class="year-menu-caret" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
             </button>
-            <ul class="year-menu-list" id="year-menu-list" role="menu" aria-label="Years" hidden></ul>
+            <ul class="year-menu-list" id="year-menu-list" role="menu" aria-label="Years" data-i18n-attr="aria-label:years" hidden></ul>
           </div>
         </div>
         <div class="log-controls">
           <div class="log-search">
-            <input type="search" id="log-search" placeholder="Search outings…" aria-label="Search outings by title or location">
-            <button class="log-search-clear" id="log-search-clear" aria-label="Clear search" hidden>×</button>
+            <input type="search" id="log-search" placeholder="Search outings…" aria-label="Search outings by title or location" data-i18n-attr="placeholder:search_placeholder; aria-label:search_aria">
+            <button class="log-search-clear" id="log-search-clear" aria-label="Clear search" data-i18n-attr="aria-label:search_clear" hidden>×</button>
           </div>
-          <div class="view-toggle" role="group" aria-label="Choose how the log is displayed">
-            <button class="view-btn" data-view="trail" aria-pressed="true">Trail</button>
-            <button class="view-btn" data-view="grid" aria-pressed="false">Grid</button>
-            <button class="view-btn" data-view="map" aria-pressed="false">Map</button>
+          <div class="view-toggle" role="group" aria-label="Choose how the log is displayed" data-i18n-attr="aria-label:view_group">
+            <button class="view-btn" data-view="trail" aria-pressed="true" data-i18n="view_trail">Trail</button>
+            <button class="view-btn" data-view="grid" aria-pressed="false" data-i18n="view_grid">Grid</button>
+            <button class="view-btn" data-view="map" aria-pressed="false" data-i18n="view_map">Map</button>
           </div>
-          <button class="random-btn" id="random-btn" type="button" aria-label="Open a random outing" title="Surprise me">
+          <button class="random-btn" id="random-btn" type="button" aria-label="Open a random outing" title="Surprise me" data-i18n-attr="aria-label:random_aria; title:random_title">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/>
             </svg>
           </button>
-          <a class="archive-link" href="#/archive" aria-label="Open the archive" title="Archive">
+          <a class="archive-link" href="#/archive" aria-label="Open the archive" title="Archive" data-i18n-attr="aria-label:archive_aria; title:archive_title">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="3" y="4" width="18" height="4.5" rx="1"/>
               <path d="M5 8.5V19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5"/>
@@ -104,7 +110,7 @@
         </div>
       </div>
       <div class="trail" id="trail">
-        <p class="loading-state">Loading the trail…</p>
+        <p class="loading-state" data-i18n="loading_trail">Loading the trail…</p>
       </div>
       <div class="log-map" id="log-map" hidden></div>
     </section>
@@ -113,26 +119,26 @@
   <!-- ARCHIVE VIEW -->
   <div id="view-archive" hidden>
     <button class="back-link" id="archive-back-link">
-      <span aria-hidden="true">←</span> Back to the trail
+      <span aria-hidden="true">←</span> <span data-i18n="back_trail">Back to the trail</span>
     </button>
     <section class="hero">
-      <p class="hero-eyebrow">put away, not forgotten</p>
-      <h1 class="hero-title">The Archive</h1>
+      <p class="hero-eyebrow" data-i18n="archive_eyebrow">put away, not forgotten</p>
+      <h1 class="hero-title" data-i18n="archive_heading">The Archive</h1>
       <p class="hero-sub" id="archive-sub"></p>
     </section>
     <div class="archive-tools" id="archive-tools" hidden>
       <div class="log-search">
-        <input type="search" id="archive-search" placeholder="Search the archive…" aria-label="Search archived outings by title or location">
-        <button class="log-search-clear" id="archive-search-clear" type="button" aria-label="Clear search" hidden>×</button>
+        <input type="search" id="archive-search" placeholder="Search the archive…" aria-label="Search archived outings by title or location" data-i18n-attr="placeholder:archive_search_placeholder; aria-label:archive_search_aria">
+        <button class="log-search-clear" id="archive-search-clear" type="button" aria-label="Clear search" data-i18n-attr="aria-label:search_clear" hidden>×</button>
       </div>
       <div class="year-menu" id="archive-year-menu" hidden>
-        <button class="year-menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="archive-year-list" aria-label="Filter the archive by year" title="Filter by year">
+        <button class="year-menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="archive-year-list" aria-label="Filter the archive by year" title="Filter by year" data-i18n-attr="aria-label:filter_year_archive; title:filter_year_title">
           <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/>
           </svg>
           <svg class="year-menu-caret" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
         </button>
-        <ul class="year-menu-list" id="archive-year-list" role="menu" aria-label="Years" hidden></ul>
+        <ul class="year-menu-list" id="archive-year-list" role="menu" aria-label="Years" data-i18n-attr="aria-label:years" hidden></ul>
       </div>
     </div>
     <div class="trail is-grid" id="archive-grid"></div>
@@ -141,7 +147,7 @@
   <!-- DETAIL VIEW -->
   <div id="view-detail" hidden>
     <button class="back-link" id="back-link">
-      <span aria-hidden="true">←</span> Back to the trail
+      <span aria-hidden="true">←</span> <span data-i18n="back_trail">Back to the trail</span>
     </button>
 
     <header class="detail-header">
@@ -155,7 +161,7 @@
     <article class="detail-readme" id="detail-readme"></article>
 
     <section class="detail-attachments" id="detail-attachments" hidden>
-      <h2 class="section-label">Attachments</h2>
+      <h2 class="section-label" data-i18n="attachments">Attachments</h2>
       <ul class="attachment-list" id="attachment-list"></ul>
     </section>
 
@@ -164,31 +170,32 @@
       <div class="media-grid" id="media-grid"></div>
     </section>
 
-    <nav class="detail-pager" id="detail-pager" aria-label="More outings" hidden></nav>
+    <nav class="detail-pager" id="detail-pager" aria-label="More outings" data-i18n-attr="aria-label:pager_aria" hidden></nav>
   </div>
 
   <div id="view-empty" hidden>
-    <p class="empty-state">Hm — couldn't find that outing. It might have been renamed or removed. <a href="#/">Back to the trail →</a></p>
+    <p class="empty-state"><span data-i18n="empty_msg">Hm — couldn't find that outing. It might have been renamed or removed.</span> <a href="#/" data-i18n="empty_link">Back to the trail →</a></p>
   </div>
 
 </main>
 
-<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Media viewer">
-  <button class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
-  <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous" hidden>‹</button>
-  <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next" hidden>›</button>
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Media viewer" data-i18n-attr="aria-label:lightbox_aria">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close" data-i18n-attr="aria-label:close">×</button>
+  <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous" data-i18n-attr="aria-label:previous" hidden>‹</button>
+  <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next" data-i18n-attr="aria-label:next" hidden>›</button>
   <div class="lightbox-content" id="lightbox-content"></div>
   <p class="lightbox-counter" id="lightbox-counter" aria-live="polite"></p>
-  <a class="lightbox-original" id="lightbox-original" target="_blank" rel="noopener" hidden>Open original ↗</a>
+  <a class="lightbox-original" id="lightbox-original" target="_blank" rel="noopener" data-i18n="open_original" hidden>Open original ↗</a>
 </div>
 
 <footer class="site-footer">
-  <p>Built by Aman · one outing at a time.</p>
+  <p data-i18n="footer">Built by Aman · one outing at a time.</p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="js/theme.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

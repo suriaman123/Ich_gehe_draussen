@@ -66,11 +66,11 @@ let yearFilter = ""; // "" = all years
 let archiveQuery = "";
 let archiveYear = "";
 
-/** Formats an ISO date ("2024-09-01") as "01 SEP 2024". */
+/** Formats an ISO date ("2024-09-01") as "01 SEP 2024" (or "01. SEP. 2024" in German). */
 function formatDate(iso) {
   const d = new Date(iso + "T00:00:00");
   return d
-    .toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
+    .toLocaleDateString(getLocale(), { day: "2-digit", month: "short", year: "numeric" })
     .toUpperCase();
 }
 
@@ -133,7 +133,12 @@ document.addEventListener(
   "error",
   (e) => {
     const img = e.target;
-    if (!(img instanceof HTMLImageElement) || !THUMB_RE.test(img.src)) return;
+    if (!(img instanceof HTMLImageElement)) return;
+    if (img.classList.contains("video-poster")) {
+      img.style.display = "none";
+      return;
+    }
+    if (!THUMB_RE.test(img.src)) return;
     img.src = img.src.replace(THUMB_RE, "/outing_data/excursion_details/$1");
   },
   true
@@ -144,11 +149,11 @@ function renderTrail(events, target = els.trail) {
     const isArchive = target === els.archiveGrid;
     const q = isArchive ? archiveQuery : searchQuery;
     let msg;
-    if (q) msg = `No outings match "${escapeHtml(q)}".`;
-    else if (isArchive && archiveYear) msg = `Nothing archived in ${escapeHtml(archiveYear)}.`;
-    else if (isArchive) msg = `Nothing in the archive yet — set "archived": true on an outing in excursion_details_js.json.`;
-    else if (yearFilter) msg = `No outings logged in ${escapeHtml(yearFilter)}.`;
-    else msg = `No outings logged yet — run the generator after adding your first one.`;
+    if (q) msg = t("no_match", { q: escapeHtml(q) });
+    else if (isArchive && archiveYear) msg = t("none_archived_year", { year: escapeHtml(archiveYear) });
+    else if (isArchive) msg = t("archive_empty");
+    else if (yearFilter) msg = t("none_year", { year: escapeHtml(yearFilter) });
+    else msg = t("none_yet");
     target.innerHTML = `<p class="loading-state">${msg}</p>`;
     return;
   }
@@ -276,9 +281,7 @@ async function renderDetail(slug) {
   }
 
   const fromArchive = !!ev.archived;
-  els.backLink.innerHTML = fromArchive
-    ? '<span aria-hidden="true">←</span> Back to the archive'
-    : '<span aria-hidden="true">←</span> Back to the trail';
+  els.backLink.innerHTML = `<span aria-hidden="true">←</span> ${t(fromArchive ? "back_archive" : "back_trail")}`;
   els.backLink.dataset.target = fromArchive ? "#/archive" : "#/";
 
   els.detailCover.src = imageUrl(ev, ev.cover, "md");
@@ -287,12 +290,11 @@ async function renderDetail(slug) {
   els.detailTitle.textContent = ev.title;
   document.title = `${ev.title} — Ich gehe draußen`;
 
-  els.detailReadme.innerHTML = "<p><em>Loading notes…</em></p>";
+  els.detailReadme.innerHTML = `<p><em>${t("notes_loading")}</em></p>`;
   try {
     const res = await fetch(encodePath(`${ev.folder}/README.md`));
     const md = res.ok ? await res.text() : "";
-    // els.detailReadme.innerHTML = md ? marked.parse(md) : "<p><em>No notes yet for this one.</em></p>";
-    els.detailReadme.innerHTML = md ? marked.parse(md) : "<p><em>No notes yet for this one.</em></p>";
+    els.detailReadme.innerHTML = md ? marked.parse(md) : `<p><em>${t("notes_none")}</em></p>`;
 
     // Fix relative image paths inside the README
     els.detailReadme.querySelectorAll("img").forEach((img) => {
@@ -309,13 +311,13 @@ async function renderDetail(slug) {
       }
     });
   } catch (e) {
-    els.detailReadme.innerHTML = "<p><em>Notes couldn't be loaded.</em></p>";
+    els.detailReadme.innerHTML = `<p><em>${t("notes_error")}</em></p>`;
   }
 
   renderAttachments(ev);
 
   const media = [...(ev.photos || []), ...(ev.videos || [])];
-  els.mediaLabel.textContent = media.length ? "Moments" : "";
+  els.mediaLabel.textContent = media.length ? t("moments") : "";
   const total = media.length;
 
   // Built once here and reused by the lightbox's prev/next navigation,
@@ -323,23 +325,33 @@ async function renderDetail(slug) {
   currentGallery = media.map((file, i) => {
     const url = encodePath(`${ev.folder}/${file}`);
     const type = isVideo(file) ? "video" : "image";
-    const label =
-      type === "video"
-        ? `Video, ${i + 1} of ${total}, from ${ev.title}`
-        : `Photo, ${i + 1} of ${total}, from ${ev.title}`;
+    const label = t(type === "video" ? "video_label" : "photo_label", {
+      i: i + 1,
+      n: total,
+      title: ev.title,
+    });
     const thumb = type === "video" ? url : imageUrl(ev, file, "sm");
     // The lightbox shows the 1600px copy (~250 KB) instead of the multi-MB
     // original; the original stays one click away via "Open original".
     const view = type === "video" ? url : imageUrl(ev, file, "md");
-    return { url, thumb, view, type, label };
+    // Still frame made by the generator (needs ffmpeg), so the gallery doesn't
+    // have to load the video itself just to show a tile.
+    const poster =
+      type === "video" && ev.videoPosters && ev.videoPosters[file]
+        ? encodePath(ev.videoPosters[file])
+        : null;
+    return { url, thumb, view, type, label, poster };
   });
 
   els.mediaGrid.innerHTML = currentGallery
-    .map(({ url, thumb, type, label }, i) => {
+    .map(({ url, thumb, type, label, poster }, i) => {
       if (type === "video") {
-        return `<button class="media-item is-video" data-index="${i}" aria-label="Play ${label}"><video src="${url}" muted preload="metadata"></video></button>`;
+        const inner = poster
+          ? `<img class="video-poster" src="${poster}" alt="" loading="lazy" decoding="async">`
+          : `<video src="${url}" muted preload="metadata"></video>`;
+        return `<button class="media-item is-video" data-index="${i}" aria-label="${escapeHtml(t("play_item", { label }))}">${inner}</button>`;
       }
-      return `<button class="media-item" data-index="${i}" aria-label="View ${label}"><img src="${thumb}" alt="" loading="lazy" decoding="async"></button>`;
+      return `<button class="media-item" data-index="${i}" aria-label="${escapeHtml(t("view_item", { label }))}"><img src="${thumb}" alt="" loading="lazy" decoding="async"></button>`;
     })
     .join("");
 
@@ -364,7 +376,7 @@ function renderAttachments(ev) {
           <span class="attachment-name">${escapeHtml(file)}</span>
           <span class="attachment-type">${escapeHtml(ext)}</span>
           <span class="attachment-open" aria-hidden="true">↗</span>
-          <span class="visually-hidden">(opens in a new tab)</span>
+          <span class="visually-hidden">${t("opens_new_tab")}</span>
         </a>
       </li>`;
     })
@@ -388,7 +400,7 @@ function renderPager(ev) {
       : `<span></span>`;
   els.detailPager.hidden = !newer && !older;
   els.detailPager.innerHTML =
-    link(older, "pager-older", "← Older") + link(newer, "pager-newer", "Newer →");
+    link(older, "pager-older", t("pager_older")) + link(newer, "pager-newer", t("pager_newer"));
 }
 
 /** ---- Lightbox ---- */
@@ -400,12 +412,12 @@ function renderLightboxAt(index) {
   if (!currentGallery.length) return;
   // Wrap around at either end rather than dead-ending the arrows.
   currentIndex = (index + currentGallery.length) % currentGallery.length;
-  const { url, view, type, label } = currentGallery[currentIndex];
+  const { url, view, type, label, poster } = currentGallery[currentIndex];
 
   els.lightboxContent.innerHTML =
     type === "video"
-      ? `<video src="${url}" controls autoplay aria-label="${label}"></video>`
-      : `<img src="${view}" alt="${label}">`;
+      ? `<video src="${url}" ${poster ? `poster="${poster}"` : ""} controls autoplay aria-label="${escapeHtml(label)}"></video>`
+      : `<img src="${view}" alt="${escapeHtml(label)}">`;
 
   // "Open original" only when we're showing a smaller copy of it.
   const hasSmallerCopy = type === "image" && view !== url;
@@ -590,7 +602,7 @@ function createYearMenu(root, onPick) {
       list.innerHTML = ["", ...years]
         .map(
           (y) =>
-            `<li role="none"><button type="button" role="menuitemradio" class="year-menu-item" data-year="${y}" aria-checked="false">${y || "All years"}</button></li>`
+            `<li role="none"><button type="button" role="menuitemradio" class="year-menu-item" data-year="${y}" aria-checked="false">${y || t("all_years")}</button></li>`
         )
         .join("");
       open(false);
@@ -610,7 +622,7 @@ const mainYearMenu = createYearMenu(els.yearMenu, (year) => {
 });
 
 function updateLogTitle() {
-  els.logTitle.textContent = yearFilter ? `${yearFilter} log` : "Full log";
+  els.logTitle.textContent = yearFilter ? t("year_log", { year: yearFilter }) : t("full_log");
 }
 
 function renderYearMenu(events) {
@@ -645,8 +657,10 @@ function renderArchive() {
   els.archiveSub.textContent = !all.length
     ? ""
     : q || archiveYear
-      ? `${list.length} of ${all.length} archived outings.`
-      : `${all.length} outing${all.length === 1 ? "" : "s"} tucked away from the main trail.`;
+      ? t("archive_count_filtered", { n: list.length, total: all.length })
+      : all.length === 1
+        ? t("archive_count_one")
+        : t("archive_count_many", { n: all.length });
 }
 
 els.archiveSearch.addEventListener("input", (e) => {
@@ -736,14 +750,14 @@ function popupHtmlFor(group) {
       </a></li>`
     )
     .join("");
-  return `<span class="map-popup-count">${group.length} outings here · scroll for more</span><ul class="map-popup-list">${items}</ul>`;
+  return `<span class="map-popup-count">${t("map_count", { n: group.length })}</span><ul class="map-popup-list">${items}</ul>`;
 }
 
 function renderMap(events) {
   const located = events.filter((ev) => ev.location);
 
   if (!located.length) {
-    els.logMap.innerHTML = `<p class="map-empty-state">No outings have a location yet — add a "Location:" line under the title in an outing's README.md and re-run the generator.</p>`;
+    els.logMap.innerHTML = `<p class="map-empty-state">${t("map_empty")}</p>`;
     leafletMap = null; // the container was just replaced with plain text; force re-init next time
     return;
   }
@@ -796,16 +810,16 @@ async function route() {
   const match = hash.match(/^#\/event\/(.+)$/);
 
   await loadEvents().catch(() => {
-    els.trail.innerHTML = `<p class="empty-state">Couldn't load the log. Check that outing_data/excursion_details_js.json exists.</p>`;
+    els.trail.innerHTML = `<p class="empty-state">${t("load_error")}</p>`;
   });
 
   if (match) {
-    renderDetail(decodeURIComponent(match[1]));
+    await renderDetail(decodeURIComponent(match[1]));
   } else if (hash === "#/archive") {
     els.archiveSearch.value = archiveQuery;
     archiveYear = archiveYearMenu.render(archivedEvents());
     renderArchive();
-    document.title = "Archive — Ich gehe draußen";
+    document.title = t("title_archive");
     showView("archive");
     window.scrollTo(0, 0);
   } else {
@@ -815,10 +829,18 @@ async function route() {
     renderYearMenu(active);
     renderTrail(getFilteredEvents());
     applyViewMode();
-    document.title = "Ich gehe draußen — a log of going out";
+    document.title = t("title_home");
     showView("home");
   }
 }
+
+// Switching language re-renders the current page in place (keeping the scroll position).
+window.onLanguageChange = async () => {
+  if (!els.lightbox.hidden) closeLightbox();
+  const y = window.scrollY;
+  await route();
+  window.scrollTo(0, y);
+};
 
 window.addEventListener("hashchange", route);
 window.addEventListener("DOMContentLoaded", route);

@@ -20,7 +20,14 @@
       "lng": 10.950651906929115
     },
     "locationQuery": "50.26497480015601, 10.950651906929115",
-    "thumbFolder": "outing_data/thumbs/Utkarshs Birthday_14.11.2026"
+    "thumbFolder": "outing_data/thumbs/Utkarshs Birthday_14.11.2026",
+    "videoPosters": {
+      "Snapchat-1184273802.mp4": "outing_data/thumbs/Utkarshs Birthday_14.11.2026/Snapchat-1184273802.mp4.poster.jpg",
+      "Snapchat-1514916048.mp4": "outing_data/thumbs/Utkarshs Birthday_14.11.2026/Snapchat-1514916048.mp4.poster.jpg",
+      "Snapchat-401414826.mp4": "outing_data/thumbs/Utkarshs Birthday_14.11.2026/Snapchat-401414826.mp4.poster.jpg",
+      "Snapchat-926233099.mp4": "outing_data/thumbs/Utkarshs Birthday_14.11.2026/Snapchat-926233099.mp4.poster.jpg",
+      "VID_20261114_002712498.mp4": "outing_data/thumbs/Utkarshs Birthday_14.11.2026/VID_20261114_002712498.mp4.poster.jpg"
+    }
   },
   {
     "slug": "soulfood-ix-lasanga",
@@ -75,7 +82,16 @@
       "lng": 10.950651906929115
     },
     "locationQuery": "50.26497480015601, 10.950651906929115",
-    "thumbFolder": "outing_data/thumbs/Party after Diwali_09.11.2026"
+    "thumbFolder": "outing_data/thumbs/Party after Diwali_09.11.2026",
+    "videoPosters": {
+      "VID_20261109_215449511.mp4": "outing_data/thumbs/Party after Diwali_09.11.2026/VID_20261109_215449511.mp4.poster.jpg",
+      "VID_20261109_215516335.mp4": "outing_data/thumbs/Party after Diwali_09.11.2026/VID_20261109_215516335.mp4.poster.jpg",
+      "VID_20261109_215610059.mp4": "outing_data/thumbs/Party after Diwali_09.11.2026/VID_20261109_215610059.mp4.poster.jpg",
+      "VID_20261109_215758326.mp4": "outing_data/thumbs/Party after Diwali_09.11.2026/VID_20261109_215758326.mp4.poster.jpg",
+      "VID_20261109_215812910.mp4": "outing_data/thumbs/Party after Diwali_09.11.2026/VID_20261109_215812910.mp4.poster.jpg",
+      "VID_20261109_220700158.mp4": "outing_data/thumbs/Party after Diwali_09.11.2026/VID_20261109_220700158.mp4.poster.jpg",
+      "VID_20261109_220722927.mp4": "outing_data/thumbs/Party after Diwali_09.11.2026/VID_20261109_220722927.mp4.poster.jpg"
+    }
   },
   {
     "slug": "go-meetup",
@@ -218,7 +234,19 @@
       "lng": 11.00099427975901
     },
     "locationQuery": "50.133105454306566, 11.00099427975901",
-    "thumbFolder": "outing_data/thumbs/GO! MeetUp_06.11.2026"
+    "thumbFolder": "outing_data/thumbs/GO! MeetUp_06.11.2026",
+    "videoPosters": {
+      "Snapchat-136718246.mp4": "outing_data/thumbs/GO! MeetUp_06.11.2026/Snapchat-136718246.mp4.poster.jpg",
+      "Snapchat-1559910427.mp4": "outing_data/thumbs/GO! MeetUp_06.11.2026/Snapchat-1559910427.mp4.poster.jpg",
+      "Snapchat-1818000369.mp4": "outing_data/thumbs/GO! MeetUp_06.11.2026/Snapchat-1818000369.mp4.poster.jpg",
+      "Snapchat-232966934.mp4": "outing_data/thumbs/GO! MeetUp_06.11.2026/Snapchat-232966934.mp4.poster.jpg",
+      "Snapchat-238329672.mp4": "outing_data/thumbs/GO! MeetUp_06.11.2026/Snapchat-238329672.mp4.poster.jpg",
+      "VID_20261106_135145921.mp4": "outing_data/thumbs/GO! MeetUp_06.11.2026/VID_20261106_135145921.mp4.poster.jpg",
+      "VID_20261106_140149052.mp4": "outing_data/thumbs/GO! MeetUp_06.11.2026/VID_20261106_140149052.mp4.poster.jpg",
+      "VID_20261106_204740580.mp4": "outing_data/thumbs/GO! MeetUp_06.11.2026/VID_20261106_204740580.mp4.poster.jpg",
+      "VID_20261108_101056532.mp4": "outing_data/thumbs/GO! MeetUp_06.11.2026/VID_20261108_101056532.mp4.poster.jpg",
+      "VID_20261108_232341990.mp4": "outing_data/thumbs/GO! MeetUp_06.11.2026/VID_20261108_232341990.mp4.poster.jpg"
+    }
   },
   {
     "slug": "soulfood-viii-chili-sin-carne",
@@ -276,6 +304,10 @@
       "lng": 10.950651906929115
     },
     "locationQuery": "50.26497480015601, 10.950651906929115",
+    "attachments": [
+      "english_transcript.txt",
+      "german_transcript.txt"
+    ],
     "thumbFolder": "outing_data/thumbs/Cat Racing MeetUp_28.10.2026"
   },
   {
@@ -326,7 +358,11 @@
       "lng": 10.96360184754839
     },
     "locationQuery": "50.25440323060424, 10.96360184754839",
-    "thumbFolder": "outing_data/thumbs/SoulFood VII_27.10.2026"
+    "thumbFolder": "outing_data/thumbs/SoulFood VII_27.10.2026",
+    "videoPosters": {
+      "VID_20261027_163621458.mp4": "outing_data/thumbs/SoulFood VII_27.10.2026/VID_20261027_163621458.mp4.poster.jpg",
+      "VID_20261027_185803370.mp4": "outing_data/thumbs/SoulFood VII_27.10.2026/VID_20261027_185803370.mp4.poster.jpg"
+    }
   },
   {
     "slug": "lebenslauf-berpr-fen",
@@ -421,7 +457,10 @@
       "lng": 10.96360184754839
     },
     "locationQuery": "50.25440323060424, 10.96360184754839",
-    "thumbFolder": "outing_data/thumbs/SoulFood VI_20.10.2026"
+    "thumbFolder": "outing_data/thumbs/SoulFood VI_20.10.2026",
+    "videoPosters": {
+      "VID_20261020_161302489.mp4": "outing_data/thumbs/SoulFood VI_20.10.2026/VID_20261020_161302489.mp4.poster.jpg"
+    }
   },
   {
     "slug": "robot-operator-assesment",
@@ -472,7 +511,10 @@
       "label": "Coburg, Germany"
     },
     "locationQuery": "Coburg, Germany",
-    "thumbFolder": "outing_data/thumbs/Coburg by the Night_14.10.2026"
+    "thumbFolder": "outing_data/thumbs/Coburg by the Night_14.10.2026",
+    "videoPosters": {
+      "Snapchat-2136872982.mp4": "outing_data/thumbs/Coburg by the Night_14.10.2026/Snapchat-2136872982.mp4.poster.jpg"
+    }
   },
   {
     "slug": "soulfood-v",
@@ -711,9 +753,6 @@
       "photo (9).jpg"
     ],
     "videos": [],
-    "attachments": [
-      "location.txt.txt"
-    ],
     "thumbFolder": "outing_data/thumbs/Creapolis Tour_17.09.2026"
   },
   {
@@ -736,13 +775,10 @@
     ],
     "videos": [],
     "location": {
-      "lat": 50.25440323060424,
-      "lng": 10.96360184754839
+      "lat": 50.254371014654936,
+      "lng": 10.963611672147996,
+      "label": "Coburg"
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839",
-    "attachments": [
-      "location.txt.txt"
-    ],
     "thumbFolder": "outing_data/thumbs/SoulFood-Cosmos_15.09.2026"
   },
   {
@@ -797,7 +833,10 @@
       "lng": 10.96361659374308
     },
     "locationQuery": "50.25451860754015, 10.96361659374308",
-    "thumbFolder": "outing_data/thumbs/Museum Night_Cosmos_12.09.2026"
+    "thumbFolder": "outing_data/thumbs/Museum Night_Cosmos_12.09.2026",
+    "videoPosters": {
+      "museum night (1).mp4": "outing_data/thumbs/Museum Night_Cosmos_12.09.2026/museum night (1).mp4.poster.jpg"
+    }
   },
   {
     "slug": "5k-marathon",
@@ -828,7 +867,13 @@
       "marathon photo (4).mp4"
     ],
     "locationQuery": "Sportplatz Gemünda, 96145 Seßlach",
-    "thumbFolder": "outing_data/thumbs/5K Marathon_11.09.2026"
+    "thumbFolder": "outing_data/thumbs/5K Marathon_11.09.2026",
+    "videoPosters": {
+      "marathon photo (1).mp4": "outing_data/thumbs/5K Marathon_11.09.2026/marathon photo (1).mp4.poster.jpg",
+      "marathon photo (2).mp4": "outing_data/thumbs/5K Marathon_11.09.2026/marathon photo (2).mp4.poster.jpg",
+      "marathon photo (3).mp4": "outing_data/thumbs/5K Marathon_11.09.2026/marathon photo (3).mp4.poster.jpg",
+      "marathon photo (4).mp4": "outing_data/thumbs/5K Marathon_11.09.2026/marathon photo (4).mp4.poster.jpg"
+    }
   },
   {
     "slug": "creapolis-community-area-makeover",

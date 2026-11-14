@@ -37,6 +37,13 @@
  *   original in the lightbox. Commit outing_data/thumbs/ along with the rest.
  *   Without sharp, everything still works — it just loads the originals.
  *
+ * VIDEO PREVIEWS
+ *   Each video gets a still frame (outing_data/thumbs/<outing>/<video>.poster.jpg)
+ *   so galleries show a picture instead of loading the video. Needs ffmpeg:
+ *   the optional "@ffmpeg-installer/ffmpeg" package (installed by npm install)
+ *   or an ffmpeg already on your PATH. Without either, videos still work —
+ *   the gallery just loads them directly like before.
+ *
  * SAFE TO RE-RUN
  *   If excursion_details_js.json already exists, this script preserves any
  *   hand-edited "featured" flag (and a few other optional fields) for
@@ -48,6 +55,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { spawnSync } = require("child_process");
 
 const ROOT = path.join(__dirname, "..");
 
@@ -69,7 +77,9 @@ const COVER_HINTS = /^(cover|profile|display)/i;
 // extensions here if you like (note: browsers download some types instead
 // of opening them, e.g. .docx). location.txt is the map-pin file, not an attachment.
 const ATTACHMENT_EXTS = [".pdf", ".txt"];
-const NOT_ATTACHMENTS = ["location.txt"];
+// "location.txt.txt" is what Windows creates when "hide file extensions" is on
+// and you name a new file "location.txt" — treat it as the map-pin file too.
+const LOCATION_FILE_NAMES = ["location.txt", "location.txt.txt"];
 
 // ---- Thumbnails (optional: needs `npm install` for "sharp") ----
 let sharp = null;
@@ -86,6 +96,63 @@ const THUMB_SIZES = {
 };
 const THUMBABLE_EXTS = [".jpg", ".jpeg", ".png", ".webp"];
 
+// ---- Video previews (optional: needs ffmpeg) ----
+function findFfmpeg() {
+  try {
+    const bundled = require("@ffmpeg-installer/ffmpeg").path;
+    if (bundled && fs.existsSync(bundled)) return bundled;
+  } catch (e) {
+    /* bundled ffmpeg not installed — try the system one */
+  }
+  const sys = spawnSync("ffmpeg", ["-version"]);
+  return !sys.error && sys.status === 0 ? "ffmpeg" : null;
+}
+const FFMPEG = findFfmpeg();
+
+// On CI (GitHub Actions) a fresh checkout gives every file a new modified
+// time, so trust thumbnails that already exist instead of comparing times.
+const IS_CI = !!process.env.CI;
+
+function isUpToDate(dest, srcTime) {
+  if (!fs.existsSync(dest) || fs.statSync(dest).size === 0) return false;
+  return IS_CI || fs.statSync(dest).mtimeMs >= srcTime;
+}
+
+/** Grabs one frame (at 1s, or the first frame for very short clips) from
+ *  each video. Returns { "clip.mp4": "outing_data/thumbs/<outing>/clip.mp4.poster.jpg" }. */
+function makePosters(folderPath, folderName, videos) {
+  const posters = {};
+  const outDir = path.join(THUMBS_DIR, folderName);
+  let made = 0;
+
+  for (const file of videos) {
+    const src = path.join(folderPath, file);
+    const dest = path.join(outDir, `${file}.poster.jpg`);
+
+    if (!isUpToDate(dest, fs.statSync(src).mtimeMs)) {
+      fs.mkdirSync(outDir, { recursive: true });
+      for (const seek of ["1", "0"]) {
+        spawnSync(
+          FFMPEG,
+          ["-y", "-loglevel", "error", "-ss", seek, "-i", src, "-frames:v", "1",
+           "-vf", "scale='min(640,iw)':-2", "-q:v", "5", dest],
+          { timeout: 120000 }
+        );
+        if (fs.existsSync(dest) && fs.statSync(dest).size > 0) break;
+      }
+      if (fs.existsSync(dest) && fs.statSync(dest).size > 0) made++;
+    }
+
+    if (fs.existsSync(dest) && fs.statSync(dest).size > 0) {
+      posters[file] = `${WEB_THUMBS_PREFIX}/${folderName}/${file}.poster.jpg`;
+    } else {
+      console.warn(`⚠ Couldn't make a preview for "${folderName}/${file}"`);
+    }
+  }
+  if (made) console.log(`  → ${made} video preview(s) for "${folderName}"`);
+  return posters;
+}
+
 /** Writes <file>.sm.webp and <file>.md.webp for each image, skipping any
  *  that are already up to date. Returns true if everything succeeded. */
 async function makeThumbs(folderPath, folderName, files) {
@@ -101,7 +168,7 @@ async function makeThumbs(folderPath, folderName, files) {
 
     for (const [name, { width, quality }] of Object.entries(THUMB_SIZES)) {
       const dest = path.join(outDir, `${file}.${name}.webp`);
-      if (fs.existsSync(dest) && fs.statSync(dest).mtimeMs >= srcTime) continue;
+      if (isUpToDate(dest, srcTime)) continue;
       try {
         await sharp(src)
           .rotate() // respect the phone's EXIF orientation
@@ -155,8 +222,9 @@ function parseLatLng(raw) {
 }
 
 function readLocationFile(folderPath) {
-  const file = path.join(folderPath, "location.txt");
-  if (!fs.existsSync(file)) return null;
+  const name = LOCATION_FILE_NAMES.find((n) => fs.existsSync(path.join(folderPath, n)));
+  if (!name) return null;
+  const file = path.join(folderPath, name);
   const parsed = parseLatLng(fs.readFileSync(file, "utf8").trim());
   if (!parsed) {
     console.warn(`⚠ Ignoring malformed location.txt in "${path.basename(folderPath)}"`);
@@ -290,7 +358,7 @@ function classifyFiles(folderPath) {
     const ext = path.extname(file).toLowerCase();
     if (IMAGE_EXTS.includes(ext)) images.push(file);
     else if (VIDEO_EXTS.includes(ext)) videos.push(file);
-    else if (ATTACHMENT_EXTS.includes(ext) && !NOT_ATTACHMENTS.includes(file.toLowerCase())) {
+    else if (ATTACHMENT_EXTS.includes(ext) && !LOCATION_FILE_NAMES.includes(file.toLowerCase())) {
       attachments.push(file);
     }
   }
@@ -333,6 +401,7 @@ async function run() {
   const results = [];
   const usedSlugs = new Set();
   const keptThumbDirs = new Set();
+  let sawVideosWithoutFfmpeg = false;
   let skipped = 0;
 
   for (const folderName of folders) {
@@ -381,12 +450,23 @@ async function run() {
     if (locationQuery) entry.locationQuery = locationQuery;
 
     // Only outings that actually have PDF/text files get this field.
-    if (attachments.length) entry.attachments = attachments;
+    if (attachments.length) {
+      entry.attachments = attachments;
+      console.log(`  → ${attachments.length} attachment(s) for "${folderName}": ${attachments.join(", ")}`);
+    }
+
+    keptThumbDirs.add(folderName);
 
     if (sharp) {
       const ok = await makeThumbs(folderPath, folderName, [cover, ...photos]);
       if (ok) entry.thumbFolder = `${WEB_THUMBS_PREFIX}/${folderName}`;
-      keptThumbDirs.add(folderName);
+    }
+
+    if (videos.length && FFMPEG) {
+      const posters = makePosters(folderPath, folderName, videos);
+      if (Object.keys(posters).length) entry.videoPosters = posters;
+    } else if (videos.length) {
+      sawVideosWithoutFfmpeg = true;
     }
 
     for (const field of PRESERVE_FIELDS) {
@@ -406,13 +486,16 @@ async function run() {
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(results, null, 2) + "\n");
 
   // Remove thumbnail folders for outings that no longer exist.
-  if (sharp && fs.existsSync(THUMBS_DIR)) {
+  if (fs.existsSync(THUMBS_DIR)) {
     for (const name of fs.readdirSync(THUMBS_DIR)) {
       const p = path.join(THUMBS_DIR, name);
       if (fs.statSync(p).isDirectory() && !keptThumbDirs.has(name)) {
         fs.rmSync(p, { recursive: true, force: true });
       }
     }
+  }
+  if (sawVideosWithoutFfmpeg) {
+    console.log("\nℹ Video previews skipped — run `npm install` once (or install ffmpeg) to enable them.");
   }
   if (!sharp) {
     console.log("\nℹ Thumbnails skipped — run `npm install` once to enable faster image loading.");
