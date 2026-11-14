@@ -44,6 +44,11 @@
  *   or an ffmpeg already on your PATH. Without either, videos still work —
  *   the gallery just loads them directly like before.
  *
+ * OPTIONAL "place" FIELD
+ *   Add  "place": "Cosmos, Coburg"  to an outing in excursion_details_js.json
+ *   to control the location text on its Polaroid share card (otherwise the
+ *   address from the README is used, or the coordinates). It is kept on re-runs.
+ *
  * SAFE TO RE-RUN
  *   If excursion_details_js.json already exists, this script preserves any
  *   hand-edited "featured" flag (and a few other optional fields) for
@@ -188,7 +193,7 @@ async function makeThumbs(folderPath, folderName, files) {
 
 // Fields a person might hand-edit in excursion_details_js.json that re-running this
 // script should NOT clobber, as long as the outing's slug still exists.
-const PRESERVE_FIELDS = ["featured", "archived", "title"];
+const PRESERVE_FIELDS = ["featured", "archived", "title", "place"];
 
 /**
  * Location resolution, two ways:

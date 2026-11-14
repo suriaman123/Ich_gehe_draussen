@@ -99,7 +99,7 @@
     "date": "2026-11-06",
     "folder": "outing_data/excursion_details/GO! MeetUp_06.11.2026",
     "cover": "cover.webp",
-    "featured": false,
+    "featured": true,
     "archived": false,
     "photos": [
       "IMG-20261106-WA0011.jpg",

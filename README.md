@@ -75,6 +75,7 @@ Waypoint 1.4 — map update               # can scroll through outings
 Waypoint 1.5 — small but fun updates    # year filter;  Prev / next outing links; A “random outing” button ;used sharp package for faster image loading; search box and year filter in archives; Faster image loading
 Waypoint 1.6 — attachments section      # to view pdf's and transcripts.text
 Waypoint 1.7 — updates no one asked for      # german translation of the page; Video previews; automatically run generate-mainfest when push
+Waypoint 1.8 — share button             # added share button; also corrent german translation button location and ui; also change favicon
 
 ```
 

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#173D32"/>
+  <!-- Sunrise -->
+  <circle cx="32" cy="23" r="13" fill="#EBA64B"/>
+  <!-- Himalayan peaks -->
+  <path d="M3 34 L18 13 L25 23 L32 12 L49 34 Z"
+        fill="#DCE9E5"/>
+  <path d="M18 13 L22 21 L18 19 L14 23 Z"
+        fill="#FFFFFF"/>
+  <path d="M32 12 L38 23 L32 20 L27 25 Z"
+        fill="#FFFFFF"/>
+  <!-- Temple -->
+  <path d="M15 39 L32 29 L49 39 Z" fill="#D99A50"/>
+  <path d="M19 39 H45 V53 H19 Z" fill="#E8C18C"/>
+  <path d="M24 39 V53 M40 39 V53" stroke="#76502F" stroke-width="2"/>
+  <path d="M28 53 V44 Q32 39 36 44 V53"
+        fill="#173D32"/>
+  <path d="M32 29 V24 M29 26 H35"
+        stroke="#E8C18C" stroke-width="2"/>
+  <path d="M12 54 H52" stroke="#D99A50" stroke-width="3"
+        stroke-linecap="round"/>
+</svg>

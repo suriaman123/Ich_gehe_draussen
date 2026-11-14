@@ -57,6 +57,13 @@ const els = {
   lightboxNext: document.getElementById("lightbox-next"),
   lightboxCounter: document.getElementById("lightbox-counter"),
   lightboxOriginal: document.getElementById("lightbox-original"),
+  shareOpen: document.getElementById("share-open"),
+  shareModal: document.getElementById("share-modal"),
+  shareClose: document.getElementById("share-close"),
+  sharePreview: document.getElementById("share-preview"),
+  shareSave: document.getElementById("share-save"),
+  shareCopy: document.getElementById("share-copy"),
+  shareCopyLabel: document.getElementById("share-copy-label"),
 };
 
 let EVENTS = [];
@@ -280,6 +287,7 @@ async function renderDetail(slug) {
     return;
   }
 
+  currentEvent = ev;
   const fromArchive = !!ev.archived;
   els.backLink.innerHTML = `<span aria-hidden="true">←</span> ${t(fromArchive ? "back_archive" : "back_trail")}`;
   els.backLink.dataset.target = fromArchive ? "#/archive" : "#/";
@@ -497,6 +505,287 @@ els.lightbox.addEventListener("keydown", (e) => {
   } else if (!e.shiftKey && document.activeElement === last) {
     e.preventDefault();
     first.focus();
+  }
+});
+
+/** ---- Share: Polaroid card + copy link ---- */
+let currentEvent = null; // the outing whose detail page is showing
+let shareTrigger = null; // the Share button, so focus can return to it
+let shareBlobUrl = ""; // object URL of the generated image (preview + download)
+let shareRun = 0; // lets us ignore a slow image if the popup was closed meanwhile
+
+/** Link to the outing's own page. */
+function outingLink(ev) {
+  return `${window.location.origin}${window.location.pathname}#/event/${ev.slug}`;
+}
+
+/** The text for the location line: a "place" you set by hand, else the
+ *  address from the README, else neat coordinates, else nothing. */
+function polaroidPlace(ev) {
+  if (ev.place) return ev.place;
+  const text = (ev.location && ev.location.label) || ev.locationQuery || "";
+  const looksLikeCoords = /^\s*-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?/.test(text);
+  if (text && !looksLikeCoords) return text;
+  if (ev.location) {
+    const { lat, lng } = ev.location;
+    return `${Math.abs(lat).toFixed(3)}° ${lat >= 0 ? "N" : "S"} · ${Math.abs(lng).toFixed(3)}° ${lng >= 0 ? "E" : "W"}`;
+  }
+  return "";
+}
+
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error("image failed to load"));
+    img.src = src;
+  });
+}
+
+function ellipsize(ctx, text, maxWidth) {
+  if (ctx.measureText(text).width <= maxWidth) return text;
+  let s = text.replace(/…$/, "");
+  while (s.length > 1 && ctx.measureText(s + "…").width > maxWidth) s = s.slice(0, -1);
+  return s.trimEnd() + "…";
+}
+
+/** Splits text into at most `maxLines` lines that fit `maxWidth`. */
+function wrapText(ctx, text, maxWidth, maxLines) {
+  const lines = [];
+  let line = "";
+  for (const word of text.split(/\s+/).filter(Boolean)) {
+    const test = line ? `${line} ${word}` : word;
+    if (line && ctx.measureText(test).width > maxWidth) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = test;
+    }
+  }
+  if (line) lines.push(line);
+  if (lines.length > maxLines) {
+    lines.length = maxLines;
+    lines[maxLines - 1] += "…";
+  }
+  return lines.map((l) => ellipsize(ctx, l, maxWidth));
+}
+
+/** Draws the outing as a Polaroid (cover photo, then title / date / place on
+ *  the white strip) and returns it as a JPEG Blob. */
+async function renderPolaroid(ev) {
+  const W = 1200, H = 1500; // the saved picture
+  const CW = 1000, CH = 1300; // the Polaroid card inside it
+  const PAD = 55, PHOTO = CW - PAD * 2; // white border + square photo
+
+  const css = getComputedStyle(document.documentElement);
+  const displayFont = css.getPropertyValue("--font-display").trim() || "Georgia, serif";
+  const monoFont = css.getPropertyValue("--font-mono").trim() || "monospace";
+  // Make sure the site's fonts are ready before drawing text with them.
+  await Promise.all([
+    document.fonts.load(`600 60px ${displayFont}`),
+    document.fonts.load(`500 28px ${monoFont}`),
+  ]).catch(() => {});
+
+  let img;
+  try {
+    img = await loadImage(imageUrl(ev, ev.cover, "md"));
+  } catch (e) {
+    img = await loadImage(imageUrl(ev, ev.cover)); // thumbnail missing: use the original
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext("2d");
+
+  // Soft backdrop
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, "#efebe4");
+  bg.addColorStop(1, "#e0dad0");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // The card, tilted a touch like it was set down by hand
+  ctx.save();
+  ctx.translate(W / 2, H / 2);
+  ctx.rotate(-0.02);
+  const x = -CW / 2, y = -CH / 2;
+
+  ctx.shadowColor = "rgba(0, 0, 0, 0.28)";
+  ctx.shadowBlur = 50;
+  ctx.shadowOffsetY = 22;
+  ctx.fillStyle = "#fcfbf8";
+  ctx.fillRect(x, y, CW, CH);
+  ctx.shadowColor = "transparent";
+
+  // Photo: cover-crop into the square
+  const px = x + PAD, py = y + PAD;
+  const scale = Math.max(PHOTO / img.width, PHOTO / img.height);
+  const sw = PHOTO / scale, sh = PHOTO / scale;
+  ctx.drawImage(img, (img.width - sw) / 2, (img.height - sh) / 2, sw, sh, px, py, PHOTO, PHOTO);
+  ctx.strokeStyle = "rgba(0, 0, 0, 0.12)";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(px, py, PHOTO, PHOTO);
+
+  // Caption strip: title, date, place — centred as one block
+  const maxW = CW - PAD * 2 - 20;
+  const stripTop = py + PHOTO;
+  const stripH = y + CH - stripTop;
+  const place = polaroidPlace(ev);
+
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.font = `600 60px ${displayFont}`;
+  const titleLines = wrapText(ctx, ev.title, maxW, 2);
+  const LINE = 68;
+  const blockH = titleLines.length * LINE + 20 + 34 + (place ? 16 + 34 : 0);
+  let cy = stripTop + (stripH - blockH) / 2 - 4;
+
+  ctx.fillStyle = "#1d2b3a";
+  titleLines.forEach((line, i) => ctx.fillText(line, 0, cy + i * LINE + LINE / 2));
+  cy += titleLines.length * LINE + 20;
+
+  ctx.font = `500 28px ${monoFont}`;
+  ctx.fillStyle = "#6b6f76";
+  if ("letterSpacing" in ctx) ctx.letterSpacing = "3px";
+  ctx.fillText(formatDate(ev.date), 0, cy + 17);
+  cy += 34 + 16;
+
+  if (place) {
+    ctx.font = `500 26px ${monoFont}`;
+    if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
+    ctx.fillStyle = "#8a8e95";
+    const text = ellipsize(ctx, place, maxW - 50);
+    const textW = ctx.measureText(text).width;
+    const iconW = 24, gap = 12;
+    const startX = -(iconW + gap + textW) / 2;
+    // little map pin
+    ctx.save();
+    ctx.translate(startX, cy + 17 - 17);
+    ctx.scale(1.4, 1.4);
+    ctx.strokeStyle = "#8a8e95";
+    ctx.lineWidth = 1.8;
+    ctx.stroke(new Path2D("M8.6 1.4a6 6 0 0 0-6 6c0 4.3 6 11.2 6 11.2s6-6.9 6-11.2a6 6 0 0 0-6-6z"));
+    ctx.beginPath();
+    ctx.arc(8.6, 7.4, 2.2, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+    ctx.textAlign = "left";
+    ctx.fillText(text, startX + iconW + gap, cy + 17);
+  }
+  ctx.restore();
+
+  // Tiny signature on the backdrop
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.font = `500 22px ${monoFont}`;
+  ctx.fillStyle = "rgba(60, 50, 40, 0.5)";
+  if ("letterSpacing" in ctx) ctx.letterSpacing = "4px";
+  ctx.fillText("ICH GEHE DRAUSSEN", W / 2, H - 50);
+
+  return new Promise((resolve, reject) =>
+    canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("toBlob failed"))), "image/jpeg", 0.92)
+  );
+}
+
+async function openShare(ev) {
+  if (!ev) return;
+  shareTrigger = document.activeElement;
+  els.shareModal.hidden = false;
+  els.shareClose.focus();
+  els.shareSave.disabled = true;
+  els.shareCopyLabel.textContent = t("share_copy");
+  els.sharePreview.innerHTML = `<p class="share-status">${t("share_preparing")}</p>`;
+
+  const run = ++shareRun;
+  try {
+    const blob = await renderPolaroid(ev);
+    if (run !== shareRun) return; // popup was closed or reopened meanwhile
+    if (shareBlobUrl) URL.revokeObjectURL(shareBlobUrl);
+    shareBlobUrl = URL.createObjectURL(blob);
+    els.sharePreview.innerHTML = `<img class="share-polaroid" src="${shareBlobUrl}" alt="${escapeHtml(t("share_alt", { title: ev.title }))}">`;
+    els.shareSave.disabled = false;
+  } catch (e) {
+    if (run !== shareRun) return;
+    els.sharePreview.innerHTML = `<p class="share-status">${t("share_error")}</p>`;
+  }
+}
+
+function closeShare() {
+  if (els.shareModal.hidden) return;
+  shareRun++;
+  els.shareModal.hidden = true;
+  els.sharePreview.innerHTML = "";
+  if (shareBlobUrl) URL.revokeObjectURL(shareBlobUrl);
+  shareBlobUrl = "";
+  if (shareTrigger) {
+    shareTrigger.focus();
+    shareTrigger = null;
+  }
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (e) {
+    // Older browsers / non-secure pages: fall back to a hidden text box.
+    const box = document.createElement("textarea");
+    box.value = text;
+    box.setAttribute("readonly", "");
+    box.style.cssText = "position:fixed;opacity:0;top:0;left:0;";
+    document.body.appendChild(box);
+    box.select();
+    let ok = false;
+    try {
+      ok = document.execCommand("copy");
+    } catch (err) {}
+    box.remove();
+    return ok;
+  }
+}
+
+els.shareOpen.addEventListener("click", () => openShare(currentEvent));
+els.shareClose.addEventListener("click", closeShare);
+els.shareModal.addEventListener("click", (e) => {
+  if (e.target === els.shareModal) closeShare();
+});
+
+els.shareSave.addEventListener("click", () => {
+  if (!shareBlobUrl || !currentEvent) return;
+  const a = document.createElement("a");
+  a.href = shareBlobUrl;
+  a.download = `${currentEvent.slug}-polaroid.jpg`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+});
+
+let copyTimer = null;
+els.shareCopy.addEventListener("click", async () => {
+  if (!currentEvent) return;
+  const ok = await copyText(outingLink(currentEvent));
+  if (!ok) return;
+  els.shareCopyLabel.textContent = t("share_copied");
+  clearTimeout(copyTimer);
+  copyTimer = setTimeout(() => (els.shareCopyLabel.textContent = t("share_copy")), 2000);
+});
+
+document.addEventListener("keydown", (e) => {
+  if (els.shareModal.hidden) return;
+  if (e.key === "Escape") closeShare();
+  if (e.key === "Tab") {
+    // keep Tab inside the popup
+    const focusable = [...els.shareModal.querySelectorAll("button:not([disabled])")];
+    if (!focusable.length) return;
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 });
 
@@ -806,6 +1095,7 @@ function renderMap(events) {
 }
 
 async function route() {
+  closeShare();
   const hash = window.location.hash;
   const match = hash.match(/^#\/event\/(.+)$/);
 

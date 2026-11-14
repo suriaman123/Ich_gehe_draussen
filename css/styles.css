@@ -1084,3 +1084,110 @@ button { font-family: inherit; cursor: pointer; }
 
 /* Video tiles that show a preview frame (no <video> loaded). */
 .media-item.is-video { background: #14171d; }
+
+/* ---- Share button (outing page) + Polaroid popup ---- */
+.detail-actions { margin-top: 1rem; display: flex; gap: 0.5rem; }
+.share-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 36px;
+  padding: 0 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.share-open:hover,
+.share-open:focus-visible {
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.share-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(5, 6, 8, 0.72);
+}
+.share-modal[hidden] { display: none; }
+.share-dialog {
+  position: relative;
+  width: min(100%, 460px);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  padding: 1.25rem 1.25rem 1.4rem;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.share-heading {
+  margin: 0 2.5rem 1rem 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+}
+.share-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.share-close:hover { background: var(--accent-soft); color: var(--accent-text); }
+
+.share-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+}
+.share-polaroid {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 56vh;
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+}
+.share-status { margin: 0; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; }
+
+.share-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.1rem; }
+.share-btn {
+  flex: 1 1 150px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+.share-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+.share-btn:disabled { opacity: 0.45; cursor: default; }
+.share-btn-primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share-btn-primary:hover:not(:disabled) { background: var(--accent); opacity: 0.9; }

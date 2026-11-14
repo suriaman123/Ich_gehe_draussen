@@ -6,7 +6,8 @@
 <title>Ich gehe draußen — a log of going out</title>
 <meta name="description" content="A log of getting outside — outings, photos, and notes from the trail.">
 
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" href="favicon.png?v=1">
+<link rel="apple-touch-icon" href="favicon.png?v=1">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ich gehe draußen">
@@ -20,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/styles.css?v=5">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 </head>
 <body>
@@ -155,6 +156,12 @@
       <div class="detail-heading">
         <p class="detail-date" id="detail-date"></p>
         <h1 id="detail-title"></h1>
+        <div class="detail-actions">
+          <button class="share-open" id="share-open" type="button" aria-label="Share this outing" data-i18n-attr="aria-label:share_aria">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="m16 6-4-4-4 4"/><path d="M12 2v13"/></svg>
+            <span data-i18n="share">Share</span>
+          </button>
+        </div>
       </div>
     </header>
 
@@ -179,6 +186,25 @@
 
 </main>
 
+<!-- Share popup: a Polaroid of the outing, plus save / copy link -->
+<div class="share-modal" id="share-modal" hidden role="dialog" aria-modal="true" aria-labelledby="share-heading">
+  <div class="share-dialog">
+    <button class="share-close" id="share-close" type="button" aria-label="Close" data-i18n-attr="aria-label:close">×</button>
+    <h2 class="share-heading" id="share-heading" data-i18n="share_heading">Share this outing</h2>
+    <div class="share-preview" id="share-preview"></div>
+    <div class="share-actions">
+      <button class="share-btn share-btn-primary" id="share-save" type="button" disabled>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        <span data-i18n="share_save">Save image</span>
+      </button>
+      <button class="share-btn" id="share-copy" type="button">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+        <span id="share-copy-label" data-i18n="share_copy" aria-live="polite">Copy link</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Media viewer" data-i18n-attr="aria-label:lightbox_aria">
   <button class="lightbox-close" id="lightbox-close" aria-label="Close" data-i18n-attr="aria-label:close">×</button>
   <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous" data-i18n-attr="aria-label:previous" hidden>‹</button>
@@ -194,8 +220,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="js/theme.js"></script>
-<script src="js/i18n.js"></script>
-<script src="js/app.js"></script>
+<script src="js/theme.js?v=5"></script>
+<script src="js/i18n.js?v=5"></script>
+<script src="js/app.js?v=5"></script>
 </body>
 </html>

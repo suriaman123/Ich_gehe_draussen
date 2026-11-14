@@ -105,6 +105,16 @@
       map_count: "{n} outings here · scroll for more",
       map_empty: "No outings have a location yet — add a \"Location:\" line under the title in an outing's README.md and re-run the generator.",
 
+      share: "Share",
+      share_aria: "Share this outing",
+      share_heading: "Share this outing",
+      share_preparing: "Creating your Polaroid…",
+      share_save: "Save image",
+      share_copy: "Copy link",
+      share_copied: "Link copied ✓",
+      share_error: "Couldn't create the image.",
+      share_alt: "Polaroid of {title}",
+
       footer: "Built by Aman · one outing at a time.",
     },
 
@@ -194,6 +204,16 @@
 
       map_count: "{n} Ausflüge hier · scrollen für mehr",
       map_empty: "Noch hat kein Ausflug einen Ort — füge unter dem Titel in der README.md eines Ausflugs eine Zeile „Location:“ hinzu und starte den Generator erneut.",
+
+      share: "Teilen",
+      share_aria: "Diesen Ausflug teilen",
+      share_heading: "Diesen Ausflug teilen",
+      share_preparing: "Dein Polaroid wird erstellt…",
+      share_save: "Bild speichern",
+      share_copy: "Link kopieren",
+      share_copied: "Link kopiert ✓",
+      share_error: "Das Bild konnte nicht erstellt werden.",
+      share_alt: "Polaroid von {title}",
 
       footer: "Gebaut von Aman · ein Ausflug nach dem anderen.",
     },
