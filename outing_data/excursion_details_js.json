@@ -771,6 +771,21 @@
     "thumbFolder": "outing_data/thumbs/Creapolis Tour_17.09.2026"
   },
   {
+    "slug": "spp-direkt",
+    "title": "SPP Direkt",
+    "date": "2026-09-15",
+    "folder": "outing_data/excursion_details/SPP Direkt_15.09.2026",
+    "cover": "cover.jpg",
+    "featured": false,
+    "archived": false,
+    "photos": [
+      "spp direkt (1).jpg",
+      "spp direkt (2).jpg"
+    ],
+    "videos": [],
+    "thumbFolder": "outing_data/thumbs/SPP Direkt_15.09.2026"
+  },
+  {
     "slug": "soulfood-cosmos",
     "title": "SoulFood Cosmos",
     "date": "2026-09-15",
@@ -795,21 +810,6 @@
       "label": "Coburg"
     },
     "thumbFolder": "outing_data/thumbs/SoulFood-Cosmos_15.09.2026"
-  },
-  {
-    "slug": "spp-direkt",
-    "title": "SPP Direkt",
-    "date": "2026-09-15",
-    "folder": "outing_data/excursion_details/SPP Direkt_15.09.2026",
-    "cover": "cover.jpg",
-    "featured": false,
-    "archived": false,
-    "photos": [
-      "spp direkt (1).jpg",
-      "spp direkt (2).jpg"
-    ],
-    "videos": [],
-    "thumbFolder": "outing_data/thumbs/SPP Direkt_15.09.2026"
   },
   {
     "slug": "museum-night-cosmos",
