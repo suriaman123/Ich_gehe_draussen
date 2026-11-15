@@ -16,10 +16,11 @@
       "VID_20261114_002712498.mp4"
     ],
     "location": {
-      "lat": 50.26497480015601,
-      "lng": 10.950651906929115
+      "lat": 50.2650615,
+      "lng": 10.9519648,
+      "label": "Hochschule Coburg, Germany"
     },
-    "locationQuery": "50.26497480015601, 10.950651906929115",
+    "locationQuery": "Hochschule Coburg, Germany",
     "thumbFolder": "outing_data/thumbs/Utkarshs Birthday_14.11.2026",
     "videoPosters": {
       "Snapchat-1184273802.mp4": "outing_data/thumbs/Utkarshs Birthday_14.11.2026/Snapchat-1184273802.mp4.poster.jpg",
@@ -47,10 +48,11 @@
     ],
     "videos": [],
     "location": {
-      "lat": 50.25440323060424,
-      "lng": 10.96360184754839
+      "lat": 50.2544559,
+      "lng": 10.9633196,
+      "label": "Cosmos, Coburg, Germany"
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "locationQuery": "Cosmos, Coburg, Germany",
     "thumbFolder": "outing_data/thumbs/SoulFood IX-Lasanga_10.11.2026"
   },
   {
@@ -78,10 +80,11 @@
       "VID_20261109_220722927.mp4"
     ],
     "location": {
-      "lat": 50.26497480015601,
-      "lng": 10.950651906929115
+      "lat": 50.2650615,
+      "lng": 10.9519648,
+      "label": "Hochschule Coburg, Germany"
     },
-    "locationQuery": "50.26497480015601, 10.950651906929115",
+    "locationQuery": "Hochschule Coburg, Germany",
     "thumbFolder": "outing_data/thumbs/Party after Diwali_09.11.2026",
     "videoPosters": {
       "VID_20261109_215449511.mp4": "outing_data/thumbs/Party after Diwali_09.11.2026/VID_20261109_215449511.mp4.poster.jpg",
@@ -230,10 +233,11 @@
       "VID_20261108_232341990.mp4"
     ],
     "location": {
-      "lat": 50.133105454306566,
-      "lng": 11.00099427975901
+      "lat": 50.1329586,
+      "lng": 11.0008129,
+      "label": "Kloster Banz, Bad Staffelstein"
     },
-    "locationQuery": "50.133105454306566, 11.00099427975901",
+    "locationQuery": "Kloster Banz, Bad Staffelstein",
     "thumbFolder": "outing_data/thumbs/GO! MeetUp_06.11.2026",
     "videoPosters": {
       "Snapchat-136718246.mp4": "outing_data/thumbs/GO! MeetUp_06.11.2026/Snapchat-136718246.mp4.poster.jpg",
@@ -278,10 +282,11 @@
     ],
     "videos": [],
     "location": {
-      "lat": 50.25440323060424,
-      "lng": 10.96360184754839
+      "lat": 50.3251848,
+      "lng": 11.1273948,
+      "label": "Jugendzentrum Coburg, Germany"
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "locationQuery": "Jugendzentrum Coburg, Germany",
     "thumbFolder": "outing_data/thumbs/SoulFood VIII-Chili sin Carne_03.11.2026"
   },
   {
@@ -300,10 +305,11 @@
     ],
     "videos": [],
     "location": {
-      "lat": 50.26497480015601,
-      "lng": 10.950651906929115
+      "lat": 50.2650615,
+      "lng": 10.9519648,
+      "label": "Hochschule Coburg, Germany"
     },
-    "locationQuery": "50.26497480015601, 10.950651906929115",
+    "locationQuery": "Hochschule Coburg, Germany",
     "attachments": [
       "english_transcript.txt",
       "german_transcript.txt"
@@ -354,10 +360,11 @@
       "VID_20261027_185803370.mp4"
     ],
     "location": {
-      "lat": 50.25440323060424,
-      "lng": 10.96360184754839
+      "lat": 50.2544559,
+      "lng": 10.9633196,
+      "label": "Cosmos, Coburg, Germany"
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "locationQuery": "Cosmos, Coburg, Germany",
     "thumbFolder": "outing_data/thumbs/SoulFood VII_27.10.2026",
     "videoPosters": {
       "VID_20261027_163621458.mp4": "outing_data/thumbs/SoulFood VII_27.10.2026/VID_20261027_163621458.mp4.poster.jpg",
@@ -378,10 +385,11 @@
     ],
     "videos": [],
     "location": {
-      "lat": 50.26497480015601,
-      "lng": 10.950651906929115
+      "lat": 50.2650615,
+      "lng": 10.9519648,
+      "label": "Hochschule Coburg, Germany"
     },
-    "locationQuery": "50.26497480015601, 10.950651906929115",
+    "locationQuery": "Hochschule Coburg, Germany",
     "attachments": [
       "Resume.pdf",
       "coverletter.pdf"
@@ -409,6 +417,7 @@
       "lng": 10.960488553262817
     },
     "locationQuery": "50.249664560314706, 10.960488553262817",
+    "placeName": "Alte Pakethalle, Coburg",
     "thumbFolder": "outing_data/thumbs/Warentauschtag Coburg 2026_24.10.2026"
   },
   {
@@ -453,10 +462,11 @@
       "VID_20261020_161302489.mp4"
     ],
     "location": {
-      "lat": 50.25440323060424,
-      "lng": 10.96360184754839
+      "lat": 50.2544559,
+      "lng": 10.9633196,
+      "label": "Cosmos, Coburg, Germany"
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "locationQuery": "Cosmos, Coburg, Germany",
     "thumbFolder": "outing_data/thumbs/SoulFood VI_20.10.2026",
     "videoPosters": {
       "VID_20261020_161302489.mp4": "outing_data/thumbs/SoulFood VI_20.10.2026/VID_20261020_161302489.mp4.poster.jpg"
@@ -486,6 +496,7 @@
       "lng": 9.261802135920705
     },
     "locationQuery": "48.55577901513233, 9.261802135920705",
+    "placeName": "Industriestraße 31, Riederich",
     "thumbFolder": "outing_data/thumbs/Robot Operator Assesment_16.10.2026"
   },
   {
@@ -544,10 +555,11 @@
     ],
     "videos": [],
     "location": {
-      "lat": 50.25440323060424,
-      "lng": 10.96360184754839
+      "lat": 50.2544559,
+      "lng": 10.9633196,
+      "label": "Cosmos, Coburg, Germany"
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "locationQuery": "Cosmos, Coburg, Germany",
     "thumbFolder": "outing_data/thumbs/SoulFood V_13.10.2026"
   },
   {
@@ -603,10 +615,11 @@
     ],
     "videos": [],
     "location": {
-      "lat": 50.25440323060424,
-      "lng": 10.96360184754839
+      "lat": 50.2544559,
+      "lng": 10.9633196,
+      "label": "Cosmos, Coburg, Germany"
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "locationQuery": "Cosmos, Coburg, Germany",
     "thumbFolder": "outing_data/thumbs/SoulFood IV_06.10.2026"
   },
   {
@@ -677,10 +690,11 @@
     ],
     "videos": [],
     "location": {
-      "lat": 50.25440323060424,
-      "lng": 10.96360184754839
+      "lat": 50.2544559,
+      "lng": 10.9633196,
+      "label": "Cosmos, Coburg, Germany"
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "locationQuery": "Cosmos, Coburg, Germany",
     "thumbFolder": "outing_data/thumbs/SoulFood III_29.09.2026"
   },
   {
@@ -723,10 +737,11 @@
     ],
     "videos": [],
     "location": {
-      "lat": 50.25440323060424,
-      "lng": 10.96360184754839
+      "lat": 50.2544559,
+      "lng": 10.9633196,
+      "label": "Cosmos, Coburg, Germany"
     },
-    "locationQuery": "50.25440323060424, 10.96360184754839",
+    "locationQuery": "Cosmos, Coburg, Germany",
     "thumbFolder": "outing_data/thumbs/SoulFood II_22.09.2026"
   },
   {
@@ -833,6 +848,7 @@
       "lng": 10.96361659374308
     },
     "locationQuery": "50.25451860754015, 10.96361659374308",
+    "placeName": "Cosmos, Coburg",
     "thumbFolder": "outing_data/thumbs/Museum Night_Cosmos_12.09.2026",
     "videoPosters": {
       "museum night (1).mp4": "outing_data/thumbs/Museum Night_Cosmos_12.09.2026/museum night (1).mp4.poster.jpg"

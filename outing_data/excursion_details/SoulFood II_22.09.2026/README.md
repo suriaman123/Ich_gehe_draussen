@@ -1,6 +1,5 @@
 # Soul Food — Day 2
-
-Location: 50.25440323060424, 10.96360184754839
+### Location: Cosmos, Coburg, Germany
 <!-- 22.09.2026 -->
 I was actually quite excited about Soul Food this week. After last time, when we somehow turned zucchini and chickpeas into a really good meal, I was curious to see what we would come up with this time. I definitely would never have thought of combining those ingredients myself.
 

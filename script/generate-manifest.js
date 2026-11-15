@@ -44,10 +44,17 @@
  *   or an ffmpeg already on your PATH. Without either, videos still work —
  *   the gallery just loads them directly like before.
  *
+ * PLACE NAMES (reverse lookup)
+ *   For outings whose location is just coordinates, the generator asks
+ *   OpenStreetMap (Nominatim) what is there and stores a short name like
+ *   "Cosmos, Coburg" as "placeName". It is shown on the outing page and the
+ *   Polaroid. Results are cached in the manifest, so each place is looked up
+ *   only once. If a lookup fails, the page just shows the coordinates.
+ *
  * OPTIONAL "place" FIELD
  *   Add  "place": "Cosmos, Coburg"  to an outing in excursion_details_js.json
- *   to control the location text on its Polaroid share card (otherwise the
- *   address from the README is used, or the coordinates). It is kept on re-runs.
+ *   to set the location text yourself (outing page + Polaroid). It always
+ *   wins over the looked-up name, and is kept on re-runs.
  *
  * SAFE TO RE-RUN
  *   If excursion_details_js.json already exists, this script preserves any
@@ -284,6 +291,39 @@ async function geocodeAddress(address) {
   }
 }
 
+/** Turns a Nominatim reverse-lookup answer into a short, readable name:
+ *  "<place or street>, <town>" — e.g. "Cosmos, Coburg". */
+function shortPlaceName(data) {
+  const a = data.address || {};
+  const town = a.city || a.town || a.village || a.municipality || a.county || "";
+  let first = data.name || "";
+  if (!first && a.road) first = a.house_number ? `${a.road} ${a.house_number}` : a.road;
+  if (!first) first = a.suburb || a.city_district || a.neighbourhood || "";
+  const parts = [...new Set([first, town].filter(Boolean))];
+  if (parts.length) return parts.join(", ");
+  return (data.display_name || "").split(",").slice(0, 2).map((s) => s.trim()).join(", ");
+}
+
+/** Asks OpenStreetMap what is at a coordinate. Returns a short name or null;
+ *  never throws, so a failed lookup can't break the run. */
+async function reverseGeocode(lat, lng) {
+  try {
+    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=18&addressdetails=1&lat=${lat}&lon=${lng}`;
+    const res = await fetch(url, {
+      headers: { "User-Agent": "IchGeheDraussen-manifest-generator/1.0 (personal project)" },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!data || data.error) return null;
+    return shortPlaceName(data) || null;
+  } catch (e) {
+    return null;
+  }
+}
+
+// Same coordinates often repeat across outings — only look each one up once per run.
+const placeNameCache = new Map();
+
 /** Resolves an outing's location, preferring location.txt, then a
  *  "Location:" line in README.md — geocoding it if needed, or reusing a
  *  cached result if the address text hasn't changed since last time. */
@@ -453,6 +493,24 @@ async function run() {
     const { location, locationQuery } = await resolveLocation(folderPath, prior);
     if (location) entry.location = location;
     if (locationQuery) entry.locationQuery = locationQuery;
+
+    // Coordinates only (no address text to show)? Look up what is there.
+    if (entry.location && !entry.location.label) {
+      const { lat, lng } = entry.location;
+      const key = `${lat},${lng}`;
+      const sameSpot = prior.location && prior.location.lat === lat && prior.location.lng === lng;
+      let name = sameSpot && prior.placeName ? prior.placeName : placeNameCache.get(key);
+      if (!name) {
+        console.log(`  → Looking up the place at ${lat.toFixed(4)}, ${lng.toFixed(4)}…`);
+        name = await reverseGeocode(lat, lng);
+        await sleep(1100); // stay under Nominatim's 1-request-per-second policy
+        if (!name) console.warn(`⚠ Couldn't look up a place name for "${folderName}" — showing coordinates instead.`);
+      }
+      if (name) {
+        placeNameCache.set(key, name);
+        entry.placeName = name;
+      }
+    }
 
     // Only outings that actually have PDF/text files get this field.
     if (attachments.length) {

@@ -1,5 +1,5 @@
-
-### Location: 50.25440323060424, 10.96360184754839
+### Location: Jugendzentrum Coburg, Germany
+<!-- ### Location: 50.25440323060424, 10.96360184754839 -->
 <!-- 03.11.2026 -->
 
 # Chili sin Carne

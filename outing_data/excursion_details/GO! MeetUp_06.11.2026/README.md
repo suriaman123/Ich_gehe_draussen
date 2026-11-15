@@ -1,5 +1,5 @@
 
-### Location: 50.133105454306566, 11.00099427975901
+### Location: Kloster Banz, Bad Staffelstein
 <!-- 06.11.2026 - 08.11.2026 -->
 
 ## 6 November 2026 – Day 1

@@ -1,5 +1,6 @@
-### Location: 50.26497480015601, 10.950651906929115
+### Location: Hochschule Coburg, Germany
 
+<!-- ### Location: 50.26497480015601, 10.950651906929115 -->
 <!-- ### Location: 7X72+X4 Coburg -->
 <!-- ### Location:  Friedrich-Streib-Straße 2/4-010, 96450 Coburg -->
 <!-- 28.10.2026 -->

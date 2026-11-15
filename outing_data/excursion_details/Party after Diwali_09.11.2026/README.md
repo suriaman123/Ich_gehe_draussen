@@ -1,4 +1,4 @@
-### Location: 50.26497480015601, 10.950651906929115
+### Location: Hochschule Coburg, Germany
 <!-- 09.11.2026 -->
 
 I'm starting this story a little before the actual event. I'm not entirely sure why, but I suppose that's how this story goes.

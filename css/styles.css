@@ -1191,3 +1191,18 @@ button { font-family: inherit; cursor: pointer; }
 .share-btn:disabled { opacity: 0.45; cursor: default; }
 .share-btn-primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .share-btn-primary:hover:not(:disabled) { background: var(--accent); opacity: 0.9; }
+
+/* ---- Location line on the outing page ---- */
+.detail-place { margin: 0.7rem 0 0; font-family: var(--font-mono); font-size: 0.82rem; }
+.detail-place[hidden] { display: none; }
+.detail-place-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.detail-place-link svg { flex: 0 0 auto; }
+a.detail-place-link:hover,
+a.detail-place-link:focus-visible { color: var(--accent-text); text-decoration: underline; }

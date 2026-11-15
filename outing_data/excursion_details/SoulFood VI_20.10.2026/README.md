@@ -1,5 +1,4 @@
-
-### Location: 50.25440323060424, 10.96360184754839
+### Location: Cosmos, Coburg, Germany
 <!-- 20.10.2026 -->
 
 

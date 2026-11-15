@@ -28,18 +28,20 @@ concurrency:
 
 jobs:
   regenerate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
 
+      # `npm ci` installs exactly what package-lock.json says (and never rewrites
+      # it). If the lock file is ever out of sync, fall back to a plain install.
       - name: Install dependencies (sharp + ffmpeg)
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund || npm install --no-audit --no-fund --no-package-lock
 
       - name: Run the generator
         run: npm run generate
@@ -56,8 +58,13 @@ jobs:
             exit 0
           fi
           git commit -m "chore: regenerate manifest, thumbnails and video previews"
+          # Installing packages can touch package.json / package-lock.json on the
+          # runner. Those changes aren't ours to commit, and git refuses to pull
+          # with a modified file lying around (that was the "exit code 128").
+          git restore package.json package-lock.json 2>/dev/null || true
+          git status --short
           # You may have pushed again while this ran — pick that up first.
-          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
           echo "changed=true" >> "$GITHUB_OUTPUT"
 

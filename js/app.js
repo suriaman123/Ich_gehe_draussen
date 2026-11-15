@@ -43,6 +43,7 @@ const els = {
   viewButtons: document.querySelectorAll(".view-btn"),
   logMap: document.getElementById("log-map"),
   detailCover: document.getElementById("detail-cover"),
+  detailPlace: document.getElementById("detail-place"),
   detailDate: document.getElementById("detail-date"),
   detailTitle: document.getElementById("detail-title"),
   detailReadme: document.getElementById("detail-readme"),
@@ -301,7 +302,7 @@ async function renderDetail(slug) {
   els.detailReadme.innerHTML = `<p><em>${t("notes_loading")}</em></p>`;
   try {
     const res = await fetch(encodePath(`${ev.folder}/README.md`));
-    const md = res.ok ? await res.text() : "";
+    const md = res.ok ? stripLocationLine(await res.text()).trim() : "";
     els.detailReadme.innerHTML = md ? marked.parse(md) : `<p><em>${t("notes_none")}</em></p>`;
 
     // Fix relative image paths inside the README
@@ -322,6 +323,7 @@ async function renderDetail(slug) {
     els.detailReadme.innerHTML = `<p><em>${t("notes_error")}</em></p>`;
   }
 
+  renderPlace(ev);
   renderAttachments(ev);
 
   const media = [...(ev.photos || []), ...(ev.videos || [])];
@@ -366,6 +368,44 @@ async function renderDetail(slug) {
   renderPager(ev);
   showView("detail");
   window.scrollTo(0, 0);
+}
+
+/** Removes the "Location: …" line from the notes. The generator reads that
+ *  line to place the map pin, and the page already shows the place under the
+ *  title, so repeating it in the notes is noise. Only looked for in the first
+ *  three non-empty lines (same rule as the generator), so a "Location:" later
+ *  in your writing is left alone. */
+function stripLocationLine(md) {
+  const lines = md.split(/\r?\n/);
+  let seen = 0;
+  for (let i = 0; i < lines.length && seen < 3; i++) {
+    if (!lines[i].trim()) continue;
+    seen++;
+    if (/^#{0,6}\s*location:\s*.+$/i.test(lines[i].trim())) {
+      lines.splice(i, 1);
+      break;
+    }
+  }
+  return lines.join("\n");
+}
+
+/** Location line under the title: a pin, the place name, and a link that
+ *  opens the spot on OpenStreetMap. Hidden when the outing has no location. */
+function renderPlace(ev) {
+  const text = placeText(ev);
+  els.detailPlace.hidden = !text;
+  if (!text) {
+    els.detailPlace.innerHTML = "";
+    return;
+  }
+  const pin = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>`;
+  if (ev.location) {
+    const { lat, lng } = ev.location;
+    const href = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=15/${lat}/${lng}`;
+    els.detailPlace.innerHTML = `<a class="detail-place-link" href="${href}" target="_blank" rel="noopener" title="${escapeHtml(t("open_map"))}">${pin}<span>${escapeHtml(text)}</span><span class="visually-hidden">${t("opens_new_tab")}</span></a>`;
+  } else {
+    els.detailPlace.innerHTML = `<span class="detail-place-link">${pin}<span>${escapeHtml(text)}</span></span>`;
+  }
 }
 
 /** "Attachments" section: PDF / text files that open in a new tab.
@@ -519,13 +559,15 @@ function outingLink(ev) {
   return `${window.location.origin}${window.location.pathname}#/event/${ev.slug}`;
 }
 
-/** The text for the location line: a "place" you set by hand, else the
- *  address from the README, else neat coordinates, else nothing. */
-function polaroidPlace(ev) {
+/** The text for an outing's location (outing page + Polaroid), in this order:
+ *  a "place" you typed by hand, an address from the README, the name looked
+ *  up from the coordinates by the generator, neat coordinates, or nothing. */
+function placeText(ev) {
   if (ev.place) return ev.place;
   const text = (ev.location && ev.location.label) || ev.locationQuery || "";
   const looksLikeCoords = /^\s*-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?/.test(text);
   if (text && !looksLikeCoords) return text;
+  if (ev.placeName) return ev.placeName;
   if (ev.location) {
     const { lat, lng } = ev.location;
     return `${Math.abs(lat).toFixed(3)}° ${lat >= 0 ? "N" : "S"} · ${Math.abs(lng).toFixed(3)}° ${lng >= 0 ? "E" : "W"}`;
@@ -631,7 +673,7 @@ async function renderPolaroid(ev) {
   const maxW = CW - PAD * 2 - 20;
   const stripTop = py + PHOTO;
   const stripH = y + CH - stripTop;
-  const place = polaroidPlace(ev);
+  const place = placeText(ev);
 
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";

@@ -1,5 +1,5 @@
 
-### Location: 50.26497480015601, 10.950651906929115
+### Location: Hochschule Coburg, Germany
 <!-- 26.10.2026 -->
 
 

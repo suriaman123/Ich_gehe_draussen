@@ -1,4 +1,4 @@
-### Location: 50.26497480015601, 10.950651906929115
+### Location: Hochschule Coburg, Germany
 <!-- 14.11.2026 -->
 
 Last Tuesday, I met Utkarsh at Cosmos. He was talking to Pia and happened to mention that his birthday was on 14 November. I made a mental note of it because I wanted to wish him exactly at midnight. Initially, I planned to get him the ice-cream pastry he likes from Kaufland. However, since I had spent most of the week lazing around, I ended up going with a different option. I picked up a really nice-looking pudding instead. Well, presentation matters too!

@@ -105,6 +105,7 @@
       map_count: "{n} outings here · scroll for more",
       map_empty: "No outings have a location yet — add a \"Location:\" line under the title in an outing's README.md and re-run the generator.",
 
+      open_map: "Open on the map",
       share: "Share",
       share_aria: "Share this outing",
       share_heading: "Share this outing",
@@ -205,6 +206,7 @@
       map_count: "{n} Ausflüge hier · scrollen für mehr",
       map_empty: "Noch hat kein Ausflug einen Ort — füge unter dem Titel in der README.md eines Ausflugs eine Zeile „Location:“ hinzu und starte den Generator erneut.",
 
+      open_map: "Auf der Karte öffnen",
       share: "Teilen",
       share_aria: "Diesen Ausflug teilen",
       share_heading: "Diesen Ausflug teilen",
