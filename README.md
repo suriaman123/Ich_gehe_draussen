@@ -76,7 +76,8 @@ Waypoint 1.5 — small but fun updates    # year filter;  Prev / next outing lin
 Waypoint 1.6 — attachments section      # to view pdf's and transcripts.text
 Waypoint 1.7 — updates no one asked for      # german translation of the page; Video previews; automatically run generate-mainfest when push
 Waypoint 1.8 — share button             # added share button; also corrent german translation button location and ui; also change favicon
-Waypoint 1.9 — location ui updated     
+Waypoint 1.9 — location ui updated     # added a pointer variable to openstreetmap under title, instead of a static location
+Waypoint 1.10 — highlight section updated    # highlight section will only show current year excursions 
 
 ```
 

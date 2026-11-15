@@ -184,8 +184,11 @@ function renderTrail(events, target = els.trail) {
   });
 }
 
+/** Highlights only show featured outings from the current year; the rest
+ *  stay in the full log. (When a new year starts, Highlights starts fresh.) */
 function renderFeatured(events) {
-  const featured = events.filter((ev) => ev.featured);
+  const thisYear = String(new Date().getFullYear());
+  const featured = events.filter((ev) => ev.featured && ev.date.slice(0, 4) === thisYear);
   if (!featured.length) {
     els.featuredSection.hidden = true;
     return;
@@ -723,7 +726,10 @@ async function renderPolaroid(ev) {
   ctx.font = `500 22px ${monoFont}`;
   ctx.fillStyle = "rgba(60, 50, 40, 0.5)";
   if ("letterSpacing" in ctx) ctx.letterSpacing = "4px";
-  ctx.fillText("ICH GEHE DRAUSSEN", W / 2, H - 50);
+  ctx.fillText("ICH GEHE DRAUSSEN by Aman Suri", W / 2, H - 66);
+  //ctx.font = `500 20px ${monoFont}`;
+  //if ("letterSpacing" in ctx) ctx.letterSpacing = "1px";
+  //ctx.fillText("by Aman Suri", W / 2, H - 34);
 
   return new Promise((resolve, reject) =>
     canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("toBlob failed"))), "image/jpeg", 0.92)
